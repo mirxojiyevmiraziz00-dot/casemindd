@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, BookOpenCheck, FileText, Search, ShieldCheck } from "lucide-react";
+import { ArrowLeft, BookOpenCheck, FileText, Search, ShieldCheck, Sparkles } from "lucide-react";
 
+import { AiLegalAssistant } from "@/components/AiLegalAssistant";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/jinoyat-kodeksi")({
@@ -71,14 +72,20 @@ function CriminalCodePage() {
                 <Search className="h-5 w-5 text-legal-gold" /> Modda raqami yoki jinoyat nomi bo‘yicha qidirish
               </div>
               <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                <div className="rounded-xl border bg-muted p-4"><p className="text-2xl font-bold text-premium">302</p><p className="text-sm text-muted-foreground">modda</p></div>
-                <div className="rounded-xl border bg-muted p-4"><p className="text-2xl font-bold text-premium">3</p><p className="text-sm text-muted-foreground">izoh bosqichi</p></div>
-                <div className="rounded-xl border bg-muted p-4"><p className="text-2xl font-bold text-premium">Misol</p><p className="text-sm text-muted-foreground">har modda uchun</p></div>
+                <Button variant="legal" className="h-auto justify-start rounded-xl border bg-muted p-4" asChild>
+                  <a href="#moddalar"><span><span className="block text-2xl font-bold text-premium">302</span><span className="block text-sm text-muted-foreground">modda</span></span></a>
+                </Button>
+                <Button variant="legal" className="h-auto justify-start rounded-xl border bg-muted p-4" asChild>
+                  <a href="#moddalar"><span><span className="block text-2xl font-bold text-premium">3</span><span className="block text-sm text-muted-foreground">izoh bosqichi</span></span></a>
+                </Button>
+                <Button variant="premium" className="h-auto justify-start rounded-xl p-4" asChild>
+                  <a href="#ai-yordamchi"><Sparkles className="h-5 w-5" /><span><span className="block text-2xl font-bold">AI</span><span className="block text-sm">savol berish</span></span></a>
+                </Button>
               </div>
             </div>
           </div>
 
-          <div className="mt-12 grid gap-5 lg:grid-cols-3">
+          <div id="moddalar" className="mt-12 grid gap-5 lg:grid-cols-3">
             {codeArticles.map((article) => (
               <article key={article.number} className="premium-card rounded-2xl border p-6 shadow-premium">
                 <div className="mb-5 flex items-center justify-between">
@@ -91,6 +98,10 @@ function CriminalCodePage() {
                 <p className="mt-4 border-l-4 border-legal-gold pl-4 text-sm leading-6 text-ink-soft">{article.example}</p>
               </article>
             ))}
+          </div>
+
+          <div id="ai-yordamchi">
+            <AiLegalAssistant />
           </div>
 
           <div className="mt-12 rounded-2xl border bg-card p-6 shadow-premium">
