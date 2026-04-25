@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
   BookOpenCheck,
@@ -88,8 +88,10 @@ function Index() {
               <p className="text-xs text-premium-foreground/70">Oson huquq kutubxonasi</p>
             </div>
           </div>
-          <Button variant="premium" className="hidden sm:inline-flex">
-            <Search className="h-4 w-4" /> Qidirish
+          <Button variant="premium" className="hidden sm:inline-flex" asChild>
+            <Link to="/jinoyat-kodeksi">
+              <Search className="h-4 w-4" /> Qidirish
+            </Link>
           </Button>
         </nav>
 
@@ -105,11 +107,13 @@ function Index() {
               Har bir modda murakkab yuridik tildan chiqarilib, qisqa mazmun, oddiy izoh va hayotiy misol bilan beriladi. Oliy sud Plenum qarorlari ham sodda mantiq bo‘yicha tushuntiriladi.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button variant="premium" size="lg">
-                Moddalarni ko‘rish <ArrowRight className="h-4 w-4" />
+              <Button variant="premium" size="lg" asChild>
+                <Link to="/jinoyat-kodeksi">
+                  Moddalarni ko‘rish <ArrowRight className="h-4 w-4" />
+                </Link>
               </Button>
-              <Button variant="legal" size="lg" className="border-premium-foreground/25 bg-premium-foreground/10 text-premium-foreground hover:bg-premium-foreground hover:text-premium">
-                Plenum izohlari
+              <Button variant="legal" size="lg" className="border-premium-foreground/25 bg-premium-foreground/10 text-premium-foreground hover:bg-premium-foreground hover:text-premium" asChild>
+                <Link to="/plenum-qarorlari">Plenum izohlari</Link>
               </Button>
             </div>
           </div>
@@ -160,7 +164,7 @@ function Index() {
                   <span className="rounded-full bg-accent px-3 py-1 text-sm font-semibold text-accent-foreground">{chapter.range}</span>
                 </div>
                 <h3 className="text-2xl font-bold text-premium">{chapter.title}</h3>
-                <p className="mt-3 text-muted-foreground">{chapter.tone} bo‘yicha sodda izohlar, bolacha tushuntirish va real misollar.</p>
+                <p className="mt-3 text-muted-foreground">{chapter.tone} bo‘yicha sodda izohlar, qisqa mazmun va real misollar.</p>
               </article>
             );
           })}
