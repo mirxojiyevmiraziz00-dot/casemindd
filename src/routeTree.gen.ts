@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PlenumQarorlariRouteImport } from './routes/plenum-qarorlari'
 import { Route as JinoyatKodeksiRouteImport } from './routes/jinoyat-kodeksi'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiAiChatRouteImport } from './routes/api/ai-chat'
 
 const PlenumQarorlariRoute = PlenumQarorlariRouteImport.update({
   id: '/plenum-qarorlari',
@@ -28,35 +29,49 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAiChatRoute = ApiAiChatRouteImport.update({
+  id: '/api/ai-chat',
+  path: '/api/ai-chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/jinoyat-kodeksi': typeof JinoyatKodeksiRoute
   '/plenum-qarorlari': typeof PlenumQarorlariRoute
+  '/api/ai-chat': typeof ApiAiChatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/jinoyat-kodeksi': typeof JinoyatKodeksiRoute
   '/plenum-qarorlari': typeof PlenumQarorlariRoute
+  '/api/ai-chat': typeof ApiAiChatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/jinoyat-kodeksi': typeof JinoyatKodeksiRoute
   '/plenum-qarorlari': typeof PlenumQarorlariRoute
+  '/api/ai-chat': typeof ApiAiChatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/jinoyat-kodeksi' | '/plenum-qarorlari'
+  fullPaths: '/' | '/jinoyat-kodeksi' | '/plenum-qarorlari' | '/api/ai-chat'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/jinoyat-kodeksi' | '/plenum-qarorlari'
-  id: '__root__' | '/' | '/jinoyat-kodeksi' | '/plenum-qarorlari'
+  to: '/' | '/jinoyat-kodeksi' | '/plenum-qarorlari' | '/api/ai-chat'
+  id:
+    | '__root__'
+    | '/'
+    | '/jinoyat-kodeksi'
+    | '/plenum-qarorlari'
+    | '/api/ai-chat'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   JinoyatKodeksiRoute: typeof JinoyatKodeksiRoute
   PlenumQarorlariRoute: typeof PlenumQarorlariRoute
+  ApiAiChatRoute: typeof ApiAiChatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +97,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/ai-chat': {
+      id: '/api/ai-chat'
+      path: '/api/ai-chat'
+      fullPath: '/api/ai-chat'
+      preLoaderRoute: typeof ApiAiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +111,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   JinoyatKodeksiRoute: JinoyatKodeksiRoute,
   PlenumQarorlariRoute: PlenumQarorlariRoute,
+  ApiAiChatRoute: ApiAiChatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

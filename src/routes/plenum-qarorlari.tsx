@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, CheckCircle2, FileText, Gavel, Scale } from "lucide-react";
+import { ArrowLeft, CheckCircle2, FileText, Gavel, Scale, Sparkles } from "lucide-react";
 
+import { AiLegalAssistant } from "@/components/AiLegalAssistant";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/plenum-qarorlari")({
@@ -68,10 +69,18 @@ function PlenumPage() {
               <p className="mt-4 leading-7 text-muted-foreground">
                 Qarorlar murakkab huquqiy matndan amaliy, tushunarli va misolli ko‘rinishga o‘tkaziladi.
               </p>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <Button variant="premium" asChild>
+                  <a href="#plenum-royxat">Qarorlarni ko‘rish</a>
+                </Button>
+                <Button variant="legal" asChild>
+                  <a href="#ai-yordamchi"><Sparkles className="h-4 w-4" /> AI savol</a>
+                </Button>
+              </div>
             </div>
           </div>
 
-          <div className="mt-12 grid gap-5 lg:grid-cols-3">
+          <div id="plenum-royxat" className="mt-12 grid gap-5 lg:grid-cols-3">
             {plenumDecisions.map((decision, index) => (
               <article key={decision.title} className="rounded-2xl border bg-card p-6 shadow-premium transition-all duration-300 hover:-translate-y-1">
                 <div className="mb-5 flex items-center justify-between">
@@ -83,6 +92,10 @@ function PlenumPage() {
                 <p className="mt-4 rounded-xl bg-muted p-4 text-sm leading-6 text-muted-foreground">{decision.example}</p>
               </article>
             ))}
+          </div>
+
+          <div id="ai-yordamchi">
+            <AiLegalAssistant />
           </div>
 
           <div className="mt-12 rounded-2xl border bg-card p-6 shadow-premium">
