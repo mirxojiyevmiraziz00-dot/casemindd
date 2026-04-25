@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
   ArrowRight,
-  Balance,
   BookOpenCheck,
   CheckCircle2,
   FileText,
   Gavel,
+  Landmark,
   Library,
   Scale,
   Search,
@@ -37,7 +37,7 @@ export const Route = createFileRoute("/")({
 const chapters = [
   { title: "Shaxsga qarshi jinoyatlar", range: "97–149", tone: "Hayot, sog‘liq, sha’n", icon: ShieldCheck },
   { title: "Tinchlik va xavfsizlik", range: "150–163", tone: "Jamiyat himoyasi", icon: Scale },
-  { title: "Iqtisodiyot sohasida", range: "164–192", tone: "Mulk va bitimlar", icon: Balance },
+  { title: "Iqtisodiyot sohasida", range: "164–192", tone: "Mulk va bitimlar", icon: Landmark },
   { title: "Boshqaruv tartibi", range: "193–241", tone: "Davlat tartibi", icon: Gavel },
   { title: "Jamoat xavfsizligi", range: "242–278", tone: "Tartib va xavfsizlik", icon: Library },
   { title: "Harbiy jinoyatlar", range: "279–302", tone: "Xizmat intizomi", icon: FileText },
