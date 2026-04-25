@@ -9,9 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PlenumQarorlariRouteImport } from './routes/plenum-qarorlari'
 import { Route as JinoyatKodeksiRouteImport } from './routes/jinoyat-kodeksi'
 import { Route as IndexRouteImport } from './routes/index'
 
+const PlenumQarorlariRoute = PlenumQarorlariRouteImport.update({
+  id: '/plenum-qarorlari',
+  path: '/plenum-qarorlari',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const JinoyatKodeksiRoute = JinoyatKodeksiRouteImport.update({
   id: '/jinoyat-kodeksi',
   path: '/jinoyat-kodeksi',
@@ -26,31 +32,42 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/jinoyat-kodeksi': typeof JinoyatKodeksiRoute
+  '/plenum-qarorlari': typeof PlenumQarorlariRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/jinoyat-kodeksi': typeof JinoyatKodeksiRoute
+  '/plenum-qarorlari': typeof PlenumQarorlariRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/jinoyat-kodeksi': typeof JinoyatKodeksiRoute
+  '/plenum-qarorlari': typeof PlenumQarorlariRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/jinoyat-kodeksi'
+  fullPaths: '/' | '/jinoyat-kodeksi' | '/plenum-qarorlari'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/jinoyat-kodeksi'
-  id: '__root__' | '/' | '/jinoyat-kodeksi'
+  to: '/' | '/jinoyat-kodeksi' | '/plenum-qarorlari'
+  id: '__root__' | '/' | '/jinoyat-kodeksi' | '/plenum-qarorlari'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   JinoyatKodeksiRoute: typeof JinoyatKodeksiRoute
+  PlenumQarorlariRoute: typeof PlenumQarorlariRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/plenum-qarorlari': {
+      id: '/plenum-qarorlari'
+      path: '/plenum-qarorlari'
+      fullPath: '/plenum-qarorlari'
+      preLoaderRoute: typeof PlenumQarorlariRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/jinoyat-kodeksi': {
       id: '/jinoyat-kodeksi'
       path: '/jinoyat-kodeksi'
@@ -71,6 +88,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   JinoyatKodeksiRoute: JinoyatKodeksiRoute,
+  PlenumQarorlariRoute: PlenumQarorlariRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
