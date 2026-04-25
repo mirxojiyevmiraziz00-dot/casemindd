@@ -18,13 +18,13 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Jinoyat kodeksi sodda izohda" },
+      { title: "Jinoyat kodeksi oson sharh" },
       {
         name: "description",
         content:
-          "O‘zbekiston Respublikasi Jinoyat kodeksining 302 moddasi va Oliy sud Plenum qarorlari sodda, misolli va premium formatda.",
+          "O‘zbekiston Respublikasi Jinoyat kodeksining 302 moddasi va Oliy sud Plenum qarorlari oson sharh, misollar va premium formatda.",
       },
-      { property: "og:title", content: "Jinoyat kodeksi sodda izohda" },
+      { property: "og:title", content: "Jinoyat kodeksi oson sharh" },
       {
         property: "og:description",
         content: "302 modda, oddiy tushuntirish, hayotiy misollar va Plenum qarorlari.",
@@ -48,21 +48,21 @@ const sampleArticles = [
     number: "97-modda",
     title: "Qasddan odam o‘ldirish",
     simple: "Birovni ataylab o‘ldirish eng og‘ir jinoyatlardan biri hisoblanadi.",
-    kid: "Buni shunday tushun: hech kim boshqa odamning hayotini tortib olishga haqli emas.",
+    kid: "Juda oddiy aytganda: hech kim boshqa odamning hayotini tortib olishga haqli emas.",
     example: "Masalan, kishi janjal paytida oldindan bilib turib boshqasiga halokatli zarar yetkazsa.",
   },
   {
     number: "169-modda",
     title: "O‘g‘rilik",
     simple: "Birovning mol-mulkini yashirincha olish o‘g‘rilikdir.",
-    kid: "Agar sen do‘stingning o‘yinchog‘ini so‘ramasdan yashirib olib ketsang — bu noto‘g‘ri.",
+    kid: "Juda oddiy aytganda: birovning narsasini so‘ramasdan yashirib olib ketish — noto‘g‘ri.",
     example: "Masalan, do‘kondan pulini to‘lamay mahsulot olib chiqish yoki cho‘ntakdan telefon olish.",
   },
   {
     number: "211-modda",
     title: "Pora berish",
     simple: "Mansabdor shaxsga noqonuniy foyda evaziga ish bitirishni so‘rash jinoyat bo‘lishi mumkin.",
-    kid: "Qoidani buzib, kimnidir sovg‘a bilan aldab ish qildirish mumkin emas.",
+    kid: "Juda oddiy aytganda: qoidani buzib, kimnidir sovg‘a bilan aldab ish qildirish mumkin emas.",
     example: "Masalan, ruxsatnomani navbatsiz olish uchun pul taklif qilish.",
   },
 ];
