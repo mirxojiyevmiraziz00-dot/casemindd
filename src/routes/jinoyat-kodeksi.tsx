@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, BookOpenCheck, FileText, Search, ShieldCheck, Sparkles } from "lucide-react";
 
 import { AiLegalAssistant } from "@/components/AiLegalAssistant";
+import { LegalDocumentManager } from "@/components/LegalDocumentManager";
+import { LegalVisualStory } from "@/components/LegalVisualStory";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/jinoyat-kodeksi")({
@@ -99,6 +101,14 @@ function CriminalCodePage() {
               </article>
             ))}
           </div>
+
+          <LegalVisualStory />
+
+          <LegalDocumentManager
+            defaultType="criminal_code_uz"
+            title="Jinoyat kodeksi hujjatlarini yuklash"
+            description="O‘zbekcha Jinoyat kodeksi va keyin inglizcha variantini yuklang — ular shu bo‘limda tartiblanadi."
+          />
 
           <div id="ai-yordamchi">
             <AiLegalAssistant />
