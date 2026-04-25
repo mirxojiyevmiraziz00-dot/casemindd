@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, CheckCircle2, FileText, Gavel, Scale, Sparkles } from "lucide-react";
 
 import { AiLegalAssistant } from "@/components/AiLegalAssistant";
+import { LegalDocumentManager } from "@/components/LegalDocumentManager";
+import { LegalVisualStory } from "@/components/LegalVisualStory";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/plenum-qarorlari")({
@@ -93,6 +95,14 @@ function PlenumPage() {
               </article>
             ))}
           </div>
+
+          <LegalVisualStory />
+
+          <LegalDocumentManager
+            defaultType="plenum_decision"
+            title="Oliy sud Plenum qarorlarini yuklash"
+            description="Plenum qarorlarini fayl ko‘rinishida yuklang — ular alohida bo‘limga ajratilib, keyin sodda sharhga tayyorlanadi."
+          />
 
           <div id="ai-yordamchi">
             <AiLegalAssistant />

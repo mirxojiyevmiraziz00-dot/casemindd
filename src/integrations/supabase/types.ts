@@ -14,16 +14,123 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      legal_documents: {
+        Row: {
+          created_at: string
+          document_type: Database["public"]["Enums"]["legal_document_type"]
+          extracted_text: string | null
+          file_name: string
+          file_size: number | null
+          id: string
+          language: string
+          mime_type: string | null
+          status: Database["public"]["Enums"]["legal_document_status"]
+          storage_path: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          document_type: Database["public"]["Enums"]["legal_document_type"]
+          extracted_text?: string | null
+          file_name: string
+          file_size?: number | null
+          id?: string
+          language?: string
+          mime_type?: string | null
+          status?: Database["public"]["Enums"]["legal_document_status"]
+          storage_path: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          document_type?: Database["public"]["Enums"]["legal_document_type"]
+          extracted_text?: string | null
+          file_name?: string
+          file_size?: number | null
+          id?: string
+          language?: string
+          mime_type?: string | null
+          status?: Database["public"]["Enums"]["legal_document_status"]
+          storage_path?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          email: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          email?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          email?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "moderator" | "user"
+      legal_document_status: "uploaded" | "processing" | "ready" | "failed"
+      legal_document_type:
+        | "criminal_code_uz"
+        | "criminal_code_en"
+        | "plenum_decision"
+        | "other"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +257,15 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "moderator", "user"],
+      legal_document_status: ["uploaded", "processing", "ready", "failed"],
+      legal_document_type: [
+        "criminal_code_uz",
+        "criminal_code_en",
+        "plenum_decision",
+        "other",
+      ],
+    },
   },
 } as const

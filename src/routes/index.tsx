@@ -14,6 +14,9 @@ import {
 } from "lucide-react";
 
 import { AiLegalAssistant } from "@/components/AiLegalAssistant";
+import { AuthStatus } from "@/components/AuthStatus";
+import { LegalDocumentManager } from "@/components/LegalDocumentManager";
+import { LegalVisualStory } from "@/components/LegalVisualStory";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
@@ -93,11 +96,15 @@ function Index() {
             <Button variant="legal" asChild>
               <Link to="/plenum-qarorlari">Plenum</Link>
             </Button>
+            <Button variant="legal" asChild>
+              <a href="#hujjat-yuklash">Yuklash</a>
+            </Button>
             <Button variant="premium" asChild>
               <Link to="/jinoyat-kodeksi">
                 <Search className="h-4 w-4" /> Qidirish
               </Link>
             </Button>
+            <AuthStatus />
           </div>
         </nav>
 
@@ -120,6 +127,9 @@ function Index() {
               </Button>
               <Button variant="legal" size="lg" className="border-premium-foreground/25 bg-premium-foreground/10 text-premium-foreground hover:bg-premium-foreground hover:text-premium" asChild>
                 <Link to="/plenum-qarorlari">Plenum izohlari</Link>
+              </Button>
+              <Button variant="legal" size="lg" className="border-premium-foreground/25 bg-premium-foreground/10 text-premium-foreground hover:bg-premium-foreground hover:text-premium" asChild>
+                <a href="#hujjat-yuklash">Hujjat yuklash</a>
               </Button>
             </div>
           </div>
@@ -196,6 +206,15 @@ function Index() {
           </div>
         </div>
       </section>
+
+      <LegalVisualStory />
+
+      <div id="hujjat-yuklash">
+        <LegalDocumentManager
+          title="Jinoyat kodeksi va Plenum hujjatlarini yuklash"
+          description="Siz yuboradigan o‘zbekcha Jinoyat kodeksi, inglizcha varianti va Oliy sud Plenum qarorlari shu bazada saqlanadi."
+        />
+      </div>
 
       <AiLegalAssistant />
 
