@@ -13,6 +13,7 @@ import {
   Sparkles,
 } from "lucide-react";
 
+import { AiLegalAssistant } from "@/components/AiLegalAssistant";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
@@ -88,11 +89,16 @@ function Index() {
               <p className="text-xs text-premium-foreground/70">Oson huquq kutubxonasi</p>
             </div>
           </div>
-          <Button variant="premium" className="hidden sm:inline-flex" asChild>
-            <Link to="/jinoyat-kodeksi">
-              <Search className="h-4 w-4" /> Qidirish
-            </Link>
-          </Button>
+          <div className="hidden items-center gap-3 sm:flex">
+            <Button variant="legal" asChild>
+              <Link to="/plenum-qarorlari">Plenum</Link>
+            </Button>
+            <Button variant="premium" asChild>
+              <Link to="/jinoyat-kodeksi">
+                <Search className="h-4 w-4" /> Qidirish
+              </Link>
+            </Button>
+          </div>
         </nav>
 
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 pb-20 pt-10 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:pb-28 lg:pt-16">
@@ -147,12 +153,12 @@ function Index() {
             <p className="text-sm font-semibold uppercase text-legal-emerald">Kodeks xaritasi</p>
             <h2 className="mt-2 text-4xl font-bold text-premium">302 modda bo‘limlarga ajratilgan</h2>
           </div>
-          <div className="relative w-full max-w-md overflow-hidden rounded-xl border bg-card p-3 shadow-premium">
+          <Link to="/jinoyat-kodeksi" className="relative block w-full max-w-md overflow-hidden rounded-xl border bg-card p-3 shadow-premium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-glow">
             <div className="absolute inset-y-0 left-0 w-20 animate-shimmer bg-gradient-to-r from-transparent via-legal-gold/20 to-transparent" />
             <div className="flex items-center gap-3 text-muted-foreground">
               <Search className="h-5 w-5" /> Modda raqami, jinoyat nomi yoki kalit so‘z
             </div>
-          </div>
+          </Link>
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {chapters.map((chapter) => {
@@ -190,6 +196,8 @@ function Index() {
           </div>
         </div>
       </section>
+
+      <AiLegalAssistant />
 
       <section className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[0.85fr_1.15fr]">
         <div>
