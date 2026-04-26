@@ -1,0 +1,101 @@
+import {
+  BadgeCheck,
+  Banknote,
+  BriefcaseBusiness,
+  Building2,
+  Cpu,
+  FileText,
+  Fingerprint,
+  Flag,
+  Gavel,
+  Globe2,
+  HeartHandshake,
+  Landmark,
+  Languages,
+  LockKeyhole,
+  Scale,
+  ScrollText,
+  Search,
+  ShieldCheck,
+  UsersRound,
+} from "lucide-react";
+
+export const navLinks = [
+  { label: "AI tahlil", to: "/ai-tahlil" },
+  { label: "Case database", to: "/case-database" },
+  { label: "Bo‘limlar", to: "/huquq-bolimlari" },
+  { label: "Mamlakatlar", to: "/mamlakatlar" },
+  { label: "Yurist", to: "/yurist-bilan-boglanish" },
+  { label: "Academy", to: "/academy" },
+] as const;
+
+export const legalAreas = [
+  { slug: "jinoyat", title: "Jinoyat huquqi", icon: ShieldCheck, tone: "Tergov, sud va javobgarlik xavfini baholash." },
+  { slug: "fuqarolik", title: "Fuqarolik huquqi", icon: Scale, tone: "Shartnomalar, zarar, mulk va majburiyatlar." },
+  { slug: "oila", title: "Oila huquqi", icon: HeartHandshake, tone: "Nikoh, aliment, vasiylik va farzand masalalari." },
+  { slug: "mehnat", title: "Mehnat huquqi", icon: UsersRound, tone: "Ishdan bo‘shatish, ish haqi, intizom va kompensatsiya." },
+  { slug: "soliq", title: "Soliq huquqi", icon: Banknote, tone: "Tekshiruv, jarima, hisob-kitob va rezidentlik." },
+  { slug: "mamuriy", title: "Ma’muriy huquq", icon: Landmark, tone: "Davlat organlari qarorlari va ma’muriy javobgarlik." },
+  { slug: "biznes", title: "Biznes huquqi", icon: BriefcaseBusiness, tone: "Kompaniya, investitsiya, M&A va compliance." },
+  { slug: "kiber", title: "Kiber huquq", icon: LockKeyhole, tone: "Data privacy, fraud, raqamli dalillar va xavfsizlik." },
+  { slug: "ip", title: "Intellektual mulk", icon: Fingerprint, tone: "Brend, patent, mualliflik huquqi va litsenziyalar." },
+  { slug: "migratsiya", title: "Migratsiya huquqi", icon: Globe2, tone: "Viza, yashash ruxsati, deportatsiya va fuqarolik." },
+  { slug: "konstitutsiya", title: "Konstitutsiyaviy huquq", icon: ScrollText, tone: "Asosiy huquqlar, erkinliklar va davlat kafolatlari." },
+];
+
+export const countries = [
+  { slug: "usa", name: "USA", region: "Common law", flag: "🇺🇸", laws: "Federal + state law, Constitution, U.S. Code", courts: "Federal courts, state courts, Supreme Court", precedents: "Marbury v. Madison, Miranda, Brown", culture: "Precedent va litigation kuchli", resolution: "Settlement, mediation, jury trial" },
+  { slug: "uk", name: "UK", region: "Common law", flag: "🇬🇧", laws: "Acts of Parliament, common law, Human Rights Act", courts: "Magistrates, Crown Court, High Court, Supreme Court", precedents: "Donoghue v Stevenson, Miller", culture: "Professional advocacy va precedent", resolution: "Barrister opinion, mediation, court claim" },
+  { slug: "germany", name: "Germany", region: "EU civil law", flag: "🇩🇪", laws: "Grundgesetz, BGB, StGB, EU law", courts: "Ordinary, administrative, constitutional courts", precedents: "Lüth, Solange, BVerfG cases", culture: "Kodifikatsiya va protsessual aniqlik", resolution: "Legal notice, settlement, court procedure" },
+  { slug: "france", name: "France", region: "EU civil law", flag: "🇫🇷", laws: "Code civil, Code pénal, EU regulations", courts: "Tribunal judiciaire, Cour d'appel, Cour de cassation", precedents: "Perruche, Jand'heur", culture: "Davlat-huquqiy institutlar kuchli", resolution: "Conciliation, administrative appeal, court" },
+  { slug: "uae", name: "UAE", region: "Mixed / civil law", flag: "🇦🇪", laws: "Federal laws, emirate regulations, DIFC/ADGM rules", courts: "Federal, local emirate, DIFC/ADGM courts", precedents: "DIFC commercial cases", culture: "Tezkor biznes va arbitraj muhit", resolution: "Arbitration, mediation, court filing" },
+  { slug: "turkey", name: "Turkey", region: "Civil law", flag: "🇹🇷", laws: "Constitution, Turkish Civil Code, Penal Code", courts: "Civil, criminal, administrative, constitutional courts", precedents: "Constitutional Court individual applications", culture: "Kodifikatsiya va davlat nazorati", resolution: "Notarial notice, mediation, lawsuit" },
+  { slug: "japan", name: "Japan", region: "Civil law", flag: "🇯🇵", laws: "Civil Code, Penal Code, Companies Act", courts: "District courts, High Courts, Supreme Court", precedents: "Sunagawa, pharmaceutical cases", culture: "Konsensus, aniqlik va reputatsiya", resolution: "Negotiation, ADR, court" },
+  { slug: "south-korea", name: "South Korea", region: "Civil law", flag: "🇰🇷", laws: "Constitution, Civil Act, Criminal Act", courts: "District, High, Supreme, Constitutional Court", precedents: "Constitutional freedom cases", culture: "Digital compliance va tezkor sudlar", resolution: "Mediation, prosecution, court" },
+  { slug: "uzbekistan", name: "Uzbekistan", region: "Civil law", flag: "🇺🇿", laws: "Konstitutsiya, kodekslar, qonunlar", courts: "Fuqarolik, jinoyat, iqtisodiy, ma’muriy sudlar", precedents: "Oliy sud Plenum qarorlari", culture: "Kodifikatsiya va Plenum sharhlari", resolution: "Ariza, shikoyat, mediatsiya, sud" },
+  { slug: "international", name: "Xalqaro huquq", region: "Treaties / arbitration", flag: "🌐", laws: "Treaties, conventions, model laws", courts: "ICJ, ICC, arbitration tribunals", precedents: "Barcelona Traction, Nicaragua, investment awards", culture: "Davlatlararo va transchegaraviy tahlil", resolution: "Diplomatic, arbitration, treaty claim" },
+];
+
+export const caseDatabase = [
+  { title: "Miranda v. Arizona", country: "USA", area: "Jinoyat", risk: "Yuqori", summary: "Gumon qilinuvchiga huquqlarini tushuntirish zarurligi bo‘yicha mashhur precedent.", tags: ["due process", "police", "rights"] },
+  { title: "Donoghue v Stevenson", country: "UK", area: "Fuqarolik", risk: "O‘rta", summary: "Ehtiyotkorlik majburiyati va zarar uchun javobgarlik konsepsiyasi.", tags: ["negligence", "tort", "duty"] },
+  { title: "Lüth Case", country: "Germany", area: "Konstitutsiyaviy", risk: "O‘rta", summary: "Asosiy huquqlarning xususiy huquq munosabatlariga ta’siri.", tags: ["rights", "speech", "constitution"] },
+  { title: "DIFC Commercial Injunction", country: "UAE", area: "Biznes", risk: "Yuqori", summary: "Transchegaraviy biznes nizosida vaqtinchalik himoya chorasi.", tags: ["injunction", "commercial", "arbitration"] },
+  { title: "Oliy sud Plenum — dalillar", country: "Uzbekistan", area: "Jinoyat", risk: "Yuqori", summary: "Dalillar qonuniyligi va sudda baholanishi bo‘yicha yo‘nalish.", tags: ["dalil", "sud", "plenum"] },
+  { title: "EU GDPR enforcement", country: "EU", area: "Kiber", risk: "Yuqori", summary: "Shaxsiy ma’lumotlarni qayta ishlashda compliance va jarimalar.", tags: ["privacy", "GDPR", "data"] },
+];
+
+export const featureCards = [
+  { title: "Global AI tahlil", icon: Cpu, text: "Vaziyatni huquq sohasi, davlatlar va xavf darajasi bo‘yicha ajratadi." },
+  { title: "Case search", icon: Search, text: "Precedent, real sud ishlari va o‘xshash holatlarni topish uchun filterlar." },
+  { title: "Ko‘p tillilik", icon: Languages, text: "O‘zbek, rus va ingliz interfeys rejimi uchun tayyor UI." },
+  { title: "PDF report", icon: FileText, text: "Tahlil natijasini professional hisobot ko‘rinishida yuklab olish." },
+];
+
+export const stats = [
+  { value: "10+", label: "huquqiy yurisdiksiya" },
+  { value: "11", label: "huquq sohasi" },
+  { value: "24/7", label: "AI yordamchi" },
+  { value: "3", label: "til rejimi" },
+];
+
+export const testimonials = [
+  { name: "Aziza Karimova", role: "Startup founder", quote: "CaseMind masalani davlatlar kesimida ko‘rib, qaysi hujjat kerakligini aniq ko‘rsatdi." },
+  { name: "Daniel Reed", role: "International counsel", quote: "The interface feels like a global legal command center, but remains simple for non-lawyers." },
+  { name: "Javohir Saidov", role: "Business owner", quote: "Yuristga borishdan oldin vaziyatimni tartiblab olishim juda oson bo‘ldi." },
+];
+
+export const pricingPlans = [
+  { name: "Free", price: "$0", features: ["AI chatbot", "Case qidiruv", "3 ta saqlangan tahlil"], cta: "Boshlash" },
+  { name: "Pro", price: "$19", features: ["PDF report", "Case compare", "Premium precedentlar", "Dashboard"], cta: "Pro olish" },
+  { name: "Team", price: "$99", features: ["Jamoa profili", "Video konsultatsiya", "Priority support", "Enterprise export"], cta: "Bog‘lanish" },
+];
+
+export const quickActions = [
+  { label: "Vaziyatni tahlil qilish", to: "/ai-tahlil", icon: Cpu },
+  { label: "Xalqaro tajribalarni ko‘rish", to: "/case-database", icon: Globe2 },
+  { label: "Mutaxassis bilan bog‘lanish", to: "/yurist-bilan-boglanish", icon: UsersRound },
+  { label: "Mamlakatlarni solishtirish", to: "/mamlakatlar", icon: Flag },
+  { label: "Tariflarni ko‘rish", to: "/pricing", icon: BadgeCheck },
+  { label: "Dashboard", to: "/dashboard", icon: Building2 },
+] as const;
