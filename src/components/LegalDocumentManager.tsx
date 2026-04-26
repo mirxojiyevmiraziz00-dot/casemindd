@@ -206,7 +206,7 @@ export function LegalDocumentManager({ defaultType = "criminal_code_uz", title, 
                 <Input
                   id="document-file"
                   type="file"
-                  accept=".pdf,.doc,.docx,.txt,.rtf,.csv,.json"
+                  accept=".pdf,.doc,.docx,.txt,.rtf,.csv,.json,.png,.jpg,.jpeg,.webp"
                   onChange={(event) => setFile(event.target.files?.[0] ?? null)}
                   className="h-auto bg-background py-3"
                 />
