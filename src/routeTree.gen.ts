@@ -9,20 +9,58 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as YuristBilanBoglanishRouteImport } from './routes/yurist-bilan-boglanish'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PlenumQarorlariRouteImport } from './routes/plenum-qarorlari'
+import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MamlakatlarRouteImport } from './routes/mamlakatlar'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as JinoyatKodeksiRouteImport } from './routes/jinoyat-kodeksi'
 import { Route as HuquqBolimlariRouteImport } from './routes/huquq-bolimlari'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CaseDatabaseRouteImport } from './routes/case-database'
 import { Route as AiTahlilRouteImport } from './routes/ai-tahlil'
+import { Route as AcademyRouteImport } from './routes/academy'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MamlakatlarCountryIdRouteImport } from './routes/mamlakatlar.$countryId'
 import { Route as ApiAiChatRouteImport } from './routes/api/ai-chat'
 
+const YuristBilanBoglanishRoute = YuristBilanBoglanishRouteImport.update({
+  id: '/yurist-bilan-boglanish',
+  path: '/yurist-bilan-boglanish',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlenumQarorlariRoute = PlenumQarorlariRouteImport.update({
   id: '/plenum-qarorlari',
   path: '/plenum-qarorlari',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MamlakatlarRoute = MamlakatlarRouteImport.update({
@@ -45,6 +83,11 @@ const HuquqBolimlariRoute = HuquqBolimlariRouteImport.update({
   path: '/huquq-bolimlari',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CaseDatabaseRoute = CaseDatabaseRouteImport.update({
   id: '/case-database',
   path: '/case-database',
@@ -53,6 +96,11 @@ const CaseDatabaseRoute = CaseDatabaseRouteImport.update({
 const AiTahlilRoute = AiTahlilRouteImport.update({
   id: '/ai-tahlil',
   path: '/ai-tahlil',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AcademyRoute = AcademyRouteImport.update({
+  id: '/academy',
+  path: '/academy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -73,38 +121,62 @@ const ApiAiChatRoute = ApiAiChatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/academy': typeof AcademyRoute
   '/ai-tahlil': typeof AiTahlilRoute
   '/case-database': typeof CaseDatabaseRoute
+  '/dashboard': typeof DashboardRoute
   '/huquq-bolimlari': typeof HuquqBolimlariRoute
   '/jinoyat-kodeksi': typeof JinoyatKodeksiRoute
   '/login': typeof LoginRoute
   '/mamlakatlar': typeof MamlakatlarRouteWithChildren
+  '/notifications': typeof NotificationsRoute
   '/plenum-qarorlari': typeof PlenumQarorlariRoute
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/settings': typeof SettingsRoute
+  '/terms': typeof TermsRoute
+  '/yurist-bilan-boglanish': typeof YuristBilanBoglanishRoute
   '/api/ai-chat': typeof ApiAiChatRoute
   '/mamlakatlar/$countryId': typeof MamlakatlarCountryIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/academy': typeof AcademyRoute
   '/ai-tahlil': typeof AiTahlilRoute
   '/case-database': typeof CaseDatabaseRoute
+  '/dashboard': typeof DashboardRoute
   '/huquq-bolimlari': typeof HuquqBolimlariRoute
   '/jinoyat-kodeksi': typeof JinoyatKodeksiRoute
   '/login': typeof LoginRoute
   '/mamlakatlar': typeof MamlakatlarRouteWithChildren
+  '/notifications': typeof NotificationsRoute
   '/plenum-qarorlari': typeof PlenumQarorlariRoute
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/settings': typeof SettingsRoute
+  '/terms': typeof TermsRoute
+  '/yurist-bilan-boglanish': typeof YuristBilanBoglanishRoute
   '/api/ai-chat': typeof ApiAiChatRoute
   '/mamlakatlar/$countryId': typeof MamlakatlarCountryIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/academy': typeof AcademyRoute
   '/ai-tahlil': typeof AiTahlilRoute
   '/case-database': typeof CaseDatabaseRoute
+  '/dashboard': typeof DashboardRoute
   '/huquq-bolimlari': typeof HuquqBolimlariRoute
   '/jinoyat-kodeksi': typeof JinoyatKodeksiRoute
   '/login': typeof LoginRoute
   '/mamlakatlar': typeof MamlakatlarRouteWithChildren
+  '/notifications': typeof NotificationsRoute
   '/plenum-qarorlari': typeof PlenumQarorlariRoute
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/settings': typeof SettingsRoute
+  '/terms': typeof TermsRoute
+  '/yurist-bilan-boglanish': typeof YuristBilanBoglanishRoute
   '/api/ai-chat': typeof ApiAiChatRoute
   '/mamlakatlar/$countryId': typeof MamlakatlarCountryIdRoute
 }
@@ -112,60 +184,134 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/academy'
     | '/ai-tahlil'
     | '/case-database'
+    | '/dashboard'
     | '/huquq-bolimlari'
     | '/jinoyat-kodeksi'
     | '/login'
     | '/mamlakatlar'
+    | '/notifications'
     | '/plenum-qarorlari'
+    | '/pricing'
+    | '/privacy'
+    | '/settings'
+    | '/terms'
+    | '/yurist-bilan-boglanish'
     | '/api/ai-chat'
     | '/mamlakatlar/$countryId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/academy'
     | '/ai-tahlil'
     | '/case-database'
+    | '/dashboard'
     | '/huquq-bolimlari'
     | '/jinoyat-kodeksi'
     | '/login'
     | '/mamlakatlar'
+    | '/notifications'
     | '/plenum-qarorlari'
+    | '/pricing'
+    | '/privacy'
+    | '/settings'
+    | '/terms'
+    | '/yurist-bilan-boglanish'
     | '/api/ai-chat'
     | '/mamlakatlar/$countryId'
   id:
     | '__root__'
     | '/'
+    | '/academy'
     | '/ai-tahlil'
     | '/case-database'
+    | '/dashboard'
     | '/huquq-bolimlari'
     | '/jinoyat-kodeksi'
     | '/login'
     | '/mamlakatlar'
+    | '/notifications'
     | '/plenum-qarorlari'
+    | '/pricing'
+    | '/privacy'
+    | '/settings'
+    | '/terms'
+    | '/yurist-bilan-boglanish'
     | '/api/ai-chat'
     | '/mamlakatlar/$countryId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AcademyRoute: typeof AcademyRoute
   AiTahlilRoute: typeof AiTahlilRoute
   CaseDatabaseRoute: typeof CaseDatabaseRoute
+  DashboardRoute: typeof DashboardRoute
   HuquqBolimlariRoute: typeof HuquqBolimlariRoute
   JinoyatKodeksiRoute: typeof JinoyatKodeksiRoute
   LoginRoute: typeof LoginRoute
   MamlakatlarRoute: typeof MamlakatlarRouteWithChildren
+  NotificationsRoute: typeof NotificationsRoute
   PlenumQarorlariRoute: typeof PlenumQarorlariRoute
+  PricingRoute: typeof PricingRoute
+  PrivacyRoute: typeof PrivacyRoute
+  SettingsRoute: typeof SettingsRoute
+  TermsRoute: typeof TermsRoute
+  YuristBilanBoglanishRoute: typeof YuristBilanBoglanishRoute
   ApiAiChatRoute: typeof ApiAiChatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/yurist-bilan-boglanish': {
+      id: '/yurist-bilan-boglanish'
+      path: '/yurist-bilan-boglanish'
+      fullPath: '/yurist-bilan-boglanish'
+      preLoaderRoute: typeof YuristBilanBoglanishRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/plenum-qarorlari': {
       id: '/plenum-qarorlari'
       path: '/plenum-qarorlari'
       fullPath: '/plenum-qarorlari'
       preLoaderRoute: typeof PlenumQarorlariRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mamlakatlar': {
@@ -196,6 +342,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HuquqBolimlariRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/case-database': {
       id: '/case-database'
       path: '/case-database'
@@ -208,6 +361,13 @@ declare module '@tanstack/react-router' {
       path: '/ai-tahlil'
       fullPath: '/ai-tahlil'
       preLoaderRoute: typeof AiTahlilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/academy': {
+      id: '/academy'
+      path: '/academy'
+      fullPath: '/academy'
+      preLoaderRoute: typeof AcademyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -248,13 +408,21 @@ const MamlakatlarRouteWithChildren = MamlakatlarRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AcademyRoute: AcademyRoute,
   AiTahlilRoute: AiTahlilRoute,
   CaseDatabaseRoute: CaseDatabaseRoute,
+  DashboardRoute: DashboardRoute,
   HuquqBolimlariRoute: HuquqBolimlariRoute,
   JinoyatKodeksiRoute: JinoyatKodeksiRoute,
   LoginRoute: LoginRoute,
   MamlakatlarRoute: MamlakatlarRouteWithChildren,
+  NotificationsRoute: NotificationsRoute,
   PlenumQarorlariRoute: PlenumQarorlariRoute,
+  PricingRoute: PricingRoute,
+  PrivacyRoute: PrivacyRoute,
+  SettingsRoute: SettingsRoute,
+  TermsRoute: TermsRoute,
+  YuristBilanBoglanishRoute: YuristBilanBoglanishRoute,
   ApiAiChatRoute: ApiAiChatRoute,
 }
 export const routeTree = rootRouteImport
