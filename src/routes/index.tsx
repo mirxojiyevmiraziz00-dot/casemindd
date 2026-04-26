@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, CheckCircle2, Globe2, Play, Scale, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2, Film, Globe2, Instagram, Play, Scale, Send, ShieldCheck, Sparkles, UploadCloud } from "lucide-react";
 
 import heroImage from "@/assets/casemind-global-justice.jpg";
 import { AiCaseAnalyzer } from "@/components/AiCaseAnalyzer";
@@ -119,6 +119,15 @@ function Index() {
       </section>
 
       <AiLegalAssistant />
+
+      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
+        <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+          <div><p className="text-sm font-semibold uppercase text-accent">Social legal studio</p><h2 className="mt-2 text-4xl font-black text-foreground">Instagram va Telegram kontent markazi</h2><p className="mt-4 leading-8 text-muted-foreground">Video, rasm, huquqiy short-form va yangiliklarni yuklashga tayyor premium media studio. Keyingi bosqichda real Instagram/Telegram connector orqali avtomatik post qilish ulanadi.</p><div className="mt-6 flex flex-col gap-3 sm:flex-row"><Button variant="premium" asChild><Link to="/dashboard"><UploadCloud className="h-4 w-4" /> Media yuklash</Link></Button><Button variant="legal" asChild><Link to="/settings"><Send className="h-4 w-4" /> Kanallarni sozlash</Link></Button></div></div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {[{ icon: Instagram, title: "Instagram Reels", text: "Case explainers, video carousel va premium legal visuals." }, { icon: Send, title: "Telegram kanal", text: "Qarorlar, yangiliklar va AI tahlillarni ulashish." }, { icon: Film, title: "Video library", text: "Yuklangan huquqiy videolar uchun showcase." }].map((item) => <article key={item.title} className="premium-card rounded-2xl border p-6 shadow-premium transition hover:-translate-y-1"><item.icon className="mb-5 h-8 w-8 text-accent" /><h3 className="text-2xl font-black text-foreground">{item.title}</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">{item.text}</p></article>)}
+          </div>
+        </div>
+      </section>
 
       <section className="bg-secondary/35 py-16">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
