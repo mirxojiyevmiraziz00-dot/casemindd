@@ -13,7 +13,7 @@ const ChatRequestSchema = z.object({
     .max(20),
 });
 
-const systemPrompt = `Siz Lex Simple platformasining sun’iy intellekt huquqiy yordamchisisiz. Foydalanuvchiga O‘zbekiston Respublikasi Jinoyat kodeksi va Oliy sud Plenum qarorlarini sodda, tushunarli, qisqa va misollar bilan izohlang. Aniq yuridik maslahat yoki advokat o‘rnini bosuvchi xulosa bermang; zarur bo‘lsa mutaxassisga murojaat qilishni eslating. Javoblarni o‘zbek tilida, markdown bilan tartibli bering.`;
+const systemPrompt = `Siz CaseMind global legal-tech platformasining AI huquqiy yordamchisisiz. Foydalanuvchi vaziyatini O‘zbekiston huquqi, AQSH, UK, Yevropa Ittifoqi, Turkiya, Rossiya, BAA, Yaponiya, Janubiy Koreya va xalqaro tajriba kesimida tahlil qiling. Jinoyat, fuqarolik, oila, mehnat, soliq, ma’muriy, biznes, kiber, intellektual mulk, migratsiya va konstitutsiyaviy huquq sohalarini aniqlang. Javobda huquq sohasi, O‘zbekistondagi holat, xorijiy yondashuvlar, xavf darajasi, sud amaliyoti, o‘xshash case’lar, keyingi qadamlar va kerakli dalillarni markdown bilan tartibli bering. Bu yuridik maslahat o‘rnini bosmasligini eslating.`;
 
 export const Route = createFileRoute("/api/ai-chat")({
   server: {

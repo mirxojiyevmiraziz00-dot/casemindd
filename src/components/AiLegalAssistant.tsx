@@ -15,7 +15,7 @@ const starterMessages: ChatMessage[] = [
   {
     role: "assistant",
     content:
-      "Assalomu alaykum! Jinoyat kodeksi moddasi yoki Oliy sud Plenum qarori bo‘yicha savol yozing — men sodda sharh va misol bilan tushuntiraman.",
+      "Assalomu alaykum! CaseMind AI yordamchisi: vaziyatingizni yozing — O‘zbekiston va xalqaro huquqiy tajriba asosida tahlil qilaman.",
   },
 ];
 
@@ -61,7 +61,7 @@ export function AiLegalAssistant() {
         <p className="text-sm font-semibold uppercase text-legal-emerald">Sun’iy intellekt</p>
         <h2 className="mt-2 text-4xl font-bold text-premium">AI huquqiy yordamchi</h2>
         <p className="mt-4 leading-8 text-muted-foreground">
-          Modda raqami, jinoyat nomi yoki Plenum qarori bo‘yicha savol bering — yordamchi javobni sodda qilib tushuntiradi.
+          Huquqiy vaziyat, davlat, soha yoki precedent bo‘yicha savol bering — yordamchi global tahlil va keyingi qadamlarni beradi.
         </p>
       </div>
 
@@ -72,7 +72,7 @@ export function AiLegalAssistant() {
               <Sparkles className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-bold text-premium">Lex Simple AI</h3>
+              <h3 className="font-bold text-premium">CaseMind AI</h3>
               <p className="text-xs text-muted-foreground">Oson sharh, misol va ogohlantirish bilan</p>
             </div>
           </div>
@@ -118,7 +118,7 @@ export function AiLegalAssistant() {
                   void sendMessage();
                 }
               }}
-              placeholder="Masalan: 169-modda o‘g‘rilikni oddiy qilib tushuntir..."
+              placeholder="Masalan: shartnoma buzildi, AQSH va O‘zbekistonda qanday choralar bor?"
               className="min-h-12 flex-1 resize-none rounded-xl border bg-background px-4 py-3 text-foreground outline-none transition focus:border-legal-gold focus:ring-2 focus:ring-legal-gold/20"
             />
             <Button variant="premium" size="lg" onClick={() => void sendMessage()} disabled={isLoading || !input.trim()}>

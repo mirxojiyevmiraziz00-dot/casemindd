@@ -11,8 +11,8 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
-      { title: "Login — Jinoyat kodeksi oson sharh" },
-      { name: "description", content: "Jinoyat kodeksi platformasiga email yoki Google orqali xavfsiz kirish." },
+      { title: "Login — CaseMind" },
+      { name: "description", content: "CaseMind platformasiga email yoki Google orqali xavfsiz kirish." },
     ],
   }),
   component: LoginPage,
@@ -94,9 +94,9 @@ function LoginPage() {
           <div className="mt-12 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
             <div>
               <p className="text-sm font-semibold uppercase text-legal-emerald">Xavfsiz login</p>
-              <h1 className="mt-3 text-5xl font-bold leading-tight text-premium">Hujjat yuklash uchun hisobga kiring</h1>
+              <h1 className="mt-3 text-5xl font-bold leading-tight text-premium">CaseMind hisobingizga kiring</h1>
               <p className="mt-6 leading-8 text-muted-foreground">
-                Login orqali Jinoyat kodeksi, inglizcha varianti va Plenum qarorlarini yuklab, hujjatlar bazasiga qo‘shishingiz mumkin.
+                Login orqali vaziyatlaringiz, hujjatlar, AI tahlillar va dashboard imkoniyatlaridan foydalaning.
               </p>
             </div>
 
