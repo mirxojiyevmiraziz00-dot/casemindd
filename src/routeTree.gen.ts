@@ -10,15 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PlenumQarorlariRouteImport } from './routes/plenum-qarorlari'
+import { Route as MamlakatlarRouteImport } from './routes/mamlakatlar'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as JinoyatKodeksiRouteImport } from './routes/jinoyat-kodeksi'
+import { Route as HuquqBolimlariRouteImport } from './routes/huquq-bolimlari'
+import { Route as CaseDatabaseRouteImport } from './routes/case-database'
 import { Route as AiTahlilRouteImport } from './routes/ai-tahlil'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MamlakatlarCountryIdRouteImport } from './routes/mamlakatlar.$countryId'
 import { Route as ApiAiChatRouteImport } from './routes/api/ai-chat'
 
 const PlenumQarorlariRoute = PlenumQarorlariRouteImport.update({
   id: '/plenum-qarorlari',
   path: '/plenum-qarorlari',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MamlakatlarRoute = MamlakatlarRouteImport.update({
+  id: '/mamlakatlar',
+  path: '/mamlakatlar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -31,6 +40,16 @@ const JinoyatKodeksiRoute = JinoyatKodeksiRouteImport.update({
   path: '/jinoyat-kodeksi',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HuquqBolimlariRoute = HuquqBolimlariRouteImport.update({
+  id: '/huquq-bolimlari',
+  path: '/huquq-bolimlari',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaseDatabaseRoute = CaseDatabaseRouteImport.update({
+  id: '/case-database',
+  path: '/case-database',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AiTahlilRoute = AiTahlilRouteImport.update({
   id: '/ai-tahlil',
   path: '/ai-tahlil',
@@ -41,6 +60,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MamlakatlarCountryIdRoute = MamlakatlarCountryIdRouteImport.update({
+  id: '/$countryId',
+  path: '/$countryId',
+  getParentRoute: () => MamlakatlarRoute,
+} as any)
 const ApiAiChatRoute = ApiAiChatRouteImport.update({
   id: '/api/ai-chat',
   path: '/api/ai-chat',
@@ -50,60 +74,87 @@ const ApiAiChatRoute = ApiAiChatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai-tahlil': typeof AiTahlilRoute
+  '/case-database': typeof CaseDatabaseRoute
+  '/huquq-bolimlari': typeof HuquqBolimlariRoute
   '/jinoyat-kodeksi': typeof JinoyatKodeksiRoute
   '/login': typeof LoginRoute
+  '/mamlakatlar': typeof MamlakatlarRouteWithChildren
   '/plenum-qarorlari': typeof PlenumQarorlariRoute
   '/api/ai-chat': typeof ApiAiChatRoute
+  '/mamlakatlar/$countryId': typeof MamlakatlarCountryIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai-tahlil': typeof AiTahlilRoute
+  '/case-database': typeof CaseDatabaseRoute
+  '/huquq-bolimlari': typeof HuquqBolimlariRoute
   '/jinoyat-kodeksi': typeof JinoyatKodeksiRoute
   '/login': typeof LoginRoute
+  '/mamlakatlar': typeof MamlakatlarRouteWithChildren
   '/plenum-qarorlari': typeof PlenumQarorlariRoute
   '/api/ai-chat': typeof ApiAiChatRoute
+  '/mamlakatlar/$countryId': typeof MamlakatlarCountryIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ai-tahlil': typeof AiTahlilRoute
+  '/case-database': typeof CaseDatabaseRoute
+  '/huquq-bolimlari': typeof HuquqBolimlariRoute
   '/jinoyat-kodeksi': typeof JinoyatKodeksiRoute
   '/login': typeof LoginRoute
+  '/mamlakatlar': typeof MamlakatlarRouteWithChildren
   '/plenum-qarorlari': typeof PlenumQarorlariRoute
   '/api/ai-chat': typeof ApiAiChatRoute
+  '/mamlakatlar/$countryId': typeof MamlakatlarCountryIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/ai-tahlil'
+    | '/case-database'
+    | '/huquq-bolimlari'
     | '/jinoyat-kodeksi'
     | '/login'
+    | '/mamlakatlar'
     | '/plenum-qarorlari'
     | '/api/ai-chat'
+    | '/mamlakatlar/$countryId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/ai-tahlil'
+    | '/case-database'
+    | '/huquq-bolimlari'
     | '/jinoyat-kodeksi'
     | '/login'
+    | '/mamlakatlar'
     | '/plenum-qarorlari'
     | '/api/ai-chat'
+    | '/mamlakatlar/$countryId'
   id:
     | '__root__'
     | '/'
     | '/ai-tahlil'
+    | '/case-database'
+    | '/huquq-bolimlari'
     | '/jinoyat-kodeksi'
     | '/login'
+    | '/mamlakatlar'
     | '/plenum-qarorlari'
     | '/api/ai-chat'
+    | '/mamlakatlar/$countryId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AiTahlilRoute: typeof AiTahlilRoute
+  CaseDatabaseRoute: typeof CaseDatabaseRoute
+  HuquqBolimlariRoute: typeof HuquqBolimlariRoute
   JinoyatKodeksiRoute: typeof JinoyatKodeksiRoute
   LoginRoute: typeof LoginRoute
+  MamlakatlarRoute: typeof MamlakatlarRouteWithChildren
   PlenumQarorlariRoute: typeof PlenumQarorlariRoute
   ApiAiChatRoute: typeof ApiAiChatRoute
 }
@@ -115,6 +166,13 @@ declare module '@tanstack/react-router' {
       path: '/plenum-qarorlari'
       fullPath: '/plenum-qarorlari'
       preLoaderRoute: typeof PlenumQarorlariRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mamlakatlar': {
+      id: '/mamlakatlar'
+      path: '/mamlakatlar'
+      fullPath: '/mamlakatlar'
+      preLoaderRoute: typeof MamlakatlarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -131,6 +189,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JinoyatKodeksiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/huquq-bolimlari': {
+      id: '/huquq-bolimlari'
+      path: '/huquq-bolimlari'
+      fullPath: '/huquq-bolimlari'
+      preLoaderRoute: typeof HuquqBolimlariRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-database': {
+      id: '/case-database'
+      path: '/case-database'
+      fullPath: '/case-database'
+      preLoaderRoute: typeof CaseDatabaseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ai-tahlil': {
       id: '/ai-tahlil'
       path: '/ai-tahlil'
@@ -145,6 +217,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mamlakatlar/$countryId': {
+      id: '/mamlakatlar/$countryId'
+      path: '/$countryId'
+      fullPath: '/mamlakatlar/$countryId'
+      preLoaderRoute: typeof MamlakatlarCountryIdRouteImport
+      parentRoute: typeof MamlakatlarRoute
+    }
     '/api/ai-chat': {
       id: '/api/ai-chat'
       path: '/api/ai-chat'
@@ -155,11 +234,26 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface MamlakatlarRouteChildren {
+  MamlakatlarCountryIdRoute: typeof MamlakatlarCountryIdRoute
+}
+
+const MamlakatlarRouteChildren: MamlakatlarRouteChildren = {
+  MamlakatlarCountryIdRoute: MamlakatlarCountryIdRoute,
+}
+
+const MamlakatlarRouteWithChildren = MamlakatlarRoute._addFileChildren(
+  MamlakatlarRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AiTahlilRoute: AiTahlilRoute,
+  CaseDatabaseRoute: CaseDatabaseRoute,
+  HuquqBolimlariRoute: HuquqBolimlariRoute,
   JinoyatKodeksiRoute: JinoyatKodeksiRoute,
   LoginRoute: LoginRoute,
+  MamlakatlarRoute: MamlakatlarRouteWithChildren,
   PlenumQarorlariRoute: PlenumQarorlariRoute,
   ApiAiChatRoute: ApiAiChatRoute,
 }
