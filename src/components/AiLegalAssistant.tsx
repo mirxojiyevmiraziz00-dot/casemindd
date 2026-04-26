@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Bot, Loader2, Send, Sparkles, User } from "lucide-react";
+import { Bot, Clapperboard, Image, Loader2, Send, Sparkles, User } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -54,6 +54,13 @@ export function AiLegalAssistant() {
       setIsLoading(false);
     }
   };
+
+  const lastAssistantMessage = [...messages].reverse().find((message) => message.role === "assistant")?.content ?? "";
+  const visualLabel = lastAssistantMessage.toLowerCase().includes("contract") || lastAssistantMessage.toLowerCase().includes("shartnoma")
+    ? "Shartnoma va muzokara sahnasi"
+    : lastAssistantMessage.toLowerCase().includes("crime") || lastAssistantMessage.toLowerCase().includes("jinoyat")
+      ? "Sud-tergov motion sahnasi"
+      : "Global legal intelligence sahnasi";
 
   return (
     <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
@@ -126,6 +133,15 @@ export function AiLegalAssistant() {
               Yuborish
             </Button>
           </div>
+        </div>
+      </div>
+
+      <div className="mt-6 grid gap-4 rounded-2xl border bg-card p-5 shadow-premium md:grid-cols-[0.8fr_1.2fr]">
+        <div className="flex items-center gap-3"><div className="flex h-12 w-12 items-center justify-center rounded-lg bg-premium text-premium-foreground"><Image className="h-5 w-5" /></div><div><p className="text-sm font-semibold uppercase text-accent">AI visual companion</p><h3 className="text-2xl font-black text-foreground">{visualLabel}</h3></div></div>
+        <div className="relative min-h-36 overflow-hidden rounded-xl border bg-secondary p-5">
+          <div className="absolute inset-0 legal-grid opacity-35" />
+          <Clapperboard className="absolute right-5 top-5 h-10 w-10 animate-float text-accent" />
+          <p className="relative max-w-2xl leading-7 text-muted-foreground">AI javobiga mos rasm/video brief avtomatik yangilanadi: sud zali, advokatlar ofisi, dunyo xaritasi, dalillar paneli va premium cinematic motion kadrlari.</p>
         </div>
       </div>
     </section>

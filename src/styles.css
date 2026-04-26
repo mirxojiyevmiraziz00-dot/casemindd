@@ -199,6 +199,20 @@
     background-size: 52px 52px;
   }
 
+  .cinematic-scan {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cinematic-scan::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 0%, color-mix(in oklab, var(--accent) 18%, transparent) 45%, transparent 62%);
+    animation: shimmer 3.2s linear infinite;
+    pointer-events: none;
+  }
+
   .text-balance {
     text-wrap: balance;
   }

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowRight, BookOpenCheck, Play, Search, X } from "lucide-react";
 
 import { CaseMindShell } from "@/components/CaseMindShell";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ function CaseDatabasePage() {
   const [query, setQuery] = useState("");
   const [country, setCountry] = useState("all");
   const [area, setArea] = useState("all");
+  const [selectedCase, setSelectedCase] = useState<(typeof caseDatabase)[number] | null>(null);
   const filtered = useMemo(() => caseDatabase.filter((item) => {
     const matchesQuery = `${item.title} ${item.summary} ${item.tags.join(" ")}`.toLowerCase().includes(query.toLowerCase());
     return matchesQuery && (country === "all" || item.country === country) && (area === "all" || item.area === area);
@@ -32,8 +33,19 @@ function CaseDatabasePage() {
           <Select value={area} onValueChange={setArea}><SelectTrigger className="bg-background"><SelectValue placeholder="Soha" /></SelectTrigger><SelectContent>{["all", "Jinoyat", "Fuqarolik", "Biznes", "Kiber", "Konstitutsiyaviy"].map((item) => <SelectItem key={item} value={item}>{item === "all" ? "Barcha sohalar" : item}</SelectItem>)}</SelectContent></Select>
         </div>
         <div className="mt-8 grid gap-5 lg:grid-cols-3">
-          {filtered.map((item) => <article key={item.title} className="rounded-2xl border bg-card p-6 shadow-premium transition hover:-translate-y-1"><div className="flex items-center justify-between"><span className="rounded-full bg-secondary px-3 py-1 text-sm text-muted-foreground">{item.country} · {item.area}</span><span className="text-sm font-bold text-accent">{item.risk}</span></div><h2 className="mt-5 text-2xl font-black text-foreground">{item.title}</h2><p className="mt-3 leading-7 text-muted-foreground">{item.summary}</p><div className="mt-5 flex flex-wrap gap-2">{item.tags.map((tag) => <span key={tag} className="rounded-full border px-3 py-1 text-xs text-muted-foreground">#{tag}</span>)}</div><Button className="mt-6" variant="legal" asChild><Link to="/ai-tahlil">O‘xshash vaziyatni topish <ArrowRight className="h-4 w-4" /></Link></Button></article>)}
+          {filtered.map((item) => <article key={item.title} className="group rounded-2xl border bg-card p-6 shadow-premium transition hover:-translate-y-1"><div className="flex items-center justify-between"><span className="rounded-full bg-secondary px-3 py-1 text-sm text-muted-foreground">{item.country} · {item.area}</span><span className="text-sm font-bold text-accent">{item.risk}</span></div><h2 className="mt-5 text-2xl font-black text-foreground">{item.title}</h2><p className="mt-3 leading-7 text-muted-foreground">{item.summary}</p><div className="mt-5 flex flex-wrap gap-2">{item.tags.map((tag) => <span key={tag} className="rounded-full border px-3 py-1 text-xs text-muted-foreground">#{tag}</span>)}</div><div className="mt-6 flex flex-col gap-2 sm:flex-row"><Button variant="premium" onClick={() => setSelectedCase(item)}><BookOpenCheck className="h-4 w-4" /> Tafsilot</Button><Button variant="legal" asChild><Link to="/ai-tahlil">AI bilan solishtirish <ArrowRight className="h-4 w-4" /></Link></Button></div></article>)}
         </div>
+        {selectedCase && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 p-5 backdrop-blur-md" role="dialog" aria-modal="true">
+            <div className="relative max-h-[88vh] w-full max-w-4xl overflow-y-auto rounded-2xl border bg-card p-6 shadow-premium">
+              <Button className="absolute right-4 top-4" variant="legal" size="icon" onClick={() => setSelectedCase(null)} aria-label="Yopish"><X className="h-4 w-4" /></Button>
+              <div className="pr-12"><p className="text-sm font-semibold uppercase text-accent">{selectedCase.country} · {selectedCase.area} · {selectedCase.risk}</p><h2 className="mt-3 text-4xl font-black text-foreground">{selectedCase.title}</h2><p className="mt-4 leading-8 text-muted-foreground">{selectedCase.summary}</p></div>
+              <div className="mt-6 grid gap-4 lg:grid-cols-2"><article className="rounded-xl border bg-background p-5"><h3 className="text-xl font-black text-foreground">Holat</h3><p className="mt-3 leading-7 text-muted-foreground">{selectedCase.facts}</p></article><article className="rounded-xl border bg-background p-5"><h3 className="text-xl font-black text-foreground">Global taqqoslash</h3><p className="mt-3 leading-7 text-muted-foreground">{selectedCase.comparison}</p></article></div>
+              <div className="mt-4 rounded-xl border bg-secondary p-5"><h3 className="text-xl font-black text-foreground">Keyingi qadamlar</h3><div className="mt-3 grid gap-2 md:grid-cols-3">{selectedCase.nextSteps.map((step) => <p key={step} className="rounded-lg border bg-card p-3 text-sm text-muted-foreground">{step}</p>)}</div></div>
+              <div className="mt-4 overflow-hidden rounded-xl border bg-background p-5"><div className="relative min-h-36"><div className="absolute inset-0 legal-grid opacity-30" /><Play className="absolute right-4 top-4 h-9 w-9 animate-float text-accent" /><div className="relative"><p className="text-sm font-semibold uppercase text-accent">Case motion preview</p><h3 className="mt-2 text-2xl font-black text-foreground">Premium video storyboard</h3><p className="mt-2 max-w-2xl text-muted-foreground">Bu case uchun sud zali, dalillar paneli, davlat bayrog‘i va global xarita elementlari bilan cinematic motion sahna.</p></div></div></div>
+            </div>
+          </div>
+        )}
       </section>
     </CaseMindShell>
   );

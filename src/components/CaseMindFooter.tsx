@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Linkedin, Mail, MessageCircle, Twitter } from "lucide-react";
+import { Instagram, Linkedin, Mail, MessageCircle, Send, Twitter } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { countries, legalAreas } from "@/lib/casemind-data";
@@ -14,9 +14,11 @@ export function CaseMindFooter() {
             O‘zbekiston va global huquqiy tajribani birlashtiruvchi AI legal-tech platforma.
           </p>
           <div className="mt-6 flex gap-2">
-            {[Linkedin, Twitter, MessageCircle, Mail].map((Icon, index) => (
-              <Button key={index} variant="legal" size="icon" aria-label="Social link">
-                <Icon className="h-4 w-4" />
+            {[Linkedin, Twitter, Instagram, Send, MessageCircle, Mail].map((Icon, index) => (
+              <Button key={index} variant="legal" size="icon" asChild aria-label="Social link">
+                <Link to={index === 5 ? "/yurist-bilan-boglanish" : "/settings"}>
+                  <Icon className="h-4 w-4" />
+                </Link>
               </Button>
             ))}
           </div>
