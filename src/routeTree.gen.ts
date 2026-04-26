@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PlenumQarorlariRouteImport } from './routes/plenum-qarorlari'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as JinoyatKodeksiRouteImport } from './routes/jinoyat-kodeksi'
+import { Route as AiTahlilRouteImport } from './routes/ai-tahlil'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiAiChatRouteImport } from './routes/api/ai-chat'
 
@@ -30,6 +31,11 @@ const JinoyatKodeksiRoute = JinoyatKodeksiRouteImport.update({
   path: '/jinoyat-kodeksi',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiTahlilRoute = AiTahlilRouteImport.update({
+  id: '/ai-tahlil',
+  path: '/ai-tahlil',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -43,6 +49,7 @@ const ApiAiChatRoute = ApiAiChatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-tahlil': typeof AiTahlilRoute
   '/jinoyat-kodeksi': typeof JinoyatKodeksiRoute
   '/login': typeof LoginRoute
   '/plenum-qarorlari': typeof PlenumQarorlariRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-tahlil': typeof AiTahlilRoute
   '/jinoyat-kodeksi': typeof JinoyatKodeksiRoute
   '/login': typeof LoginRoute
   '/plenum-qarorlari': typeof PlenumQarorlariRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-tahlil': typeof AiTahlilRoute
   '/jinoyat-kodeksi': typeof JinoyatKodeksiRoute
   '/login': typeof LoginRoute
   '/plenum-qarorlari': typeof PlenumQarorlariRoute
@@ -67,15 +76,23 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ai-tahlil'
     | '/jinoyat-kodeksi'
     | '/login'
     | '/plenum-qarorlari'
     | '/api/ai-chat'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/jinoyat-kodeksi' | '/login' | '/plenum-qarorlari' | '/api/ai-chat'
+  to:
+    | '/'
+    | '/ai-tahlil'
+    | '/jinoyat-kodeksi'
+    | '/login'
+    | '/plenum-qarorlari'
+    | '/api/ai-chat'
   id:
     | '__root__'
     | '/'
+    | '/ai-tahlil'
     | '/jinoyat-kodeksi'
     | '/login'
     | '/plenum-qarorlari'
@@ -84,6 +101,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiTahlilRoute: typeof AiTahlilRoute
   JinoyatKodeksiRoute: typeof JinoyatKodeksiRoute
   LoginRoute: typeof LoginRoute
   PlenumQarorlariRoute: typeof PlenumQarorlariRoute
@@ -113,6 +131,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JinoyatKodeksiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-tahlil': {
+      id: '/ai-tahlil'
+      path: '/ai-tahlil'
+      fullPath: '/ai-tahlil'
+      preLoaderRoute: typeof AiTahlilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -132,6 +157,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiTahlilRoute: AiTahlilRoute,
   JinoyatKodeksiRoute: JinoyatKodeksiRoute,
   LoginRoute: LoginRoute,
   PlenumQarorlariRoute: PlenumQarorlariRoute,
