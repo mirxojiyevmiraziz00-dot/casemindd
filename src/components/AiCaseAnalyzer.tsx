@@ -180,7 +180,7 @@ export function AiCaseAnalyzer() {
             {isLoading ? (
               <div className="flex h-80 items-center justify-center text-muted-foreground"><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Tahlil qilinmoqda...</div>
             ) : result ? (
-              <div className="prose prose-invert max-w-none prose-p:my-2 prose-li:my-1 prose-strong:text-foreground">
+              <div className="prose max-w-none prose-p:my-2 prose-li:my-1 prose-strong:text-foreground prose-headings:text-foreground prose-p:text-muted-foreground prose-li:text-muted-foreground">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{result}</ReactMarkdown>
               </div>
             ) : (
