@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 type ChatMessage = {
   role: "user" | "assistant";
   content: string;
+  imageUrl?: string;
 };
 
 const starterMessages: ChatMessage[] = [
@@ -23,6 +24,7 @@ export function AiLegalAssistant() {
   const [messages, setMessages] = useState<ChatMessage[]>(starterMessages);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isVisualLoading, setIsVisualLoading] = useState(false);
   const [error, setError] = useState("");
 
   const sendMessage = async () => {
@@ -48,10 +50,40 @@ export function AiLegalAssistant() {
       }
 
       setMessages((current) => [...current, { role: "assistant", content: data.content }]);
+      void generateVisual(`${question}\n${data.content}`);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Noma’lum xatolik yuz berdi.");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const generateVisual = async (prompt: string) => {
+    setIsVisualLoading(true);
+    try {
+      const response = await fetch("/api/ai-chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ visual: true, messages: [{ role: "user", content: prompt }] }),
+      });
+      const data = await response.json().catch(() => null);
+      if (!response.ok) throw new Error(data?.error || "Visual AI ishlamadi.");
+      if (data?.imageUrl) {
+        setMessages((current) => {
+          const next = [...current];
+          for (let index = next.length - 1; index >= 0; index -= 1) {
+            if (next[index].role === "assistant") {
+              next[index] = { ...next[index], imageUrl: data.imageUrl };
+              break;
+            }
+          }
+          return next;
+        });
+      }
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Visual yaratishda xatolik yuz berdi.");
+    } finally {
+      setIsVisualLoading(false);
     }
   };
 
