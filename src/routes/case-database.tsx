@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, BookOpenCheck, Play, Search, X } from "lucide-react";
+import { ArrowRight, BookOpenCheck, Bot, Image, Loader2, Play, Search, X } from "lucide-react";
 
 import { CaseMindShell } from "@/components/CaseMindShell";
 import { Button } from "@/components/ui/button";
@@ -18,10 +18,23 @@ function CaseDatabasePage() {
   const [country, setCountry] = useState("all");
   const [area, setArea] = useState("all");
   const [selectedCase, setSelectedCase] = useState<(typeof caseDatabase)[number] | null>(null);
+  const [visualUrl, setVisualUrl] = useState("");
+  const [isVisualLoading, setIsVisualLoading] = useState(false);
   const filtered = useMemo(() => caseDatabase.filter((item) => {
     const matchesQuery = `${item.title} ${item.summary} ${item.tags.join(" ")}`.toLowerCase().includes(query.toLowerCase());
     return matchesQuery && (country === "all" || item.country === country) && (area === "all" || item.area === area);
   }), [query, country, area]);
+  const queueAi = (item: (typeof caseDatabase)[number]) => window.localStorage.setItem("casemind-ai-prompt", `${item.title}\n${item.facts}\n${item.comparison}\nKeyingi qadamlar: ${item.nextSteps.join(", ")}`);
+  const openCase = (item: (typeof caseDatabase)[number]) => { setSelectedCase(item); setVisualUrl(""); };
+  const generateCaseVisual = async () => {
+    if (!selectedCase) return;
+    setIsVisualLoading(true);
+    try {
+      const response = await fetch("/api/ai-chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ visual: true, messages: [{ role: "user", content: selectedCase.visualPrompt }] }) });
+      const data = await response.json().catch(() => null);
+      if (data?.imageUrl) setVisualUrl(data.imageUrl);
+    } finally { setIsVisualLoading(false); }
+  };
 
   return (
     <CaseMindShell>
@@ -29,11 +42,11 @@ function CaseDatabasePage() {
       <section className="mx-auto max-w-7xl px-5 py-12 sm:px-8">
         <div className="grid gap-3 rounded-2xl border bg-card p-4 shadow-premium md:grid-cols-[1fr_220px_220px]">
           <div className="relative"><Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" /><Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Case, precedent yoki kalit so‘z..." className="bg-background pl-10" /></div>
-          <Select value={country} onValueChange={setCountry}><SelectTrigger className="bg-background"><SelectValue placeholder="Davlat" /></SelectTrigger><SelectContent>{["all", "USA", "UK", "Germany", "UAE", "Uzbekistan", "EU"].map((item) => <SelectItem key={item} value={item}>{item === "all" ? "Barcha davlatlar" : item}</SelectItem>)}</SelectContent></Select>
-          <Select value={area} onValueChange={setArea}><SelectTrigger className="bg-background"><SelectValue placeholder="Soha" /></SelectTrigger><SelectContent>{["all", "Jinoyat", "Fuqarolik", "Biznes", "Kiber", "Konstitutsiyaviy"].map((item) => <SelectItem key={item} value={item}>{item === "all" ? "Barcha sohalar" : item}</SelectItem>)}</SelectContent></Select>
+          <Select value={country} onValueChange={setCountry}><SelectTrigger className="bg-background"><SelectValue placeholder="Davlat" /></SelectTrigger><SelectContent>{["all", "USA", "UK", "Germany", "France", "UAE", "Turkey", "Japan", "South Korea", "Uzbekistan", "EU", "International"].map((item) => <SelectItem key={item} value={item}>{item === "all" ? "Barcha davlatlar" : item}</SelectItem>)}</SelectContent></Select>
+          <Select value={area} onValueChange={setArea}><SelectTrigger className="bg-background"><SelectValue placeholder="Soha" /></SelectTrigger><SelectContent>{["all", "Jinoyat", "Fuqarolik", "Biznes", "Kiber", "Konstitutsiyaviy", "Mehnat"].map((item) => <SelectItem key={item} value={item}>{item === "all" ? "Barcha sohalar" : item}</SelectItem>)}</SelectContent></Select>
         </div>
         <div className="mt-8 grid gap-5 lg:grid-cols-3">
-          {filtered.map((item) => <article key={item.title} className="group rounded-2xl border bg-card p-6 shadow-premium transition hover:-translate-y-1"><div className="flex items-center justify-between"><span className="rounded-full bg-secondary px-3 py-1 text-sm text-muted-foreground">{item.country} · {item.area}</span><span className="text-sm font-bold text-accent">{item.risk}</span></div><h2 className="mt-5 text-2xl font-black text-foreground">{item.title}</h2><p className="mt-3 leading-7 text-muted-foreground">{item.summary}</p><div className="mt-5 flex flex-wrap gap-2">{item.tags.map((tag) => <span key={tag} className="rounded-full border px-3 py-1 text-xs text-muted-foreground">#{tag}</span>)}</div><div className="mt-6 flex flex-col gap-2 sm:flex-row"><Button variant="premium" onClick={() => setSelectedCase(item)}><BookOpenCheck className="h-4 w-4" /> Tafsilot</Button><Button variant="legal" asChild><Link to="/ai-tahlil">AI bilan solishtirish <ArrowRight className="h-4 w-4" /></Link></Button></div></article>)}
+          {filtered.map((item) => <article key={item.title} className="group cinematic-scan rounded-2xl border bg-card p-6 shadow-premium transition hover:-translate-y-1"><div className="flex items-center justify-between"><span className="rounded-full bg-secondary px-3 py-1 text-sm text-muted-foreground">{item.country} · {item.area}</span><span className="text-sm font-bold text-accent">{item.risk}</span></div><h2 className="mt-5 text-2xl font-black text-foreground">{item.title}</h2><p className="mt-3 leading-7 text-muted-foreground">{item.summary}</p><p className="mt-3 text-xs text-accent">Manba: {item.source}</p><div className="mt-5 flex flex-wrap gap-2">{item.tags.map((tag) => <span key={tag} className="rounded-full border px-3 py-1 text-xs text-muted-foreground">#{tag}</span>)}</div><div className="mt-6 flex flex-col gap-2 sm:flex-row"><Button variant="premium" onClick={() => openCase(item)}><BookOpenCheck className="h-4 w-4" /> Tafsilot</Button><Button variant="legal" asChild onClick={() => queueAi(item)}><Link to="/ai-tahlil"><Bot className="h-4 w-4" /> AI tahlil <ArrowRight className="h-4 w-4" /></Link></Button></div></article>)}
         </div>
         {selectedCase && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 p-5 backdrop-blur-md" role="dialog" aria-modal="true">
