@@ -56,7 +56,21 @@ export const countries = [
   { slug: "international", name: "Xalqaro huquq", region: "Treaties / arbitration", flag: "🌐", laws: "Treaties, conventions, model laws", courts: "ICJ, ICC, arbitration tribunals", precedents: "Barcelona Traction, Nicaragua, investment awards", culture: "Davlatlararo va transchegaraviy tahlil", resolution: "Diplomatic, arbitration, treaty claim" },
 ];
 
-export const caseDatabase = [
+export type CaseRecord = {
+  title: string;
+  country: string;
+  area: string;
+  risk: string;
+  summary: string;
+  facts: string;
+  comparison: string;
+  nextSteps: string[];
+  tags: string[];
+  source: string;
+  visualPrompt: string;
+};
+
+export const caseDatabase: CaseRecord[] = [
   {
     title: "Miranda v. Arizona",
     country: "USA",
@@ -67,6 +81,8 @@ export const caseDatabase = [
     comparison: "O‘zbekistonda ham himoya huquqi, advokat ishtiroki va dalilning qonuniyligi muhim; AQSHda warning berilmasa, ko‘rsatma chiqarib tashlanishi mumkin.",
     nextSteps: ["So‘roq bayonnomasini tekshirish", "Advokat ishtiroki bo‘lgan-bo‘lmaganini aniqlash", "Dalilni maqbul emas deb topish masalasini ko‘tarish"],
     tags: ["due process", "police", "rights"],
+    source: "U.S. Supreme Court landmark precedent",
+    visualPrompt: "cinematic interrogation room, legal rights card, courthouse silhouette, premium global justice style",
   },
   {
     title: "Donoghue v Stevenson",
@@ -78,6 +94,8 @@ export const caseDatabase = [
     comparison: "Fuqarolik huquqida zarar, sababiy bog‘liqlik va ayb tahlil qilinadi; common law tizimida duty of care asosiy testga aylangan.",
     nextSteps: ["Zararni hujjatlashtirish", "Ekspertiza va cheklarni saqlash", "Da’vo yoki settlement yo‘lini tanlash"],
     tags: ["negligence", "tort", "duty"],
+    source: "UK House of Lords tort law precedent",
+    visualPrompt: "premium product liability courtroom, evidence table, consumer protection documents, London legal atmosphere",
   },
   {
     title: "Lüth Case",
@@ -89,6 +107,8 @@ export const caseDatabase = [
     comparison: "Germaniyada konstitutsiyaviy qadriyatlar xususiy huquqqa ham ta’sir qiladi; O‘zbekistonda ham sha’n, qadr-qimmat va so‘z erkinligi muvozanatlanadi.",
     nextSteps: ["Huquqiy manfaatlarni ajratish", "Cheklov mutanosibligini baholash", "Konstitutsiyaviy kafolatlarni ko‘rsatish"],
     tags: ["rights", "speech", "constitution"],
+    source: "German Federal Constitutional Court doctrine",
+    visualPrompt: "German constitutional court chamber, freedom of expression documents, balanced scales, cinematic silver lighting",
   },
   {
     title: "DIFC Commercial Injunction",
