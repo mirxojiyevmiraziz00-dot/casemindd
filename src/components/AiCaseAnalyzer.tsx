@@ -1,5 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
-import { Clapperboard, FileAudio, FileDown, FileUp, Image, Loader2, Mic, Send, ShieldAlert, Sparkles } from "lucide-react";
+import {
+  Clapperboard,
+  FileAudio,
+  FileDown,
+  FileUp,
+  Image,
+  Loader2,
+  Mic,
+  Send,
+  ShieldAlert,
+  Sparkles,
+} from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -42,15 +53,38 @@ export function AiCaseAnalyzer() {
 
   const detectedArea = useMemo(() => {
     const text = situation.toLowerCase();
-    return legalAreas.find((area) => text.includes(area.slug) || text.includes(area.title.toLowerCase().split(" ")[0]))?.title ?? "AI aniqlaydi";
+    return (
+      legalAreas.find(
+        (area) => text.includes(area.slug) || text.includes(area.title.toLowerCase().split(" ")[0]),
+      )?.title ?? "AI aniqlaydi"
+    );
   }, [situation]);
 
   const visualScene = useMemo(() => {
     const text = `${situation} ${result}`.toLowerCase();
-    if (text.includes("jinoyat") || text.includes("police") || text.includes("crime")) return { title: "Jinoyat protsessi sahnasi", tone: "Tergov xonasi, dalillar paneli va sud zali kadrlari", icon: ShieldAlert };
-    if (text.includes("biznes") || text.includes("contract") || text.includes("shartnoma")) return { title: "Biznes nizosi vizuali", tone: "Shartnoma, investor meeting va arbitration table atmosferasi", icon: Clapperboard };
-    if (text.includes("kiber") || text.includes("data") || text.includes("fraud")) return { title: "Kiber dalillar xaritasi", tone: "Raqamli izlar, bank tranzaksiyalari va data protection dashboard", icon: Image };
-    return { title: "Global justice video brief", tone: "Dunyo xaritasi, advokatlar ofisi va sud tarozisi bilan premium motion sahna", icon: Clapperboard };
+    if (text.includes("jinoyat") || text.includes("police") || text.includes("crime"))
+      return {
+        title: "Jinoyat protsessi sahnasi",
+        tone: "Tergov xonasi, dalillar paneli va sud zali kadrlari",
+        icon: ShieldAlert,
+      };
+    if (text.includes("biznes") || text.includes("contract") || text.includes("shartnoma"))
+      return {
+        title: "Biznes nizosi vizuali",
+        tone: "Shartnoma, investor meeting va arbitration table atmosferasi",
+        icon: Clapperboard,
+      };
+    if (text.includes("kiber") || text.includes("data") || text.includes("fraud"))
+      return {
+        title: "Kiber dalillar xaritasi",
+        tone: "Raqamli izlar, bank tranzaksiyalari va data protection dashboard",
+        icon: Image,
+      };
+    return {
+      title: "Global justice video brief",
+      tone: "Dunyo xaritasi, advokatlar ofisi va sud tarozisi bilan premium motion sahna",
+      icon: Clapperboard,
+    };
   }, [result, situation]);
 
   const analyze = async () => {
@@ -139,30 +173,52 @@ export function AiCaseAnalyzer() {
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
               <Label className="rounded-xl border bg-background p-4">
-                <span className="mb-3 flex items-center gap-2 font-semibold"><FileUp className="h-4 w-4 text-accent" /> Fayl yuklash</span>
+                <span className="mb-3 flex items-center gap-2 font-semibold">
+                  <FileUp className="h-4 w-4 text-accent" /> Fayl yuklash
+                </span>
                 <Input
                   type="file"
                   accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.webp"
                   className="bg-card"
                   onChange={(event) => setFileName(event.target.files?.[0]?.name ?? "")}
                 />
-                {fileName && <span className="mt-2 block text-xs text-muted-foreground">{fileName}</span>}
+                {fileName && (
+                  <span className="mt-2 block text-xs text-muted-foreground">{fileName}</span>
+                )}
               </Label>
               <button
                 type="button"
                 onClick={() => setVoiceNote((value) => !value)}
                 className="rounded-xl border bg-background p-4 text-left transition hover:bg-secondary"
               >
-                <span className="mb-3 flex items-center gap-2 font-semibold"><Mic className="h-4 w-4 text-accent" /> Ovoz yuborish</span>
-                <span className="text-sm text-muted-foreground">{voiceNote ? "Ovozli izoh biriktirildi" : "Demo ovoz yozishni yoqish"}</span>
+                <span className="mb-3 flex items-center gap-2 font-semibold">
+                  <Mic className="h-4 w-4 text-accent" /> Ovoz yuborish
+                </span>
+                <span className="text-sm text-muted-foreground">
+                  {voiceNote ? "Ovozli izoh biriktirildi" : "Demo ovoz yozishni yoqish"}
+                </span>
               </button>
             </div>
             <div className="rounded-xl border bg-secondary p-4 text-sm text-muted-foreground">
               Taxminiy soha: <span className="font-semibold text-foreground">{detectedArea}</span>
             </div>
-            {error && <p className="rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-sm text-foreground">{error}</p>}
-            <Button variant="premium" size="lg" className="w-full" onClick={() => void analyze()} disabled={isLoading}>
-              {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+            {error && (
+              <p className="rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-sm text-foreground">
+                {error}
+              </p>
+            )}
+            <Button
+              variant="premium"
+              size="lg"
+              className="w-full"
+              onClick={() => void analyze()}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Send className="h-4 w-4" />
+              )}
               Tahlil qilish
             </Button>
           </div>
@@ -178,7 +234,9 @@ export function AiCaseAnalyzer() {
           </div>
           <div className="min-h-96 rounded-xl border bg-background p-5 leading-7">
             {isLoading ? (
-              <div className="flex h-80 items-center justify-center text-muted-foreground"><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Tahlil qilinmoqda...</div>
+              <div className="flex h-80 items-center justify-center text-muted-foreground">
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Tahlil qilinmoqda...
+              </div>
             ) : result ? (
               <div className="prose max-w-none prose-p:my-2 prose-li:my-1 prose-strong:text-foreground prose-headings:text-foreground prose-p:text-muted-foreground prose-li:text-muted-foreground">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{result}</ReactMarkdown>
@@ -204,15 +262,43 @@ export function AiCaseAnalyzer() {
                 <div className="absolute inset-0 legal-grid opacity-30" />
                 <div className="absolute left-8 top-8 h-24 w-24 rounded-full border border-accent/40 animate-float" />
                 <div className="absolute bottom-8 right-8 h-32 w-32 rounded-full border border-legal-emerald/35 animate-pulse" />
-                {visualUrl && <img src={visualUrl} alt="AI yaratgan huquqiy vaziyat rasmi" className="absolute inset-0 h-full w-full object-cover opacity-70" loading="lazy" />}
+                {visualUrl && (
+                  <img
+                    src={visualUrl}
+                    alt="AI yaratgan huquqiy vaziyat rasmi"
+                    className="absolute inset-0 h-full w-full object-cover opacity-70"
+                    loading="lazy"
+                  />
+                )}
                 <div className="relative flex h-full min-h-48 flex-col justify-between bg-background/35 p-4 backdrop-blur-sm">
                   <div className="inline-flex w-fit items-center gap-2 rounded-full border bg-card/80 px-3 py-2 text-xs font-semibold uppercase text-accent backdrop-blur">
-                    <visualScene.icon className="h-4 w-4" /> {isVisualLoading ? "Visual AI tayyorlayapti" : "AI visual output"}
+                    <visualScene.icon className="h-4 w-4" />{" "}
+                    {isVisualLoading ? "Visual AI tayyorlayapti" : "AI visual output"}
                   </div>
                   <div>
                     <h4 className="text-2xl font-black text-foreground">{visualScene.title}</h4>
-                    <p className="mt-2 max-w-xl leading-7 text-muted-foreground">{visualScene.tone}</p>
-                    <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-accent"><span className="h-2 w-2 rounded-full bg-accent" /> {visualUrl ? "Rasm AI tomonidan yaratildi" : "Rasm/video creative brief tayyor"}<Button variant="legal" size="sm" onClick={() => void generateVisual()} disabled={isVisualLoading}>{isVisualLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Image className="h-4 w-4" />} Qayta yaratish</Button></div>
+                    <p className="mt-2 max-w-xl leading-7 text-muted-foreground">
+                      {visualScene.tone}
+                    </p>
+                    <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-accent">
+                      <span className="h-2 w-2 rounded-full bg-accent" />{" "}
+                      {visualUrl
+                        ? "Rasm AI tomonidan yaratildi"
+                        : "Rasm/video creative brief tayyor"}
+                      <Button
+                        variant="legal"
+                        size="sm"
+                        onClick={() => void generateVisual()}
+                        disabled={isVisualLoading}
+                      >
+                        {isVisualLoading ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <Image className="h-4 w-4" />
+                        )}{" "}
+                        Qayta yaratish
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
