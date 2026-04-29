@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Clapperboard, FileAudio, FileDown, FileUp, Image, Loader2, Mic, Send, ShieldAlert, Sparkles } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -31,6 +31,14 @@ export function AiCaseAnalyzer() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isVisualLoading, setIsVisualLoading] = useState(false);
+
+  useEffect(() => {
+    const queued = window.localStorage.getItem("casemind-ai-prompt");
+    if (queued) {
+      setSituation(queued);
+      window.localStorage.removeItem("casemind-ai-prompt");
+    }
+  }, []);
 
   const detectedArea = useMemo(() => {
     const text = situation.toLowerCase();
