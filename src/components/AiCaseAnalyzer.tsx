@@ -27,8 +27,10 @@ export function AiCaseAnalyzer() {
   const [fileName, setFileName] = useState("");
   const [voiceNote, setVoiceNote] = useState(false);
   const [result, setResult] = useState("");
+  const [visualUrl, setVisualUrl] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isVisualLoading, setIsVisualLoading] = useState(false);
 
   const detectedArea = useMemo(() => {
     const text = situation.toLowerCase();
@@ -52,6 +54,7 @@ export function AiCaseAnalyzer() {
     setIsLoading(true);
     setError("");
     setResult("");
+    setVisualUrl("");
 
     try {
       const prompt = `${analysisTemplate}\n\nVaziyat: ${situation || "Foydalanuvchi fayl/ovoz yubordi."}\nFayl: ${fileName || "yo‘q"}\nOvoz: ${voiceNote ? "bor" : "yo‘q"}`;
@@ -63,10 +66,30 @@ export function AiCaseAnalyzer() {
       const data = await response.json().catch(() => null);
       if (!response.ok) throw new Error(data?.error || "AI tahlil amalga oshmadi.");
       setResult(data.content);
+      await generateVisual(`${situation}\n${data.content}`);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Noma’lum xatolik yuz berdi.");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const generateVisual = async (promptText = `${situation}\n${result}`) => {
+    if (!promptText.trim()) return;
+    setIsVisualLoading(true);
+    try {
+      const response = await fetch("/api/ai-chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ visual: true, messages: [{ role: "user", content: promptText }] }),
+      });
+      const data = await response.json().catch(() => null);
+      if (!response.ok) throw new Error(data?.error || "Visual AI ishlamadi.");
+      setVisualUrl(data.imageUrl || "");
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Visual yaratishda xatolik yuz berdi.");
+    } finally {
+      setIsVisualLoading(false);
     }
   };
 
@@ -167,20 +190,21 @@ export function AiCaseAnalyzer() {
               <a href="/case-database">O‘xshash case topish</a>
             </Button>
           </div>
-          {result && (
+          {(result || isVisualLoading) && (
             <div className="mt-5 overflow-hidden rounded-2xl border bg-secondary shadow-premium">
               <div className="relative min-h-56 p-5">
                 <div className="absolute inset-0 legal-grid opacity-30" />
                 <div className="absolute left-8 top-8 h-24 w-24 rounded-full border border-accent/40 animate-float" />
                 <div className="absolute bottom-8 right-8 h-32 w-32 rounded-full border border-legal-emerald/35 animate-pulse" />
-                <div className="relative flex h-full min-h-48 flex-col justify-between">
+                {visualUrl && <img src={visualUrl} alt="AI yaratgan huquqiy vaziyat rasmi" className="absolute inset-0 h-full w-full object-cover opacity-70" loading="lazy" />}
+                <div className="relative flex h-full min-h-48 flex-col justify-between bg-background/35 p-4 backdrop-blur-sm">
                   <div className="inline-flex w-fit items-center gap-2 rounded-full border bg-card/80 px-3 py-2 text-xs font-semibold uppercase text-accent backdrop-blur">
-                    <visualScene.icon className="h-4 w-4" /> AI visual output
+                    <visualScene.icon className="h-4 w-4" /> {isVisualLoading ? "Visual AI tayyorlayapti" : "AI visual output"}
                   </div>
                   <div>
                     <h4 className="text-2xl font-black text-foreground">{visualScene.title}</h4>
                     <p className="mt-2 max-w-xl leading-7 text-muted-foreground">{visualScene.tone}</p>
-                    <div className="mt-4 flex items-center gap-3 text-sm text-accent"><span className="h-2 w-2 rounded-full bg-accent" /> Rasm/video uchun avtomatik creative brief tayyor</div>
+                    <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-accent"><span className="h-2 w-2 rounded-full bg-accent" /> {visualUrl ? "Rasm AI tomonidan yaratildi" : "Rasm/video creative brief tayyor"}<Button variant="legal" size="sm" onClick={() => void generateVisual()} disabled={isVisualLoading}>{isVisualLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Image className="h-4 w-4" />} Qayta yaratish</Button></div>
                   </div>
                 </div>
               </div>
