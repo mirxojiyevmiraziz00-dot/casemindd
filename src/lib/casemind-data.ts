@@ -120,6 +120,8 @@ export const caseDatabase: CaseRecord[] = [
     comparison: "BAAda DIFC/ADGM kabi zonalarda common law uslubi kuchli; O‘zbekistonda iqtisodiy sud orqali ta’minlash chorasi so‘raladi.",
     nextSteps: ["Shartnoma va yurisdiksiya bandini tekshirish", "Aktivlar bo‘yicha dalil yig‘ish", "Arbitraj yoki sud strategiyasini tanlash"],
     tags: ["injunction", "commercial", "arbitration"],
+    source: "DIFC/ADGM commercial court practice",
+    visualPrompt: "Dubai financial district arbitration room, frozen assets dashboard, premium legal-tech motion scene",
   },
   {
     title: "Oliy sud Plenum — dalillar",
@@ -131,6 +133,8 @@ export const caseDatabase: CaseRecord[] = [
     comparison: "Ko‘plab davlatlarda noqonuniy dalil exclusionary rule yoki maqbullik testi orqali cheklanadi.",
     nextSteps: ["Dalil manbasini aniqlash", "Protsessual buzilishlarni yozib chiqish", "Sudga iltimosnoma tayyorlash"],
     tags: ["dalil", "sud", "plenum"],
+    source: "O‘zbekiston Oliy sudi Plenum amaliyoti",
+    visualPrompt: "Uzbek courtroom evidence board, procedural code pages, judge bench, cinematic blue silver lighting",
   },
   {
     title: "EU GDPR enforcement",
@@ -142,6 +146,8 @@ export const caseDatabase: CaseRecord[] = [
     comparison: "EUda jarimalar yuqori; O‘zbekistonda ham shaxsga doir ma’lumotlar bo‘yicha rozilik, maqsad va xavfsizlik talablari bor.",
     nextSteps: ["Privacy policy va consent loglarni tekshirish", "Data breach timeline tuzish", "Regulyatorga javob strategiyasini tayyorlash"],
     tags: ["privacy", "GDPR", "data"],
+    source: "European Data Protection Board and GDPR enforcement practice",
+    visualPrompt: "European data privacy command center, encrypted user records, regulatory dashboard, cinematic interface",
   },
   {
     title: "Ish haqi kechiktirilishi — employee claim",
@@ -153,6 +159,8 @@ export const caseDatabase: CaseRecord[] = [
     comparison: "UK va EUda wage claim tribunal/inspeksiya orqali yuradi; O‘zbekistonda mehnat organlari va sudga murojaat qilinadi.",
     nextSteps: ["Mehnat shartnomasi va tabelni yig‘ish", "Ish beruvchiga yozma talab yuborish", "Inspeksiya yoki sudga ariza tayyorlash"],
     tags: ["mehnat", "ish haqi", "employee"],
+    source: "O‘zbekiston mehnat nizolari va xalqaro tribunal amaliyoti",
+    visualPrompt: "worker wage claim documents, office payroll screen, labor inspection desk, premium legal illustration",
   },
   {
     title: "Online firibgarlik va karta tranzaksiyasi",
@@ -164,6 +172,8 @@ export const caseDatabase: CaseRecord[] = [
     comparison: "AQSH va EUda chargeback, fraud report va data breach protseduralari bor; O‘zbekistonda bankka hamda tergov organiga murojaat qilinadi.",
     nextSteps: ["Kartani bloklash", "Bankka chargeback/fraud ariza berish", "Skrinshot, SMS va tranzaksiya IDlarni saqlash"],
     tags: ["fraud", "bank", "cyber"],
+    source: "FBI IC3, Europol cybercrime and banking dispute practice",
+    visualPrompt: "cyber fraud transaction trail, bank card alert, digital forensics map, dark premium command center",
   },
   {
     title: "Startup investment term sheet dispute",
@@ -175,6 +185,8 @@ export const caseDatabase: CaseRecord[] = [
     comparison: "AQSHda Delaware practice va venture norms muhim; O‘zbekistonda shartnoma, korporativ hujjatlar va investitsiya shartlari asos bo‘ladi.",
     nextSteps: ["Term sheet bandlarini risk bo‘yicha belgilash", "Cap table ta’sirini hisoblash", "Yurisdiksiya va arbitration bandini tekshirish"],
     tags: ["startup", "investment", "contract"],
+    source: "Delaware corporate and venture financing practice",
+    visualPrompt: "startup boardroom, cap table hologram, investor contract negotiation, silver blue cinematic lights",
   },
 ];
 
