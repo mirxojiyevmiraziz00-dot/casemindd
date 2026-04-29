@@ -56,7 +56,21 @@ export const countries = [
   { slug: "international", name: "Xalqaro huquq", region: "Treaties / arbitration", flag: "🌐", laws: "Treaties, conventions, model laws", courts: "ICJ, ICC, arbitration tribunals", precedents: "Barcelona Traction, Nicaragua, investment awards", culture: "Davlatlararo va transchegaraviy tahlil", resolution: "Diplomatic, arbitration, treaty claim" },
 ];
 
-export const caseDatabase = [
+export type CaseRecord = {
+  title: string;
+  country: string;
+  area: string;
+  risk: string;
+  summary: string;
+  facts: string;
+  comparison: string;
+  nextSteps: string[];
+  tags: string[];
+  source: string;
+  visualPrompt: string;
+};
+
+export const caseDatabase: CaseRecord[] = [
   {
     title: "Miranda v. Arizona",
     country: "USA",
@@ -67,6 +81,8 @@ export const caseDatabase = [
     comparison: "O‘zbekistonda ham himoya huquqi, advokat ishtiroki va dalilning qonuniyligi muhim; AQSHda warning berilmasa, ko‘rsatma chiqarib tashlanishi mumkin.",
     nextSteps: ["So‘roq bayonnomasini tekshirish", "Advokat ishtiroki bo‘lgan-bo‘lmaganini aniqlash", "Dalilni maqbul emas deb topish masalasini ko‘tarish"],
     tags: ["due process", "police", "rights"],
+    source: "U.S. Supreme Court landmark precedent",
+    visualPrompt: "cinematic interrogation room, legal rights card, courthouse silhouette, premium global justice style",
   },
   {
     title: "Donoghue v Stevenson",
@@ -78,6 +94,8 @@ export const caseDatabase = [
     comparison: "Fuqarolik huquqida zarar, sababiy bog‘liqlik va ayb tahlil qilinadi; common law tizimida duty of care asosiy testga aylangan.",
     nextSteps: ["Zararni hujjatlashtirish", "Ekspertiza va cheklarni saqlash", "Da’vo yoki settlement yo‘lini tanlash"],
     tags: ["negligence", "tort", "duty"],
+    source: "UK House of Lords tort law precedent",
+    visualPrompt: "premium product liability courtroom, evidence table, consumer protection documents, London legal atmosphere",
   },
   {
     title: "Lüth Case",
@@ -89,6 +107,8 @@ export const caseDatabase = [
     comparison: "Germaniyada konstitutsiyaviy qadriyatlar xususiy huquqqa ham ta’sir qiladi; O‘zbekistonda ham sha’n, qadr-qimmat va so‘z erkinligi muvozanatlanadi.",
     nextSteps: ["Huquqiy manfaatlarni ajratish", "Cheklov mutanosibligini baholash", "Konstitutsiyaviy kafolatlarni ko‘rsatish"],
     tags: ["rights", "speech", "constitution"],
+    source: "German Federal Constitutional Court doctrine",
+    visualPrompt: "German constitutional court chamber, freedom of expression documents, balanced scales, cinematic silver lighting",
   },
   {
     title: "DIFC Commercial Injunction",
@@ -100,6 +120,8 @@ export const caseDatabase = [
     comparison: "BAAda DIFC/ADGM kabi zonalarda common law uslubi kuchli; O‘zbekistonda iqtisodiy sud orqali ta’minlash chorasi so‘raladi.",
     nextSteps: ["Shartnoma va yurisdiksiya bandini tekshirish", "Aktivlar bo‘yicha dalil yig‘ish", "Arbitraj yoki sud strategiyasini tanlash"],
     tags: ["injunction", "commercial", "arbitration"],
+    source: "DIFC/ADGM commercial court practice",
+    visualPrompt: "Dubai financial district arbitration room, frozen assets dashboard, premium legal-tech motion scene",
   },
   {
     title: "Oliy sud Plenum — dalillar",
@@ -111,6 +133,8 @@ export const caseDatabase = [
     comparison: "Ko‘plab davlatlarda noqonuniy dalil exclusionary rule yoki maqbullik testi orqali cheklanadi.",
     nextSteps: ["Dalil manbasini aniqlash", "Protsessual buzilishlarni yozib chiqish", "Sudga iltimosnoma tayyorlash"],
     tags: ["dalil", "sud", "plenum"],
+    source: "O‘zbekiston Oliy sudi Plenum amaliyoti",
+    visualPrompt: "Uzbek courtroom evidence board, procedural code pages, judge bench, cinematic blue silver lighting",
   },
   {
     title: "EU GDPR enforcement",
@@ -122,6 +146,8 @@ export const caseDatabase = [
     comparison: "EUda jarimalar yuqori; O‘zbekistonda ham shaxsga doir ma’lumotlar bo‘yicha rozilik, maqsad va xavfsizlik talablari bor.",
     nextSteps: ["Privacy policy va consent loglarni tekshirish", "Data breach timeline tuzish", "Regulyatorga javob strategiyasini tayyorlash"],
     tags: ["privacy", "GDPR", "data"],
+    source: "European Data Protection Board and GDPR enforcement practice",
+    visualPrompt: "European data privacy command center, encrypted user records, regulatory dashboard, cinematic interface",
   },
   {
     title: "Ish haqi kechiktirilishi — employee claim",
@@ -133,6 +159,8 @@ export const caseDatabase = [
     comparison: "UK va EUda wage claim tribunal/inspeksiya orqali yuradi; O‘zbekistonda mehnat organlari va sudga murojaat qilinadi.",
     nextSteps: ["Mehnat shartnomasi va tabelni yig‘ish", "Ish beruvchiga yozma talab yuborish", "Inspeksiya yoki sudga ariza tayyorlash"],
     tags: ["mehnat", "ish haqi", "employee"],
+    source: "O‘zbekiston mehnat nizolari va xalqaro tribunal amaliyoti",
+    visualPrompt: "worker wage claim documents, office payroll screen, labor inspection desk, premium legal illustration",
   },
   {
     title: "Online firibgarlik va karta tranzaksiyasi",
@@ -144,6 +172,8 @@ export const caseDatabase = [
     comparison: "AQSH va EUda chargeback, fraud report va data breach protseduralari bor; O‘zbekistonda bankka hamda tergov organiga murojaat qilinadi.",
     nextSteps: ["Kartani bloklash", "Bankka chargeback/fraud ariza berish", "Skrinshot, SMS va tranzaksiya IDlarni saqlash"],
     tags: ["fraud", "bank", "cyber"],
+    source: "FBI IC3, Europol cybercrime and banking dispute practice",
+    visualPrompt: "cyber fraud transaction trail, bank card alert, digital forensics map, dark premium command center",
   },
   {
     title: "Startup investment term sheet dispute",
@@ -155,8 +185,120 @@ export const caseDatabase = [
     comparison: "AQSHda Delaware practice va venture norms muhim; O‘zbekistonda shartnoma, korporativ hujjatlar va investitsiya shartlari asos bo‘ladi.",
     nextSteps: ["Term sheet bandlarini risk bo‘yicha belgilash", "Cap table ta’sirini hisoblash", "Yurisdiksiya va arbitration bandini tekshirish"],
     tags: ["startup", "investment", "contract"],
+    source: "Delaware corporate and venture financing practice",
+    visualPrompt: "startup boardroom, cap table hologram, investor contract negotiation, silver blue cinematic lights",
+  },
+  {
+    title: "Brown v. Board of Education",
+    country: "USA",
+    area: "Konstitutsiyaviy",
+    risk: "Yuqori",
+    summary: "Teng himoya prinsipi va diskriminatsiyani taqiqlash bo‘yicha landmark precedent.",
+    facts: "Maktab segregatsiyasi Konstitutsiyadagi equal protection talablariga zid deb topilgan.",
+    comparison: "AQSHda fundamental rights strict scrutiny bilan ko‘riladi; O‘zbekistonda kamsitmaslik va ta’lim huquqi konstitutsiyaviy kafolatlar orqali baholanadi.",
+    nextSteps: ["Diskriminatsiya faktlarini yig‘ish", "Davlat organi qarorini tekshirish", "Konstitutsiyaviy va ma’muriy himoya yo‘lini tanlash"],
+    tags: ["equality", "education", "constitution"],
+    source: "United States Courts landmark case materials",
+    visualPrompt: "constitutional equality courtroom, school documents, diverse citizens, premium justice light beams",
+  },
+  {
+    title: "Miller prorogation case",
+    country: "UK",
+    area: "Konstitutsiyaviy",
+    risk: "Yuqori",
+    summary: "Parlament suvereniteti va ijro hokimiyati vakolatlari chegarasi bo‘yicha UK Supreme Court ishi.",
+    facts: "Hukumat parlament ishini to‘xtatish vakolatidan foydalanganda sud konstitutsiyaviy nazorat o‘tkazgan.",
+    comparison: "UKda unwritten constitution va judicial review muhim; O‘zbekistonda davlat organlari vakolatlari qonuniylik va konstitutsiyaviylik mezoni bilan tekshiriladi.",
+    nextSteps: ["Vakolat manbasini aniqlash", "Qarorning oqibatini tahlil qilish", "Sudga shikoyat yoki parlament nazorati yo‘lini baholash"],
+    tags: ["parliament", "judicial review", "power"],
+    source: "UK Supreme Court public judgment summaries",
+    visualPrompt: "Westminster constitutional hearing, parliament lights, supreme court bench, cinematic blue silver scene",
+  },
+  {
+    title: "Deutsche Wohnen GDPR fine",
+    country: "EU",
+    area: "Kiber",
+    risk: "Yuqori",
+    summary: "GDPR jarimalarida kompaniya javobgarligi va data controller majburiyatlari bo‘yicha CJEU yondashuvi.",
+    facts: "Kompaniya shaxsiy ma’lumotlarni saqlash, o‘chirish va compliance nazorati bo‘yicha tekshiruvga tushgan.",
+    comparison: "EUda data minimization va accountability qat’iy; O‘zbekistonda ham shaxsga doir ma’lumotlar rozilik, maqsad va xavfsizlik bilan himoyalanadi.",
+    nextSteps: ["Data inventory tuzish", "Consent va retention siyosatini tekshirish", "Regulyator javobi va tuzatish rejasini tayyorlash"],
+    tags: ["GDPR", "controller", "fine"],
+    source: "CJEU C-807/21 Deutsche Wohnen judgment summary",
+    visualPrompt: "European privacy regulator room, data vault hologram, compliance risk meters, premium cinematic UI",
+  },
+  {
+    title: "Turkey Constitutional Court individual application",
+    country: "Turkey",
+    area: "Konstitutsiyaviy",
+    risk: "O‘rta",
+    summary: "Shaxsiy ariza orqali asosiy huquqlar buzilishini konstitutsiyaviy sudda ko‘rib chiqish modeli.",
+    facts: "Fuqarolik yoki jinoyat ishida yakuniy qarordan keyin shaxs huquqi buzilganini ko‘rsatadi.",
+    comparison: "Turkiyada individual application mexanizmi kuchli; O‘zbekistonda shikoyat, nazorat, ombudsman va konstitutsiyaviy himoya yo‘llari alohida baholanadi.",
+    nextSteps: ["Ichki himoya vositalari tugaganini tekshirish", "Buzilgan huquqni aniq ko‘rsatish", "Muddat va dalillarni tizimlash"],
+    tags: ["rights", "appeal", "constitutional"],
+    source: "Turkey Constitutional Court individual application practice",
+    visualPrompt: "Ankara constitutional court facade, rights petition documents, judge chamber, premium motion glow",
+  },
+  {
+    title: "France Jand’heur liability doctrine",
+    country: "France",
+    area: "Fuqarolik",
+    risk: "O‘rta",
+    summary: "Narsa nazorati ostidagi zarar uchun javobgarlik doktrinasi fuqarolik javobgarligini kengaytirgan.",
+    facts: "Transport yoki xavfli predmet sabab zarar kelganda ayb va nazorat masalasi muhokama qilingan.",
+    comparison: "Fransiyada civil code asosidagi strict liability rivojlangan; O‘zbekistonda zarar, xavf manbai va sababiy bog‘liqlik asosiy elementlar.",
+    nextSteps: ["Zarar manbasini aniqlash", "Egasi/nazoratchisini belgilash", "Tibbiy va moddiy zarar dalillarini jamlash"],
+    tags: ["liability", "civil", "damage"],
+    source: "French civil liability landmark doctrine",
+    visualPrompt: "Paris civil court, accident evidence folder, liability diagram, elegant legal-tech cinematic mood",
+  },
+  {
+    title: "Japan product safety recall dispute",
+    country: "Japan",
+    area: "Fuqarolik",
+    risk: "O‘rta",
+    summary: "Mahsulot xavfsizligi, iste’molchi zarari va kompaniya reputatsiyasi bo‘yicha yapon yondashuvi.",
+    facts: "Mahsulot nuqsoni tufayli zarar yuz bergan, ishlab chiqaruvchi recall va kompensatsiya masalasini baholaydi.",
+    comparison: "Yaponiyada reputatsiya, ichki tekshiruv va kelishuv muhim; O‘zbekistonda iste’molchi huquqlari va fuqarolik javobgarligi qo‘llanadi.",
+    nextSteps: ["Mahsulot partiyasi va xarid dalilini saqlash", "Ekspertiza talab qilish", "Kompensatsiya yoki da’vo strategiyasini tuzish"],
+    tags: ["consumer", "product", "ADR"],
+    source: "Japan consumer protection and product liability practice",
+    visualPrompt: "Tokyo legal office, product recall board, consumer evidence, minimalist premium courtroom style",
+  },
+  {
+    title: "Korea digital platform defamation",
+    country: "South Korea",
+    area: "Kiber",
+    risk: "Yuqori",
+    summary: "Onlayn sha’n-qadr masalalari, platforma kontenti va raqamli dalillar bo‘yicha Koreya tajribasi.",
+    facts: "Ijtimoiy tarmoqdagi post shaxs reputatsiyasiga zarar yetkazgani da’vo qilingan.",
+    comparison: "Koreyada cyber defamation jiddiy baholanadi; O‘zbekistonda sha’n, qadr-qimmat, haqorat va tuhmat normalari bilan solishtiriladi.",
+    nextSteps: ["Post skrinshotini va URLni saqlash", "Platformaga takedown yuborish", "Fuqarolik yoki jinoyat yo‘lini baholash"],
+    tags: ["defamation", "platform", "evidence"],
+    source: "South Korea cyber defamation and platform regulation practice",
+    visualPrompt: "Seoul digital evidence lab, social media posts, reputation risk graph, premium cyber legal motion",
+  },
+  {
+    title: "Barcelona Traction diplomatic protection",
+    country: "International",
+    area: "Biznes",
+    risk: "Yuqori",
+    summary: "Korporativ shaxs, investor huquqlari va davlatlararo diplomatik himoya chegarasi bo‘yicha ICJ ishi.",
+    facts: "Xorijiy kompaniya aksiyadorlari davlatlararo himoya talab qilganida yuridik shaxs mansubligi va zarar masalasi ko‘rilgan.",
+    comparison: "Xalqaro huquqda investor-state va diplomatic protection alohida; O‘zbekistonda investitsiya shartnomasi, BIT va arbitraj bandi muhim.",
+    nextSteps: ["Kompaniya yurisdiksiyasini aniqlash", "BIT/arbitraj bandlarini tekshirish", "Davlat organi harakati va zarar miqdorini hujjatlashtirish"],
+    tags: ["ICJ", "investment", "company"],
+    source: "International Court of Justice landmark decision",
+    visualPrompt: "international court chamber, treaty documents, world map arbitration lines, luxury global justice scene",
   },
 ];
+
+export const getCountryCases = (countryName: string) => {
+  if (countryName === "Xalqaro huquq") return caseDatabase.filter((item) => item.country === "International").slice(0, 3);
+  const direct = caseDatabase.filter((item) => item.country === countryName).slice(0, 3);
+  return direct.length >= 2 ? direct : [...direct, ...caseDatabase.filter((item) => item.country === "International")].slice(0, 3);
+};
 
 export const featureCards = [
   { title: "Global AI tahlil", icon: Cpu, text: "Vaziyatni huquq sohasi, davlatlar va xavf darajasi bo‘yicha ajratadi." },

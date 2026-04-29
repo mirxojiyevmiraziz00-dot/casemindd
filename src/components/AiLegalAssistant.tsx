@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 type ChatMessage = {
   role: "user" | "assistant";
   content: string;
+  imageUrl?: string;
 };
 
 const starterMessages: ChatMessage[] = [
@@ -23,6 +24,7 @@ export function AiLegalAssistant() {
   const [messages, setMessages] = useState<ChatMessage[]>(starterMessages);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isVisualLoading, setIsVisualLoading] = useState(false);
   const [error, setError] = useState("");
 
   const sendMessage = async () => {
@@ -48,10 +50,40 @@ export function AiLegalAssistant() {
       }
 
       setMessages((current) => [...current, { role: "assistant", content: data.content }]);
+      void generateVisual(`${question}\n${data.content}`);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Noma’lum xatolik yuz berdi.");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const generateVisual = async (prompt: string) => {
+    setIsVisualLoading(true);
+    try {
+      const response = await fetch("/api/ai-chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ visual: true, messages: [{ role: "user", content: prompt }] }),
+      });
+      const data = await response.json().catch(() => null);
+      if (!response.ok) throw new Error(data?.error || "Visual AI ishlamadi.");
+      if (data?.imageUrl) {
+        setMessages((current) => {
+          const next = [...current];
+          for (let index = next.length - 1; index >= 0; index -= 1) {
+            if (next[index].role === "assistant") {
+              next[index] = { ...next[index], imageUrl: data.imageUrl };
+              break;
+            }
+          }
+          return next;
+        });
+      }
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Visual yaratishda xatolik yuz berdi.");
+    } finally {
+      setIsVisualLoading(false);
     }
   };
 
@@ -83,7 +115,7 @@ export function AiLegalAssistant() {
               <p className="text-xs text-muted-foreground">Oson sharh, misol va ogohlantirish bilan</p>
             </div>
           </div>
-          {isLoading ? <Loader2 className="h-5 w-5 animate-spin text-legal-gold" /> : <Bot className="h-5 w-5 text-legal-emerald" />}
+          {isLoading || isVisualLoading ? <Loader2 className="h-5 w-5 animate-spin text-legal-gold" /> : <Bot className="h-5 w-5 text-legal-emerald" />}
         </div>
 
         <div className="max-h-[520px] space-y-4 overflow-y-auto p-5">
@@ -103,6 +135,7 @@ export function AiLegalAssistant() {
                 <div className="prose prose-sm max-w-none prose-p:my-2 prose-ul:my-2 prose-li:my-1 prose-strong:text-inherit">
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>
                 </div>
+                {message.imageUrl && <img src={message.imageUrl} alt="AI yaratgan huquqiy vaziyat visuali" className="mt-3 aspect-video w-full rounded-xl border object-cover" loading="lazy" />}
               </div>
               {message.role === "user" && (
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent text-accent-foreground">
@@ -141,7 +174,7 @@ export function AiLegalAssistant() {
         <div className="relative min-h-36 overflow-hidden rounded-xl border bg-secondary p-5">
           <div className="absolute inset-0 legal-grid opacity-35" />
           <Clapperboard className="absolute right-5 top-5 h-10 w-10 animate-float text-accent" />
-          <p className="relative max-w-2xl leading-7 text-muted-foreground">AI javobiga mos rasm/video brief avtomatik yangilanadi: sud zali, advokatlar ofisi, dunyo xaritasi, dalillar paneli va premium cinematic motion kadrlari.</p>
+          <p className="relative max-w-2xl leading-7 text-muted-foreground">{isVisualLoading ? "AI javobga mos premium rasmni yaratmoqda..." : "AI javobiga mos rasm chat ichida avtomatik paydo bo‘ladi: sud zali, advokatlar ofisi, dunyo xaritasi va dalillar paneli."}</p>
         </div>
       </div>
     </section>
