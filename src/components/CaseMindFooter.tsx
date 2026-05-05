@@ -1,8 +1,14 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Linkedin, Mail, MessageCircle, Send, Twitter } from "lucide-react";
+import { Facebook, Instagram, Mail, Send } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { countries, legalAreas } from "@/lib/casemind-data";
+
+const socials = [
+  { Icon: Instagram, href: "https://instagram.com/_miraziz.1", label: "Instagram" },
+  { Icon: Facebook, href: "https://facebook.com/Ado.Vis", label: "Facebook" },
+  { Icon: Send, href: "https://t.me/mirxojiyev", label: "Telegram" },
+];
 
 export function CaseMindFooter() {
   return (
@@ -14,13 +20,16 @@ export function CaseMindFooter() {
             O‘zbekiston va global huquqiy tajribani birlashtiruvchi AI legal-tech platforma.
           </p>
           <div className="mt-6 flex gap-2">
-            {[Linkedin, Twitter, Instagram, Send, MessageCircle, Mail].map((Icon, index) => (
-              <Button key={index} variant="legal" size="icon" asChild aria-label="Social link">
-                <Link to={index === 5 ? "/yurist-bilan-boglanish" : "/settings"}>
+            {socials.map(({ Icon, href, label }) => (
+              <Button key={label} variant="legal" size="icon" asChild aria-label={label}>
+                <a href={href} target="_blank" rel="noopener noreferrer">
                   <Icon className="h-4 w-4" />
-                </Link>
+                </a>
               </Button>
             ))}
+            <Button variant="legal" size="icon" asChild aria-label="Email">
+              <Link to="/yurist-bilan-boglanish"><Mail className="h-4 w-4" /></Link>
+            </Button>
           </div>
         </div>
         <div>
