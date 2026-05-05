@@ -13,12 +13,13 @@ import {
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { jsPDF } from "jspdf";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { legalAreas } from "@/lib/casemind-data";
+import { caseDatabase, legalAreas } from "@/lib/casemind-data";
 
 const analysisTemplate = `Quyidagi formatda tahlil qiling:
 - Qaysi huquq sohasi
