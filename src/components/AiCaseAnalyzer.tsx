@@ -280,9 +280,23 @@ export function AiCaseAnalyzer() {
               <FileDown className="h-4 w-4" /> PDF report download
             </Button>
             <Button variant="legal" asChild>
-              <a href="/case-database">O‘xshash case topish</a>
+              <a href="/case-database">Case database</a>
             </Button>
           </div>
+          {similarCases.length > 0 && (
+            <div className="mt-5 rounded-2xl border bg-background p-5">
+              <p className="text-sm font-semibold uppercase text-accent">O‘xshash case’lar</p>
+              <div className="mt-3 grid gap-3 md:grid-cols-3">
+                {similarCases.map((c) => (
+                  <a key={c.title} href="/case-database" className="rounded-xl border bg-card p-4 transition hover:-translate-y-0.5 hover:shadow-premium">
+                    <p className="text-xs text-accent">{c.country} · {c.area}</p>
+                    <h5 className="mt-2 font-bold text-foreground">{c.title}</h5>
+                    <p className="mt-2 text-xs text-muted-foreground line-clamp-3">{c.summary}</p>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
           {(result || isVisualLoading) && (
             <div className="mt-5 overflow-hidden rounded-2xl border bg-secondary shadow-premium">
               <div className="relative min-h-56 p-5">
