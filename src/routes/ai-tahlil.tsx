@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Bot, FileText, Globe2, ScanFace, Sparkles } from "lucide-react";
 
-import founderPortrait from "@/assets/casemind-founder.png";
+import founderPortrait from "@/assets/casemind-founder-clean.png";
 import { AiCaseAnalyzer } from "@/components/AiCaseAnalyzer";
-import { AiLegalAssistant } from "@/components/AiLegalAssistant";
 import { CaseMindShell } from "@/components/CaseMindShell";
 
 export const Route = createFileRoute("/ai-tahlil")({
@@ -78,7 +77,6 @@ function AiAnalysisPage() {
         </div>
       </section>
       <AiCaseAnalyzer />
-      <AiLegalAssistant />
     </CaseMindShell>
   );
 }
