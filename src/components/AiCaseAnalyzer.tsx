@@ -137,15 +137,41 @@ export function AiCaseAnalyzer() {
   };
 
   const downloadReport = () => {
-    const content = `CaseMind AI Report\n\nVaziyat:\n${situation}\n\nNatija:\n${result || "Tahlil hali yaratilmagan."}`;
-    const blob = new Blob([content], { type: "application/pdf" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "casemind-ai-report.pdf";
-    link.click();
-    URL.revokeObjectURL(url);
+    if (!result) return;
+    const doc = new jsPDF({ unit: "pt", format: "a4" });
+    const margin = 40;
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const maxWidth = pageWidth - margin * 2;
+    let y = margin;
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.text("CaseMind AI Report", margin, y);
+    y += 28;
+    doc.setFontSize(12);
+    doc.text("Vaziyat:", margin, y); y += 16;
+    doc.setFont("helvetica", "normal");
+    const sit = doc.splitTextToSize(situation || "(bo'sh)", maxWidth);
+    sit.forEach((line: string) => { if (y > pageHeight - margin) { doc.addPage(); y = margin; } doc.text(line, margin, y); y += 14; });
+    y += 8;
+    doc.setFont("helvetica", "bold"); doc.text("Tahlil natijasi:", margin, y); y += 16;
+    doc.setFont("helvetica", "normal");
+    const plain = result.replace(/[#*_`>]/g, "");
+    const lines = doc.splitTextToSize(plain, maxWidth);
+    lines.forEach((line: string) => { if (y > pageHeight - margin) { doc.addPage(); y = margin; } doc.text(line, margin, y); y += 14; });
+    doc.save("casemind-ai-report.pdf");
   };
+
+  const similarCases = useMemo(() => {
+    const text = `${situation} ${result}`.toLowerCase();
+    if (!text.trim()) return [] as typeof caseDatabase;
+    const scored = caseDatabase.map((c) => {
+      const hay = `${c.title} ${c.summary} ${c.tags.join(" ")} ${c.area}`.toLowerCase();
+      const score = hay.split(/\s+/).filter((w) => w.length > 3 && text.includes(w)).length;
+      return { c, score };
+    });
+    return scored.sort((a, b) => b.score - a.score).slice(0, 3).map((s) => s.c);
+  }, [situation, result]);
 
   return (
     <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
