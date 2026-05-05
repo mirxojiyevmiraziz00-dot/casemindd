@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      consultation_requests: {
+        Row: {
+          area: string | null
+          contact: string
+          created_at: string
+          full_name: string
+          id: string
+          situation: string
+          status: string
+          user_id: string | null
+        }
+        Insert: {
+          area?: string | null
+          contact: string
+          created_at?: string
+          full_name: string
+          id?: string
+          situation: string
+          status?: string
+          user_id?: string | null
+        }
+        Update: {
+          area?: string | null
+          contact?: string
+          created_at?: string
+          full_name?: string
+          id?: string
+          situation?: string
+          status?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       legal_documents: {
         Row: {
           created_at: string
