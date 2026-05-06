@@ -45,7 +45,7 @@ function AreaPage() {
             <BookOpen className="mb-4 h-7 w-7 text-accent" />
             <h2 className="text-2xl font-black text-foreground">Rasmiy manbalar</h2>
             <div className="mt-4 space-y-2">
-              {area.sources.map((s) => (
+              {area.sources.map((s: { label: string; url: string }) => (
                 <a key={s.url} href={s.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between rounded-lg border bg-background px-4 py-3 text-sm text-foreground transition hover:bg-secondary">
                   <span>{s.label}</span><ExternalLink className="h-4 w-4 text-accent" />
                 </a>
