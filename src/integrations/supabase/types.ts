@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      case_history: {
+        Row: {
+          ai_response: string | null
+          area: string | null
+          created_at: string
+          id: string
+          image_url: string | null
+          situation: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          ai_response?: string | null
+          area?: string | null
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          situation: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          ai_response?: string | null
+          area?: string | null
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          situation?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       consultation_requests: {
         Row: {
           area: string | null
@@ -21,8 +54,10 @@ export type Database = {
           created_at: string
           full_name: string
           id: string
+          lawyer_id: string | null
           situation: string
           status: string
+          user_email: string | null
           user_id: string | null
         }
         Insert: {
@@ -31,8 +66,10 @@ export type Database = {
           created_at?: string
           full_name: string
           id?: string
+          lawyer_id?: string | null
           situation: string
           status?: string
+          user_email?: string | null
           user_id?: string | null
         }
         Update: {
@@ -41,9 +78,70 @@ export type Database = {
           created_at?: string
           full_name?: string
           id?: string
+          lawyer_id?: string | null
           situation?: string
           status?: string
+          user_email?: string | null
           user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "consultation_requests_lawyer_id_fkey"
+            columns: ["lawyer_id"]
+            isOneToOne: false
+            referencedRelation: "lawyers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lawyers: {
+        Row: {
+          areas: string[]
+          bio: string
+          city: string | null
+          contact_email: string | null
+          contact_phone: string | null
+          created_at: string
+          experience_years: number | null
+          full_name: string
+          id: string
+          is_active: boolean
+          languages: string[]
+          photo_url: string | null
+          rating: number | null
+          telegram: string | null
+        }
+        Insert: {
+          areas?: string[]
+          bio: string
+          city?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          experience_years?: number | null
+          full_name: string
+          id?: string
+          is_active?: boolean
+          languages?: string[]
+          photo_url?: string | null
+          rating?: number | null
+          telegram?: string | null
+        }
+        Update: {
+          areas?: string[]
+          bio?: string
+          city?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          experience_years?: number | null
+          full_name?: string
+          id?: string
+          is_active?: boolean
+          languages?: string[]
+          photo_url?: string | null
+          rating?: number | null
+          telegram?: string | null
         }
         Relationships: []
       }
