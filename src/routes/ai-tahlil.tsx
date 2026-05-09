@@ -47,20 +47,26 @@ function AiAnalysisPage() {
           </div>
           <div className="mt-10 grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
             <div className="cinematic-scan rounded-2xl border bg-card p-5 shadow-premium">
-              <div className="relative mx-auto aspect-[4/5] max-w-sm overflow-hidden rounded-xl bg-secondary">
-                <div className="absolute inset-0 legal-grid opacity-40" />
-                <div className="portrait-motion absolute inset-x-0 bottom-0 mx-auto w-[94%]">
-                  <img
-                    src={founderPortrait}
-                    alt="CaseMind legal AI vakili portreti"
-                    className="relative z-10 w-full object-contain drop-shadow-2xl"
-                    loading="eager"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
-                <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border bg-card/85 px-3 py-2 text-xs font-bold uppercase text-accent backdrop-blur">
-                  <ScanFace className="h-4 w-4" /> Live AI avatar
-                </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {[founderPortrait, founderPortraitTwo].map((src, idx) => (
+                  <div key={idx} className="relative aspect-[4/5] overflow-hidden rounded-xl bg-secondary">
+                    <div className="absolute inset-0 legal-grid opacity-40" />
+                    <div className="portrait-motion absolute inset-x-0 bottom-0 mx-auto w-[94%]" style={{ animationDelay: `${idx * 0.6}s` }}>
+                      <img
+                        src={src}
+                        alt="CaseMind legal AI vakili portreti"
+                        className="relative z-10 w-full object-contain drop-shadow-2xl"
+                        loading={idx === 0 ? "eager" : "lazy"}
+                      />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
+                    {idx === 0 && (
+                      <div className="absolute left-3 top-3 inline-flex items-center gap-2 rounded-full border bg-card/85 px-3 py-1.5 text-[10px] font-bold uppercase text-accent backdrop-blur">
+                        <ScanFace className="h-3.5 w-3.5" /> Live AI avatar
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
             <div className="rounded-2xl border bg-card p-6 shadow-premium">
