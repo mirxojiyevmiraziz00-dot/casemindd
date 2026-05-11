@@ -28,12 +28,12 @@ function Index() {
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/82 to-background/20" />
         <div className="absolute inset-0 legal-grid opacity-35" />
         <div className="relative mx-auto grid max-w-7xl gap-10 px-5 py-20 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
-          <div className="animate-reveal">
+          <div className="fade-in-up">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border bg-card/80 px-4 py-2 text-sm text-muted-foreground backdrop-blur">
               <Sparkles className="h-4 w-4 text-accent" /> Unicorn startup darajasidagi legal intelligence
             </div>
             <h1 className="max-w-4xl text-balance text-5xl font-black leading-tight text-foreground sm:text-6xl lg:text-7xl">
-              Har qanday huquqiy vaziyat uchun global aqlli yechim
+              Har qanday huquqiy vaziyat uchun <span className="gradient-text">global aqlli yechim</span>
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
               Muammoingizni yozing va O‘zbekiston hamda xorijiy huquqiy tajribalar asosida tahlil oling.
