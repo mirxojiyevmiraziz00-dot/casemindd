@@ -28,12 +28,12 @@ function Index() {
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/82 to-background/20" />
         <div className="absolute inset-0 legal-grid opacity-35" />
         <div className="relative mx-auto grid max-w-7xl gap-10 px-5 py-20 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
-          <div className="animate-reveal">
+          <div className="fade-in-up">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border bg-card/80 px-4 py-2 text-sm text-muted-foreground backdrop-blur">
               <Sparkles className="h-4 w-4 text-accent" /> Unicorn startup darajasidagi legal intelligence
             </div>
             <h1 className="max-w-4xl text-balance text-5xl font-black leading-tight text-foreground sm:text-6xl lg:text-7xl">
-              Har qanday huquqiy vaziyat uchun global aqlli yechim
+              Har qanday huquqiy vaziyat uchun <span className="gradient-text">global aqlli yechim</span>
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
               Muammoingizni yozing va O‘zbekiston hamda xorijiy huquqiy tajribalar asosida tahlil oling.
@@ -64,10 +64,10 @@ function Index() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-4 px-5 py-12 sm:px-8 md:grid-cols-4">
+      <section className="mx-auto grid max-w-7xl gap-4 stagger px-5 py-12 sm:px-8 md:grid-cols-4">
         {stats.map((stat) => (
-          <div key={stat.label} className="rounded-2xl border bg-card p-6 shadow-premium">
-            <p className="text-4xl font-black text-accent">{stat.value}</p>
+          <div key={stat.label} className="hover-lift rounded-2xl border bg-card p-6 shadow-premium">
+            <p className="text-4xl font-black gradient-text">{stat.value}</p>
             <p className="mt-2 text-sm text-muted-foreground">{stat.label}</p>
           </div>
         ))}
@@ -95,10 +95,10 @@ function Index() {
           <div><p className="text-sm font-semibold uppercase text-accent">Huquq bo‘limlari</p><h2 className="mt-2 text-4xl font-black text-foreground">Barcha asosiy yo‘nalishlar</h2></div>
           <Button variant="legal" asChild><Link to="/huquq-bolimlari">Hammasini ko‘rish</Link></Button>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 stagger md:grid-cols-2 lg:grid-cols-3">
           {legalAreas.slice(0, 9).map((area) => {
             const Icon = area.icon;
-            return <Link key={area.slug} to="/huquq-bolimlari" className="premium-card group rounded-2xl border p-6 transition hover:-translate-y-1"><Icon className="mb-5 h-7 w-7 text-accent" /><h3 className="text-2xl font-black text-foreground">{area.title}</h3><p className="mt-3 text-muted-foreground">{area.tone}</p></Link>;
+            return <Link key={area.slug} to="/huquq-bolimlari" className="premium-card hover-lift group rounded-2xl border p-6"><Icon className="mb-5 h-7 w-7 text-accent transition group-hover:scale-110" /><h3 className="text-2xl font-black text-foreground">{area.title}</h3><p className="mt-3 text-muted-foreground">{area.tone}</p></Link>;
           })}
         </div>
       </section>
