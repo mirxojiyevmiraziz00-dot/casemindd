@@ -62,19 +62,23 @@ function AiAnalysisPage() {
           </div>
           <div className="mt-10 cinematic-scan rounded-2xl border bg-card p-5 shadow-premium">
             <div className="grid gap-8 sm:grid-cols-2">
-              {[founderPortrait, founderPortraitTwo].map((src, idx) => (
+              {[
+                { src: founderPortrait, name: "Mirxojiyev Miraziz" },
+                { src: founderPortraitTwo, name: "Xolboboyev Alijon" },
+              ].map((item, idx) => (
                 <div key={idx} className="flex flex-col items-center gap-3">
                   <div
                     className="portrait-motion h-48 w-48 overflow-hidden rounded-full border-4 border-accent/30 bg-secondary shadow-premium sm:h-56 sm:w-56"
                     style={{ animationDelay: `${idx * 0.6}s` }}
                   >
                     <img
-                      src={src}
+                      src={item.src}
                       alt="CaseMind legal AI vakili portreti"
                       className="h-full w-full object-cover"
                       loading={idx === 0 ? "eager" : "lazy"}
                     />
                   </div>
+                  <p className="text-lg font-medium italic text-accent">{item.name}</p>
                 </div>
               ))}
             </div>
