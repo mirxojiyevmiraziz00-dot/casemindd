@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Bot, FileText, Globe2, ScanFace, Sparkles } from "lucide-react";
+import { Bot, FileText, Globe2 } from "lucide-react";
 
 import founderPortrait from "@/assets/casemind-founder-clean.png";
 import founderPortraitTwo from "@/assets/casemind-founder-3.png";
@@ -45,40 +45,37 @@ function AiAnalysisPage() {
               </div>
             ))}
           </div>
-          <div className="mt-10 grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-            <div className="cinematic-scan rounded-2xl border bg-card p-5 shadow-premium">
-              <div className="grid gap-4 sm:grid-cols-2">
-                {[founderPortrait, founderPortraitTwo].map((src, idx) => (
-                  <div key={idx} className="relative aspect-[4/5] overflow-hidden rounded-xl bg-secondary">
-                    <div className="absolute inset-0 legal-grid opacity-40" />
-                    <div className="portrait-motion absolute inset-x-0 bottom-0 mx-auto w-[94%]" style={{ animationDelay: `${idx * 0.6}s` }}>
-                      <img
-                        src={src}
-                        alt="CaseMind legal AI vakili portreti"
-                        className="relative z-10 w-full object-contain drop-shadow-2xl"
-                        loading={idx === 0 ? "eager" : "lazy"}
-                      />
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
-                    {idx === 0 && (
-                      <div className="absolute left-3 top-3 inline-flex items-center gap-2 rounded-full border bg-card/85 px-3 py-1.5 text-[10px] font-bold uppercase text-accent backdrop-blur">
-                        <ScanFace className="h-3.5 w-3.5" /> Live AI avatar
-                      </div>
-                    )}
+          <div className="mt-10 rounded-2xl border border-accent/40 bg-accent/10 p-6 shadow-premium">
+            <p className="text-sm font-semibold uppercase text-accent">E'lon</p>
+            <h2 className="mt-2 text-2xl font-black text-foreground sm:text-3xl">
+              Bu AI mutlaqo tekin
+            </h2>
+            <p className="mt-3 leading-7 text-muted-foreground">
+              Ushbu loyihani rivojlantirish uchun sizdan talab qilinadigan narsa faqat savol
+              yozishdir. Har bir savol uchun sizga{" "}
+              <span className="font-bold text-foreground">1000 so'm</span> mukofot taqdim etiladi:
+              500 so'mi loyiha rivoji uchun olib qolinadi, qolgan 500 so'mi plastik kartangizga
+              o'tkazib olishingiz mumkin. Mablag' akkauntingizning{" "}
+              <span className="font-bold text-foreground">"Salaries"</span> bo'limida yig'ilib
+              boriladi.
+            </p>
+          </div>
+          <div className="mt-10 cinematic-scan rounded-2xl border bg-card p-5 shadow-premium">
+            <div className="grid gap-4 sm:grid-cols-2">
+              {[founderPortrait, founderPortraitTwo].map((src, idx) => (
+                <div key={idx} className="relative aspect-[4/5] overflow-hidden rounded-xl bg-secondary">
+                  <div className="absolute inset-0 legal-grid opacity-40" />
+                  <div className="portrait-motion absolute inset-x-0 bottom-0 mx-auto w-[94%]" style={{ animationDelay: `${idx * 0.6}s` }}>
+                    <img
+                      src={src}
+                      alt="CaseMind legal AI vakili portreti"
+                      className="relative z-10 w-full object-contain drop-shadow-2xl"
+                      loading={idx === 0 ? "eager" : "lazy"}
+                    />
                   </div>
-                ))}
-              </div>
-            </div>
-            <div className="rounded-2xl border bg-card p-6 shadow-premium">
-              <Sparkles className="mb-4 h-8 w-8 text-accent" />
-              <h2 className="text-4xl font-black text-foreground">
-                Motion portretli AI konsultant
-              </h2>
-              <p className="mt-4 leading-8 text-muted-foreground">
-                Yuklangan portret endi sahifada premium motion effekt bilan ko‘rinadi: yengil
-                suzish, mimika signallari va cinematic scan animatsiyasi AI tahlil tajribasini
-                jonlantiradi.
-              </p>
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
+                </div>
+              ))}
             </div>
           </div>
         </div>
