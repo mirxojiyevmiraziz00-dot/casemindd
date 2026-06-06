@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Bot, FileText, Globe2 } from "lucide-react";
+import { Bot, FileText, Globe2, Instagram } from "lucide-react";
 
 import founderPortrait from "@/assets/casemind-founder-clean.png";
 import founderPortraitTwo from "@/assets/casemind-founder-3.png";
@@ -61,19 +61,25 @@ function AiAnalysisPage() {
             </p>
           </div>
           <div className="mt-10 cinematic-scan rounded-2xl border bg-card p-5 shadow-premium">
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-8 sm:grid-cols-2">
               {[founderPortrait, founderPortraitTwo].map((src, idx) => (
-                <div key={idx} className="relative aspect-[4/5] overflow-hidden rounded-xl bg-secondary">
-                  <div className="absolute inset-0 legal-grid opacity-40" />
-                  <div className="portrait-motion absolute inset-x-0 bottom-0 mx-auto w-[94%]" style={{ animationDelay: `${idx * 0.6}s` }}>
-                    <img
-                      src={src}
-                      alt="CaseMind legal AI vakili portreti"
-                      className="relative z-10 w-full object-contain drop-shadow-2xl"
-                      loading={idx === 0 ? "eager" : "lazy"}
-                    />
+                <div key={idx} className="flex flex-col items-center gap-3">
+                  <div className="relative">
+                    <div
+                      className="portrait-motion h-48 w-48 overflow-hidden rounded-full border-4 border-accent/30 bg-secondary shadow-premium sm:h-56 sm:w-56"
+                      style={{ animationDelay: `${idx * 0.6}s` }}
+                    >
+                      <img
+                        src={src}
+                        alt="CaseMind legal AI vakili portreti"
+                        className="h-full w-full object-cover"
+                        loading={idx === 0 ? "eager" : "lazy"}
+                      />
+                    </div>
+                    <div className="absolute -bottom-1 -right-1 flex h-10 w-10 items-center justify-center rounded-full bg-accent shadow-md sm:h-12 sm:w-12">
+                      <Instagram className="h-5 w-5 text-primary-foreground sm:h-6 sm:w-6" />
+                    </div>
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
                 </div>
               ))}
             </div>
