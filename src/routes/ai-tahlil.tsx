@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Bot, FileText, Globe2 } from "lucide-react";
 
 import founderPortrait from "@/assets/casemind-founder-clean.png";
-import founderPortraitTwo from "@/assets/casemind-founder-3.png";
+import founderPortraitTwo from "@/assets/casemind-founder-alijon.jpg";
 import { AiCaseAnalyzer } from "@/components/AiCaseAnalyzer";
 import { CaseMindShell } from "@/components/CaseMindShell";
 
