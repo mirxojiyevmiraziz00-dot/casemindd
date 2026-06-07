@@ -131,9 +131,17 @@ export function LegalDocumentManager({ defaultType = "criminal_code_uz", title, 
   };
 
   const downloadDocument = async (document: LegalDocument) => {
+    if (document.source_url) {
+      window.open(document.source_url, "_blank", "noopener,noreferrer");
+      return;
+    }
+    if (!document.storage_path) {
+      setError("Bu hujjat uchun fayl yoki havola mavjud emas.");
+      return;
+    }
     const { data, error: signedError } = await supabase.storage
       .from("legal-documents")
-      .createSignedUrl(document.storage_path, 60 * 5, { download: document.file_name });
+      .createSignedUrl(document.storage_path, 60 * 5, { download: document.file_name ?? undefined });
 
     if (signedError || !data?.signedUrl) {
       setError("Faylni ochish uchun havola yaratib bo‘lmadi.");

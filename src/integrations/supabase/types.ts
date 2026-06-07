@@ -148,48 +148,57 @@ export type Database = {
       legal_documents: {
         Row: {
           created_at: string
-          document_type: Database["public"]["Enums"]["legal_document_type"]
+          description: string | null
+          document_type: string
           extracted_text: string | null
-          file_name: string
+          file_name: string | null
           file_size: number | null
           id: string
           language: string
+          legal_area: string | null
           mime_type: string | null
-          status: Database["public"]["Enums"]["legal_document_status"]
-          storage_path: string
+          source_url: string | null
+          status: string
+          storage_path: string | null
           title: string
           updated_at: string
-          user_id: string
+          user_id: string | null
         }
         Insert: {
           created_at?: string
-          document_type: Database["public"]["Enums"]["legal_document_type"]
+          description?: string | null
+          document_type: string
           extracted_text?: string | null
-          file_name: string
+          file_name?: string | null
           file_size?: number | null
           id?: string
           language?: string
+          legal_area?: string | null
           mime_type?: string | null
-          status?: Database["public"]["Enums"]["legal_document_status"]
-          storage_path: string
+          source_url?: string | null
+          status?: string
+          storage_path?: string | null
           title: string
           updated_at?: string
-          user_id: string
+          user_id?: string | null
         }
         Update: {
           created_at?: string
-          document_type?: Database["public"]["Enums"]["legal_document_type"]
+          description?: string | null
+          document_type?: string
           extracted_text?: string | null
-          file_name?: string
+          file_name?: string | null
           file_size?: number | null
           id?: string
           language?: string
+          legal_area?: string | null
           mime_type?: string | null
-          status?: Database["public"]["Enums"]["legal_document_status"]
-          storage_path?: string
+          source_url?: string | null
+          status?: string
+          storage_path?: string | null
           title?: string
           updated_at?: string
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: []
       }
