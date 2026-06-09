@@ -22,6 +22,7 @@ import { Route as MamlakatlarRouteImport } from './routes/mamlakatlar'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as JinoyatKodeksiRouteImport } from './routes/jinoyat-kodeksi'
 import { Route as HuquqBolimlariRouteImport } from './routes/huquq-bolimlari'
+import { Route as HamyonRouteImport } from './routes/hamyon'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CaseDatabaseRouteImport } from './routes/case-database'
 import { Route as AiTahlilRouteImport } from './routes/ai-tahlil'
@@ -97,6 +98,11 @@ const HuquqBolimlariRoute = HuquqBolimlariRouteImport.update({
   path: '/huquq-bolimlari',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HamyonRoute = HamyonRouteImport.update({
+  id: '/hamyon',
+  path: '/hamyon',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -150,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/ai-tahlil': typeof AiTahlilRoute
   '/case-database': typeof CaseDatabaseRoute
   '/dashboard': typeof DashboardRoute
+  '/hamyon': typeof HamyonRoute
   '/huquq-bolimlari': typeof HuquqBolimlariRouteWithChildren
   '/jinoyat-kodeksi': typeof JinoyatKodeksiRoute
   '/login': typeof LoginRoute
@@ -174,6 +181,7 @@ export interface FileRoutesByTo {
   '/ai-tahlil': typeof AiTahlilRoute
   '/case-database': typeof CaseDatabaseRoute
   '/dashboard': typeof DashboardRoute
+  '/hamyon': typeof HamyonRoute
   '/huquq-bolimlari': typeof HuquqBolimlariRouteWithChildren
   '/jinoyat-kodeksi': typeof JinoyatKodeksiRoute
   '/login': typeof LoginRoute
@@ -199,6 +207,7 @@ export interface FileRoutesById {
   '/ai-tahlil': typeof AiTahlilRoute
   '/case-database': typeof CaseDatabaseRoute
   '/dashboard': typeof DashboardRoute
+  '/hamyon': typeof HamyonRoute
   '/huquq-bolimlari': typeof HuquqBolimlariRouteWithChildren
   '/jinoyat-kodeksi': typeof JinoyatKodeksiRoute
   '/login': typeof LoginRoute
@@ -225,6 +234,7 @@ export interface FileRouteTypes {
     | '/ai-tahlil'
     | '/case-database'
     | '/dashboard'
+    | '/hamyon'
     | '/huquq-bolimlari'
     | '/jinoyat-kodeksi'
     | '/login'
@@ -249,6 +259,7 @@ export interface FileRouteTypes {
     | '/ai-tahlil'
     | '/case-database'
     | '/dashboard'
+    | '/hamyon'
     | '/huquq-bolimlari'
     | '/jinoyat-kodeksi'
     | '/login'
@@ -273,6 +284,7 @@ export interface FileRouteTypes {
     | '/ai-tahlil'
     | '/case-database'
     | '/dashboard'
+    | '/hamyon'
     | '/huquq-bolimlari'
     | '/jinoyat-kodeksi'
     | '/login'
@@ -298,6 +310,7 @@ export interface RootRouteChildren {
   AiTahlilRoute: typeof AiTahlilRoute
   CaseDatabaseRoute: typeof CaseDatabaseRoute
   DashboardRoute: typeof DashboardRoute
+  HamyonRoute: typeof HamyonRoute
   HuquqBolimlariRoute: typeof HuquqBolimlariRouteWithChildren
   JinoyatKodeksiRoute: typeof JinoyatKodeksiRoute
   LoginRoute: typeof LoginRoute
@@ -407,6 +420,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HuquqBolimlariRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hamyon': {
+      id: '/hamyon'
+      path: '/hamyon'
+      fullPath: '/hamyon'
+      preLoaderRoute: typeof HamyonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -504,6 +524,7 @@ const rootRouteChildren: RootRouteChildren = {
   AiTahlilRoute: AiTahlilRoute,
   CaseDatabaseRoute: CaseDatabaseRoute,
   DashboardRoute: DashboardRoute,
+  HamyonRoute: HamyonRoute,
   HuquqBolimlariRoute: HuquqBolimlariRouteWithChildren,
   JinoyatKodeksiRoute: JinoyatKodeksiRoute,
   LoginRoute: LoginRoute,

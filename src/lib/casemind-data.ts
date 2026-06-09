@@ -28,6 +28,7 @@ export const navLinks = [
   { label: "Yuristlar", to: "/yuristlar" },
   { label: "Media", to: "/media" },
   { label: "Academy", to: "/academy" },
+  { label: "Hamyon", to: "/hamyon" },
 ] as const;
 
 export type LegalArea = {
