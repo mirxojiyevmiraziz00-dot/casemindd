@@ -53,10 +53,10 @@ function AiAnalysisPage() {
             <p className="mt-3 leading-7 text-muted-foreground">
               Ushbu loyihani rivojlantirish uchun sizdan talab qilinadigan narsa faqat savol
               yozishdir. Har bir savol uchun sizga{" "}
-              <span className="font-bold text-foreground">1000 so'm</span> mukofot taqdim etiladi:
-              500 so'mi loyiha rivoji uchun olib qolinadi, qolgan 500 so'mi plastik kartangizga
+              <span className="font-bold text-foreground">100 so'm</span> mukofot taqdim etiladi:
+              50 so'mi loyiha rivoji uchun olib qolinadi, qolgan 50 so'mi plastik kartangizga
               o'tkazib olishingiz mumkin. Mablag' akkauntingizning{" "}
-              <span className="font-bold text-foreground">"Salaries"</span> bo'limida yig'ilib
+              <span className="font-bold text-foreground">"Hamyon"</span> bo'limida yig'ilib
               boriladi.
             </p>
           </div>
