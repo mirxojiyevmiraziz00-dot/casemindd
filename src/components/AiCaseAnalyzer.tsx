@@ -20,6 +20,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { caseDatabase, legalAreas } from "@/lib/casemind-data";
+import { supabase } from "@/integrations/supabase/client";
+
+const QUESTION_REWARD_SOM = 50;
 
 const analysisTemplate = `Quyidagi formatda tahlil qiling:
 - Qaysi huquq sohasi
