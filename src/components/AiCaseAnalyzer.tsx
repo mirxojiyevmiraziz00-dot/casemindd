@@ -112,6 +112,18 @@ export function AiCaseAnalyzer() {
       const data = await response.json().catch(() => null);
       if (!response.ok) throw new Error(data?.error || "AI tahlil amalga oshmadi.");
       setResult(data.content);
+      // Credit the user's wallet for asking a question (silent failure if not signed in)
+      try {
+        const { data: sess } = await supabase.auth.getSession();
+        if (sess.session?.user?.id) {
+          await supabase.rpc("credit_wallet", {
+            _user_id: sess.session.user.id,
+            _amount: QUESTION_REWARD_SOM,
+          });
+        }
+      } catch {
+        /* ignore wallet errors */
+      }
       await generateVisual(`${situation}\n${data.content}`);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Noma’lum xatolik yuz berdi.");
