@@ -124,7 +124,6 @@ export function AiCaseAnalyzer() {
       } catch {
         /* ignore wallet errors */
       }
-      await generateVisual(`${situation}\n${data.content}`);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Noma’lum xatolik yuz berdi.");
     } finally {
@@ -329,7 +328,7 @@ export function AiCaseAnalyzer() {
                 <div className="relative flex h-full min-h-48 flex-col justify-between bg-background/35 p-4 backdrop-blur-sm">
                   <div className="inline-flex w-fit items-center gap-2 rounded-full border bg-card/80 px-3 py-2 text-xs font-semibold uppercase text-accent backdrop-blur">
                     <visualScene.icon className="h-4 w-4" />{" "}
-                    {isVisualLoading ? "Visual AI tayyorlayapti" : "AI visual output"}
+                    {isVisualLoading ? "Visual AI tayyorlayapti" : "Creative brief"}
                   </div>
                   <div>
                     <h4 className="text-2xl font-black text-foreground">{visualScene.title}</h4>
@@ -352,7 +351,7 @@ export function AiCaseAnalyzer() {
                         ) : (
                           <Image className="h-4 w-4" />
                         )}{" "}
-                        Qayta yaratish
+                        Rasm yaratish
                       </Button>
                     </div>
                   </div>
