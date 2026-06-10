@@ -50,7 +50,6 @@ export function AiLegalAssistant() {
       }
 
       setMessages((current) => [...current, { role: "assistant", content: data.content }]);
-      void generateVisual(`${question}\n${data.content}`);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Noma’lum xatolik yuz berdi.");
     } finally {
@@ -174,7 +173,7 @@ export function AiLegalAssistant() {
         <div className="relative min-h-36 overflow-hidden rounded-xl border bg-secondary p-5">
           <div className="absolute inset-0 legal-grid opacity-35" />
           <Clapperboard className="absolute right-5 top-5 h-10 w-10 animate-float text-accent" />
-          <p className="relative max-w-2xl leading-7 text-muted-foreground">{isVisualLoading ? "AI javobga mos premium rasmni yaratmoqda..." : "AI javobiga mos rasm chat ichida avtomatik paydo bo‘ladi: sud zali, advokatlar ofisi, dunyo xaritasi va dalillar paneli."}</p>
+          <p className="relative max-w-2xl leading-7 text-muted-foreground">{isVisualLoading ? "AI javobga mos premium rasmni yaratmoqda..." : "AI limiti tejalishi uchun rasm avtomatik yaratilmaydi; matnli yordamchi asosiy rejimda ishlaydi."}</p>
         </div>
       </div>
     </section>
