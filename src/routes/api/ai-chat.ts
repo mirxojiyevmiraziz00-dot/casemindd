@@ -59,7 +59,7 @@ export const Route = createFileRoute("/api/ai-chat")({
                 ? "google/gemini-3.1-flash-image-preview"
                 : parsed.data.imageDataUrl
                   ? "google/gemini-2.5-flash"
-                  : "google/gemini-2.5-flash-lite",
+                  : "google/gemini-3-flash-preview",
               messages: parsed.data.visual
                 ? [{ role: "user", content: `Create a premium cinematic legal-tech visual for this legal situation. No readable text, no logos. ${last?.content ?? "global justice scene"}` }]
                 : [{ role: "system", content: systemPrompt }, ...userMessages],
@@ -68,13 +68,17 @@ export const Route = createFileRoute("/api/ai-chat")({
             }),
           });
 
-          if ((aiResponse.status === 429 || aiResponse.status === 402) && !parsed.data.visual) {
-            return Response.json({ content: buildFallbackAnswer(last?.content ?? "Huquqiy vaziyat") });
-          }
           if (!aiResponse.ok) {
             console.error("AI gateway error", aiResponse.status, await aiResponse.text());
+            if (aiResponse.status === 429) {
+              return Response.json({ error: "Hozir AI band — biroz kuting va qayta urinib ko'ring." }, { status: 429 });
+            }
+            if (aiResponse.status === 402) {
+              return Response.json({ error: "AI limiti tugadi — workspace billing'ida kredit qo'shing." }, { status: 402 });
+            }
             return Response.json({ error: "AI javob berishda xatolik yuz berdi." }, { status: 500 });
           }
+
 
           const data = await aiResponse.json();
           const content = data.choices?.[0]?.message?.content;
