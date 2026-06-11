@@ -112,6 +112,8 @@ export function AiCaseAnalyzer() {
       const data = await response.json().catch(() => null);
       if (!response.ok) throw new Error(data?.error || "AI tahlil amalga oshmadi.");
       setResult(data.content);
+      void generateVisual(`${situation}\n${data.content}`);
+
       // Credit the user's wallet for asking a question (silent failure if not signed in)
       try {
         const { data: sess } = await supabase.auth.getSession();
