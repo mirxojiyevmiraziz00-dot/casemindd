@@ -174,7 +174,7 @@ export function AiLegalAssistant() {
         <div className="relative min-h-36 overflow-hidden rounded-xl border bg-secondary p-5">
           <div className="absolute inset-0 legal-grid opacity-35" />
           <Clapperboard className="absolute right-5 top-5 h-10 w-10 animate-float text-accent" />
-          <p className="relative max-w-2xl leading-7 text-muted-foreground">{isVisualLoading ? "AI javobga mos premium rasmni yaratmoqda..." : "AI limiti tejalishi uchun rasm avtomatik yaratilmaydi; matnli yordamchi asosiy rejimda ishlaydi."}</p>
+          <p className="relative max-w-2xl leading-7 text-muted-foreground">{isVisualLoading ? "AI javobga mos premium rasmni yaratmoqda..." : "AI har bir javobga mos cinematic huquqiy vizual yaratadi."}</p>
         </div>
       </div>
     </section>
