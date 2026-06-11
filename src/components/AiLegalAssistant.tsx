@@ -50,6 +50,7 @@ export function AiLegalAssistant() {
       }
 
       setMessages((current) => [...current, { role: "assistant", content: data.content }]);
+      void generateVisual(question);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Noma’lum xatolik yuz berdi.");
     } finally {
