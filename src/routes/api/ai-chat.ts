@@ -37,18 +37,30 @@ export const Route = createFileRoute("/api/ai-chat")({
           }
 
           const last = parsed.data.messages.at(-1);
-          const userMessages = parsed.data.imageDataUrl && last
+          const { audioBase64, audioFormat, imageDataUrl, transcribeOnly } = parsed.data;
+
+          const attachments: unknown[] = [];
+          if (imageDataUrl) attachments.push({ type: "image_url", image_url: { url: imageDataUrl } });
+          if (audioBase64) {
+            attachments.push({
+              type: "input_audio",
+              input_audio: { data: audioBase64, format: audioFormat ?? "webm" },
+            });
+          }
+
+          const userMessages = attachments.length > 0 && last
             ? [
                 ...parsed.data.messages.slice(0, -1),
                 {
                   role: "user" as const,
                   content: [
                     { type: "text", text: last.content },
-                    { type: "image_url", image_url: { url: parsed.data.imageDataUrl } },
+                    ...attachments,
                   ] as unknown as string,
                 },
               ]
             : parsed.data.messages;
+
 
           const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
             method: "POST",
