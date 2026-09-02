@@ -6,7 +6,6 @@ import {
   FileUp,
   Image,
   Loader2,
-  Mic,
   Send,
   ShieldAlert,
   Sparkles,
