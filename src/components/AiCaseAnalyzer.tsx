@@ -93,7 +93,7 @@ export function AiCaseAnalyzer() {
   }, [result, situation]);
 
   const analyze = async () => {
-    if (!situation.trim() && !fileName && !voiceNote) {
+    if (!situation.trim() && !fileName) {
       setError("Vaziyatni yozing, fayl yuklang yoki ovozli izoh yuboring.");
       return;
     }
@@ -104,28 +104,39 @@ export function AiCaseAnalyzer() {
     setVisualUrl("");
 
     try {
-      const prompt = `${analysisTemplate}\n\nVaziyat: ${situation || "Foydalanuvchi fayl/ovoz yubordi."}\nFayl: ${fileName || "yo‘q"}\nOvoz: ${voiceNote ? "bor" : "yo‘q"}`;
+      const prompt = `${analysisTemplate}\n\nVaziyat: ${situation || "Foydalanuvchi fayl yubordi."}\nFayl: ${fileName || "yo‘q"}`;
       const response = await fetch("/api/ai-chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: [{ role: "user", content: prompt }] }),
+        body: JSON.stringify({
+          messages: [{ role: "user", content: prompt }],
+          ...(imageDataUrl ? { imageDataUrl } : {}),
+        }),
       });
       const data = await response.json().catch(() => null);
       if (!response.ok) throw new Error(data?.error || "AI tahlil amalga oshmadi.");
       setResult(data.content);
       void generateVisual(`${situation}\n${data.content}`);
 
-      // Credit the user's wallet for asking a question (silent failure if not signed in)
+      // Credit the wallet + save history (silent failure if not signed in)
       try {
         const { data: sess } = await supabase.auth.getSession();
-        if (sess.session?.user?.id) {
+        const userId = sess.session?.user?.id;
+        if (userId) {
           await supabase.rpc("credit_wallet", {
-            _user_id: sess.session.user.id,
+            _user_id: userId,
             _amount: QUESTION_REWARD_SOM,
+          });
+          await supabase.from("case_history").insert({
+            user_id: userId,
+            title: (situation || fileName || "AI tahlil").slice(0, 90),
+            area: detectedArea,
+            situation: situation || fileName,
+            ai_response: data.content,
           });
         }
       } catch {
-        /* ignore wallet errors */
+        /* ignore wallet/history errors */
       }
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Noma’lum xatolik yuz berdi.");
