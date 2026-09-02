@@ -13,6 +13,9 @@ const ChatRequestSchema = z.object({
     .max(20),
   visual: z.boolean().optional(),
   imageDataUrl: z.string().max(8_000_000).optional(),
+  audioBase64: z.string().max(12_000_000).optional(),
+  audioFormat: z.enum(["webm", "m4a", "mp3", "wav", "ogg", "aac", "flac"]).optional(),
+  transcribeOnly: z.boolean().optional(),
 });
 
 const systemPrompt = `Siz CaseMind global legal-tech platformasining premium AI huquqiy yordamchisisiz. Foydalanuvchi qaysi tilda yozsa — o'zbek, ingliz, rus, nemis, urdu, arab, turk, fransuz, ispan, xitoy va boshqa istalgan tilda — aynan o'sha tilda tabiiy va professional javob bering. Avtomatik til aniqlang. Har qanday savolga foydali javob bering, lekin huquqiy mavzuda bo'lsa, O'zbekiston huquqi, AQSH, UK, Yevropa Ittifoqi, Turkiya, Rossiya, BAA, Yaponiya, Janubiy Koreya va xalqaro tajriba kesimida tahlil qiling. Jinoyat, fuqarolik, oila, mehnat, soliq, ma'muriy, biznes, kiber, intellektual mulk, migratsiya va konstitutsiyaviy huquq sohalarini aniqlang. Javobda huquq sohasi, O'zbekistondagi holat, xorijiy yondashuvlar, xavf darajasi, sud amaliyoti, o'xshash case'lar, keyingi qadamlar va kerakli dalillarni markdown bilan tartibli bering. Foydalanuvchi rasm yuborsa — undagi hujjat, yozuv yoki sahnani huquqiy nuqtai nazardan tahlil qiling. Bu yuridik maslahat o'rnini bosmasligini eslating.`;
@@ -34,18 +37,30 @@ export const Route = createFileRoute("/api/ai-chat")({
           }
 
           const last = parsed.data.messages.at(-1);
-          const userMessages = parsed.data.imageDataUrl && last
+          const { audioBase64, audioFormat, imageDataUrl, transcribeOnly } = parsed.data;
+
+          const attachments: unknown[] = [];
+          if (imageDataUrl) attachments.push({ type: "image_url", image_url: { url: imageDataUrl } });
+          if (audioBase64) {
+            attachments.push({
+              type: "input_audio",
+              input_audio: { data: audioBase64, format: audioFormat ?? "webm" },
+            });
+          }
+
+          const userMessages = attachments.length > 0 && last
             ? [
                 ...parsed.data.messages.slice(0, -1),
                 {
                   role: "user" as const,
                   content: [
                     { type: "text", text: last.content },
-                    { type: "image_url", image_url: { url: parsed.data.imageDataUrl } },
+                    ...attachments,
                   ] as unknown as string,
                 },
               ]
             : parsed.data.messages;
+
 
           const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
             method: "POST",
@@ -57,12 +72,20 @@ export const Route = createFileRoute("/api/ai-chat")({
             body: JSON.stringify({
               model: parsed.data.visual
                 ? "google/gemini-3.1-flash-image-preview"
-                : parsed.data.imageDataUrl
+                : imageDataUrl || audioBase64
                   ? "google/gemini-2.5-flash"
                   : "google/gemini-3-flash-preview",
               messages: parsed.data.visual
                 ? [{ role: "user", content: `Create a premium cinematic legal-tech visual for this legal situation. No readable text, no logos. ${last?.content ?? "global justice scene"}` }]
-                : [{ role: "system", content: systemPrompt }, ...userMessages],
+                : [
+                    {
+                      role: "system",
+                      content: transcribeOnly
+                        ? "Siz aniq transkripsiya xizmatisiz. Audio yozuvni so'zma-so'z, aynan aytilgan tilda matnga aylantiring. Hech qanday izoh, sarlavha yoki qo'shimcha qo'shmang — faqat matnni qaytaring."
+                        : systemPrompt,
+                    },
+                    ...userMessages,
+                  ],
               modalities: parsed.data.visual ? ["image", "text"] : undefined,
               temperature: 0.35,
             }),

@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 import { Button } from "@/components/ui/button";
+import { VoiceRecorder } from "@/components/VoiceRecorder";
 import { cn } from "@/lib/utils";
 
 type ChatMessage = {
@@ -165,6 +166,11 @@ export function AiLegalAssistant() {
               {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
               Yuborish
             </Button>
+          </div>
+          <div className="mt-3">
+            <VoiceRecorder
+              onTranscript={(text) => setInput((current) => (current.trim() ? `${current.trim()} ${text}` : text))}
+            />
           </div>
         </div>
       </div>

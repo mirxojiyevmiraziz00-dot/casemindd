@@ -6,7 +6,6 @@ import {
   FileUp,
   Image,
   Loader2,
-  Mic,
   Send,
   ShieldAlert,
   Sparkles,
@@ -19,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { VoiceRecorder } from "@/components/VoiceRecorder";
 import { caseDatabase, legalAreas } from "@/lib/casemind-data";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -40,7 +40,7 @@ const analysisTemplate = `Quyidagi formatda tahlil qiling:
 export function AiCaseAnalyzer() {
   const [situation, setSituation] = useState("");
   const [fileName, setFileName] = useState("");
-  const [voiceNote, setVoiceNote] = useState(false);
+  const [imageDataUrl, setImageDataUrl] = useState("");
   const [result, setResult] = useState("");
   const [visualUrl, setVisualUrl] = useState("");
   const [error, setError] = useState("");
@@ -92,7 +92,7 @@ export function AiCaseAnalyzer() {
   }, [result, situation]);
 
   const analyze = async () => {
-    if (!situation.trim() && !fileName && !voiceNote) {
+    if (!situation.trim() && !fileName) {
       setError("Vaziyatni yozing, fayl yuklang yoki ovozli izoh yuboring.");
       return;
     }
@@ -103,28 +103,39 @@ export function AiCaseAnalyzer() {
     setVisualUrl("");
 
     try {
-      const prompt = `${analysisTemplate}\n\nVaziyat: ${situation || "Foydalanuvchi fayl/ovoz yubordi."}\nFayl: ${fileName || "yo‘q"}\nOvoz: ${voiceNote ? "bor" : "yo‘q"}`;
+      const prompt = `${analysisTemplate}\n\nVaziyat: ${situation || "Foydalanuvchi fayl yubordi."}\nFayl: ${fileName || "yo‘q"}`;
       const response = await fetch("/api/ai-chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: [{ role: "user", content: prompt }] }),
+        body: JSON.stringify({
+          messages: [{ role: "user", content: prompt }],
+          ...(imageDataUrl ? { imageDataUrl } : {}),
+        }),
       });
       const data = await response.json().catch(() => null);
       if (!response.ok) throw new Error(data?.error || "AI tahlil amalga oshmadi.");
       setResult(data.content);
       void generateVisual(`${situation}\n${data.content}`);
 
-      // Credit the user's wallet for asking a question (silent failure if not signed in)
+      // Credit the wallet + save history (silent failure if not signed in)
       try {
         const { data: sess } = await supabase.auth.getSession();
-        if (sess.session?.user?.id) {
+        const userId = sess.session?.user?.id;
+        if (userId) {
           await supabase.rpc("credit_wallet", {
-            _user_id: sess.session.user.id,
+            _user_id: userId,
             _amount: QUESTION_REWARD_SOM,
+          });
+          await supabase.from("case_history").insert({
+            user_id: userId,
+            title: (situation || fileName || "AI tahlil").slice(0, 90),
+            area: detectedArea,
+            situation: situation || fileName,
+            ai_response: data.content,
           });
         }
       } catch {
-        /* ignore wallet errors */
+        /* ignore wallet/history errors */
       }
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Noma’lum xatolik yuz berdi.");
@@ -223,24 +234,33 @@ export function AiCaseAnalyzer() {
                   type="file"
                   accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.webp"
                   className="bg-card"
-                  onChange={(event) => setFileName(event.target.files?.[0]?.name ?? "")}
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    setFileName(file?.name ?? "");
+                    setImageDataUrl("");
+                    if (file && file.type.startsWith("image/")) {
+                      if (file.size > 5_000_000) {
+                        setError("Rasm hajmi 5MB dan katta — kichikroq fayl yuklang.");
+                        return;
+                      }
+                      const reader = new FileReader();
+                      reader.onload = () => setImageDataUrl(String(reader.result));
+                      reader.readAsDataURL(file);
+                    }
+                  }}
                 />
                 {fileName && (
-                  <span className="mt-2 block text-xs text-muted-foreground">{fileName}</span>
+                  <span className="mt-2 block text-xs text-muted-foreground">
+                    {fileName}
+                    {imageDataUrl ? " · rasm AI ga yuboriladi" : ""}
+                  </span>
                 )}
               </Label>
-              <button
-                type="button"
-                onClick={() => setVoiceNote((value) => !value)}
-                className="rounded-xl border bg-background p-4 text-left transition hover:bg-secondary"
-              >
-                <span className="mb-3 flex items-center gap-2 font-semibold">
-                  <Mic className="h-4 w-4 text-accent" /> Ovoz yuborish
-                </span>
-                <span className="text-sm text-muted-foreground">
-                  {voiceNote ? "Ovozli izoh biriktirildi" : "Demo ovoz yozishni yoqish"}
-                </span>
-              </button>
+              <VoiceRecorder
+                onTranscript={(text) =>
+                  setSituation((current) => (current.trim() ? `${current.trim()}\n${text}` : text))
+                }
+              />
             </div>
             <div className="rounded-xl border bg-secondary p-4 text-sm text-muted-foreground">
               Taxminiy soha: <span className="font-semibold text-foreground">{detectedArea}</span>
