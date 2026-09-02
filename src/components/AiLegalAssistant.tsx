@@ -167,6 +167,11 @@ export function AiLegalAssistant() {
               Yuborish
             </Button>
           </div>
+          <div className="mt-3">
+            <VoiceRecorder
+              onTranscript={(text) => setInput((current) => (current.trim() ? `${current.trim()} ${text}` : text))}
+            />
+          </div>
         </div>
       </div>
 
