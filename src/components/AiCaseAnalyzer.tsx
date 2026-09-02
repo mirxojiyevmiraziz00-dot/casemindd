@@ -41,7 +41,7 @@ const analysisTemplate = `Quyidagi formatda tahlil qiling:
 export function AiCaseAnalyzer() {
   const [situation, setSituation] = useState("");
   const [fileName, setFileName] = useState("");
-  const [voiceNote, setVoiceNote] = useState(false);
+  const [imageDataUrl, setImageDataUrl] = useState("");
   const [result, setResult] = useState("");
   const [visualUrl, setVisualUrl] = useState("");
   const [error, setError] = useState("");
