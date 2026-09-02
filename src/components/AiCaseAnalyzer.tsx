@@ -235,24 +235,33 @@ export function AiCaseAnalyzer() {
                   type="file"
                   accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.webp"
                   className="bg-card"
-                  onChange={(event) => setFileName(event.target.files?.[0]?.name ?? "")}
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    setFileName(file?.name ?? "");
+                    setImageDataUrl("");
+                    if (file && file.type.startsWith("image/")) {
+                      if (file.size > 5_000_000) {
+                        setError("Rasm hajmi 5MB dan katta — kichikroq fayl yuklang.");
+                        return;
+                      }
+                      const reader = new FileReader();
+                      reader.onload = () => setImageDataUrl(String(reader.result));
+                      reader.readAsDataURL(file);
+                    }
+                  }}
                 />
                 {fileName && (
-                  <span className="mt-2 block text-xs text-muted-foreground">{fileName}</span>
+                  <span className="mt-2 block text-xs text-muted-foreground">
+                    {fileName}
+                    {imageDataUrl ? " · rasm AI ga yuboriladi" : ""}
+                  </span>
                 )}
               </Label>
-              <button
-                type="button"
-                onClick={() => setVoiceNote((value) => !value)}
-                className="rounded-xl border bg-background p-4 text-left transition hover:bg-secondary"
-              >
-                <span className="mb-3 flex items-center gap-2 font-semibold">
-                  <Mic className="h-4 w-4 text-accent" /> Ovoz yuborish
-                </span>
-                <span className="text-sm text-muted-foreground">
-                  {voiceNote ? "Ovozli izoh biriktirildi" : "Demo ovoz yozishni yoqish"}
-                </span>
-              </button>
+              <VoiceRecorder
+                onTranscript={(text) =>
+                  setSituation((current) => (current.trim() ? `${current.trim()}\n${text}` : text))
+                }
+              />
             </div>
             <div className="rounded-xl border bg-secondary p-4 text-sm text-muted-foreground">
               Taxminiy soha: <span className="font-semibold text-foreground">{detectedArea}</span>
