@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 import { Button } from "@/components/ui/button";
+import { VoiceRecorder } from "@/components/VoiceRecorder";
 import { cn } from "@/lib/utils";
 
 type ChatMessage = {
