@@ -72,12 +72,20 @@ export const Route = createFileRoute("/api/ai-chat")({
             body: JSON.stringify({
               model: parsed.data.visual
                 ? "google/gemini-3.1-flash-image-preview"
-                : parsed.data.imageDataUrl
+                : imageDataUrl || audioBase64
                   ? "google/gemini-2.5-flash"
                   : "google/gemini-3-flash-preview",
               messages: parsed.data.visual
                 ? [{ role: "user", content: `Create a premium cinematic legal-tech visual for this legal situation. No readable text, no logos. ${last?.content ?? "global justice scene"}` }]
-                : [{ role: "system", content: systemPrompt }, ...userMessages],
+                : [
+                    {
+                      role: "system",
+                      content: transcribeOnly
+                        ? "Siz aniq transkripsiya xizmatisiz. Audio yozuvni so'zma-so'z, aynan aytilgan tilda matnga aylantiring. Hech qanday izoh, sarlavha yoki qo'shimcha qo'shmang — faqat matnni qaytaring."
+                        : systemPrompt,
+                    },
+                    ...userMessages,
+                  ],
               modalities: parsed.data.visual ? ["image", "text"] : undefined,
               temperature: 0.35,
             }),
