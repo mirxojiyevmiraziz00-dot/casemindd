@@ -21,8 +21,10 @@ function pickMimeType(): { mimeType?: string; format: "webm" | "m4a" } {
 
 export function VoiceRecorder({
   onTranscript,
+  onAudioChange,
 }: {
   onTranscript: (text: string) => void;
+  onAudioChange?: (clip: { blob: Blob; format: "webm" | "m4a" } | null) => void;
 }) {
   const [state, setState] = useState<RecorderState>("idle");
   const [seconds, setSeconds] = useState(0);
