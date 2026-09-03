@@ -86,6 +86,7 @@ export function VoiceRecorder({
         stream.getTracks().forEach((track) => track.stop());
         const blob = new Blob(chunksRef.current, { type: mimeType ?? "audio/webm" });
         blobRef.current = blob;
+        onAudioChange?.({ blob, format: formatRef.current });
         setAudioUrl((previous) => {
           if (previous) URL.revokeObjectURL(previous);
           return URL.createObjectURL(blob);
