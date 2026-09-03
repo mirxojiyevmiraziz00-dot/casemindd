@@ -41,6 +41,7 @@ export function AiCaseAnalyzer() {
   const [situation, setSituation] = useState("");
   const [fileName, setFileName] = useState("");
   const [imageDataUrl, setImageDataUrl] = useState("");
+  const [audioClip, setAudioClip] = useState<{ blob: Blob; format: "webm" | "m4a" } | null>(null);
   const [result, setResult] = useState("");
   const [visualUrl, setVisualUrl] = useState("");
   const [error, setError] = useState("");
