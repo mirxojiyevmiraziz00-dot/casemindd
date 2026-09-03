@@ -24,17 +24,12 @@ import { supabase } from "@/integrations/supabase/client";
 
 const QUESTION_REWARD_SOM = 50;
 
-const analysisTemplate = `Quyidagi formatda tahlil qiling:
-- Qaysi huquq sohasi
-- O‘zbekiston qonunchiligidagi holati
-- Chet el davlatlarida bu holat qanday baholanadi
-- AQSHda qanday chora ko‘riladi
-- Yevropada qanday hal qilinadi
-- Turkiyada qanday tartib mavjud
-- Sud amaliyoti misollari
-- O‘xshash real case’lar
-- Xavf darajasi
-- Tavsiya etiladigan keyingi qadamlar
+const analysisTemplate = `Quyidagi vaziyatni qisqa, aniq va ortiqcha gaplarsiz tahlil qiling. Har bir bo'lim 1-3 gapdan oshmasin, faqat kerakli ma'lumot:
+- Huquq sohasi
+- O'zbekiston qonunchiligidagi holat (modda raqami bilan, agar aniq bo'lsa)
+- Xorij tajribasi (AQSH, Yevropa, Turkiya) — faqat qisqa taqqoslash
+- Xavf darajasi (past / o'rta / yuqori + sabab)
+- Keyingi qadamlar (aniq ro'yxat)
 - Kerakli hujjatlar va dalillar`;
 
 export function AiCaseAnalyzer() {

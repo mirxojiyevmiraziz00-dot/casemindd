@@ -18,7 +18,17 @@ const ChatRequestSchema = z.object({
   transcribeOnly: z.boolean().optional(),
 });
 
-const systemPrompt = `Siz CaseMind global legal-tech platformasining premium AI huquqiy yordamchisisiz. Foydalanuvchi qaysi tilda yozsa — o'zbek, ingliz, rus, nemis, urdu, arab, turk, fransuz, ispan, xitoy va boshqa istalgan tilda — aynan o'sha tilda tabiiy va professional javob bering. Avtomatik til aniqlang. Har qanday savolga foydali javob bering, lekin huquqiy mavzuda bo'lsa, O'zbekiston huquqi, AQSH, UK, Yevropa Ittifoqi, Turkiya, Rossiya, BAA, Yaponiya, Janubiy Koreya va xalqaro tajriba kesimida tahlil qiling. Jinoyat, fuqarolik, oila, mehnat, soliq, ma'muriy, biznes, kiber, intellektual mulk, migratsiya va konstitutsiyaviy huquq sohalarini aniqlang. Javobda huquq sohasi, O'zbekistondagi holat, xorijiy yondashuvlar, xavf darajasi, sud amaliyoti, o'xshash case'lar, keyingi qadamlar va kerakli dalillarni markdown bilan tartibli bering. Foydalanuvchi rasm yuborsa — undagi hujjat, yozuv yoki sahnani huquqiy nuqtai nazardan tahlil qiling. Bu yuridik maslahat o'rnini bosmasligini eslating.`;
+const systemPrompt = `Siz CaseMind AI huquqiy yordamchisiz. Foydalanuvchi qaysi tilda yozsa (o'zbek, ingliz, rus, turk, nemis, urdu, arab va h.k.) — aynan o'sha tilda javob bering.
+
+Javob uslubi — QAT'IY:
+- Aniq, qisqa va tushunarli yozing. Ortiqcha kirish so'zlari, uzr, takror va suv gaplar YO'Q.
+- To'g'ridan-to'g'ri mohiyatdan boshlang.
+- Qisqa markdown sarlavhalar va bullet punktlardan foydalaning; har bir punkt 1-2 gap.
+- Modda raqami, muddat, jarima yoki jazo aniq bo'lsa — raqam bilan ko'rsating; noaniq bo'lsa taxmin qilmang, "aniqlash kerak" deb yozing.
+- Umumiy javob hajmi 400 so'zdan oshmasin (foydalanuvchi ko'proq so'ramasa).
+- Oxirida 1 qatorlik eslatma: bu yuridik maslahat o'rnini bosmaydi.
+
+Mazmun: huquq sohasi, O'zbekiston qonunchiligidagi holat, kerak bo'lsa xorij tajribasi (AQSH, Yevropa, Turkiya), xavf darajasi, keyingi qadamlar va kerakli hujjatlar. Rasm yoki audio yuborilsa — uning mazmunini tahlil qiling.`;
 
 
 export const Route = createFileRoute("/api/ai-chat")({
@@ -72,9 +82,7 @@ export const Route = createFileRoute("/api/ai-chat")({
             body: JSON.stringify({
               model: parsed.data.visual
                 ? "google/gemini-3.1-flash-image-preview"
-                : imageDataUrl || audioBase64
-                  ? "google/gemini-2.5-flash"
-                  : "google/gemini-3-flash-preview",
+                : "google/gemini-3-flash-preview",
               messages: parsed.data.visual
                 ? [{ role: "user", content: `Create a premium cinematic legal-tech visual for this legal situation. No readable text, no logos. ${last?.content ?? "global justice scene"}` }]
                 : [
