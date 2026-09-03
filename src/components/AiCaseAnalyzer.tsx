@@ -275,10 +275,16 @@ export function AiCaseAnalyzer() {
                 onTranscript={(text) =>
                   setSituation((current) => (current.trim() ? `${current.trim()}\n${text}` : text))
                 }
+                onAudioChange={setAudioClip}
               />
             </div>
             <div className="rounded-xl border bg-secondary p-4 text-sm text-muted-foreground">
               Taxminiy soha: <span className="font-semibold text-foreground">{detectedArea}</span>
+              {audioClip && (
+                <span className="mt-2 block text-xs text-accent">
+                  Ovozli xabar tayyor — “Tahlil qilish” bosilganda AI ga yuboriladi.
+                </span>
+              )}
             </div>
             {error && (
               <p className="rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-sm text-foreground">
