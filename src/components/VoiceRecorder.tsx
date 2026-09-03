@@ -247,7 +247,9 @@ export function VoiceRecorder({
 
       {error && <p className="mt-3 text-xs text-destructive">{error}</p>}
       {!error && state === "idle" && !audioUrl && (
-        <p className="mt-3 text-xs text-muted-foreground">Mikrofonda gapiring — AI matnga aylantiradi.</p>
+        <p className="mt-3 text-xs text-muted-foreground">
+          Mikrofonda gapiring — ovoz “Tahlil qilish” bosilganda AI ga yuboriladi.
+        </p>
       )}
     </div>
   );
