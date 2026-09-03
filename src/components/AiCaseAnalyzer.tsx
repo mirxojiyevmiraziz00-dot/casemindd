@@ -93,7 +93,7 @@ export function AiCaseAnalyzer() {
   }, [result, situation]);
 
   const analyze = async () => {
-    if (!situation.trim() && !fileName) {
+    if (!situation.trim() && !fileName && !audioClip) {
       setError("Vaziyatni yozing, fayl yuklang yoki ovozli izoh yuboring.");
       return;
     }
@@ -104,13 +104,27 @@ export function AiCaseAnalyzer() {
     setVisualUrl("");
 
     try {
-      const prompt = `${analysisTemplate}\n\nVaziyat: ${situation || "Foydalanuvchi fayl yubordi."}\nFayl: ${fileName || "yo‘q"}`;
+      let audioBase64 = "";
+      if (audioClip) {
+        audioBase64 = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onerror = () => reject(new Error("Ovoz o‘qilmadi."));
+          reader.onload = () => {
+            const value = String(reader.result);
+            resolve(value.slice(value.indexOf(",") + 1));
+          };
+          reader.readAsDataURL(audioClip.blob);
+        });
+      }
+
+      const prompt = `${analysisTemplate}\n\nVaziyat: ${situation || (audioClip ? "Foydalanuvchi ovozli xabar yubordi — audioni tinglab tahlil qiling." : "Foydalanuvchi fayl yubordi.")}\nFayl: ${fileName || "yo‘q"}`;
       const response = await fetch("/api/ai-chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: [{ role: "user", content: prompt }],
           ...(imageDataUrl ? { imageDataUrl } : {}),
+          ...(audioBase64 ? { audioBase64, audioFormat: audioClip?.format ?? "webm" } : {}),
         }),
       });
       const data = await response.json().catch(() => null);
