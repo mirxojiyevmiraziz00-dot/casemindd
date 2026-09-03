@@ -82,9 +82,7 @@ export const Route = createFileRoute("/api/ai-chat")({
             body: JSON.stringify({
               model: parsed.data.visual
                 ? "google/gemini-3.1-flash-image-preview"
-                : imageDataUrl || audioBase64
-                  ? "google/gemini-2.5-flash"
-                  : "google/gemini-3-flash-preview",
+                : "google/gemini-3-flash-preview",
               messages: parsed.data.visual
                 ? [{ role: "user", content: `Create a premium cinematic legal-tech visual for this legal situation. No readable text, no logos. ${last?.content ?? "global justice scene"}` }]
                 : [
