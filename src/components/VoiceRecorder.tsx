@@ -135,6 +135,7 @@ export function VoiceRecorder({
     setSeconds(0);
     setIsPlaying(false);
     blobRef.current = null;
+    onAudioChange?.(null);
     setAudioUrl((previous) => {
       if (previous) URL.revokeObjectURL(previous);
       return "";
