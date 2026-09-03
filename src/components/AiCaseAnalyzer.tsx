@@ -41,6 +41,7 @@ export function AiCaseAnalyzer() {
   const [situation, setSituation] = useState("");
   const [fileName, setFileName] = useState("");
   const [imageDataUrl, setImageDataUrl] = useState("");
+  const [audioClip, setAudioClip] = useState<{ blob: Blob; format: "webm" | "m4a" } | null>(null);
   const [result, setResult] = useState("");
   const [visualUrl, setVisualUrl] = useState("");
   const [error, setError] = useState("");
@@ -92,7 +93,7 @@ export function AiCaseAnalyzer() {
   }, [result, situation]);
 
   const analyze = async () => {
-    if (!situation.trim() && !fileName) {
+    if (!situation.trim() && !fileName && !audioClip) {
       setError("Vaziyatni yozing, fayl yuklang yoki ovozli izoh yuboring.");
       return;
     }
@@ -103,13 +104,27 @@ export function AiCaseAnalyzer() {
     setVisualUrl("");
 
     try {
-      const prompt = `${analysisTemplate}\n\nVaziyat: ${situation || "Foydalanuvchi fayl yubordi."}\nFayl: ${fileName || "yo‘q"}`;
+      let audioBase64 = "";
+      if (audioClip) {
+        audioBase64 = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onerror = () => reject(new Error("Ovoz o‘qilmadi."));
+          reader.onload = () => {
+            const value = String(reader.result);
+            resolve(value.slice(value.indexOf(",") + 1));
+          };
+          reader.readAsDataURL(audioClip.blob);
+        });
+      }
+
+      const prompt = `${analysisTemplate}\n\nVaziyat: ${situation || (audioClip ? "Foydalanuvchi ovozli xabar yubordi — audioni tinglab tahlil qiling." : "Foydalanuvchi fayl yubordi.")}\nFayl: ${fileName || "yo‘q"}`;
       const response = await fetch("/api/ai-chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: [{ role: "user", content: prompt }],
           ...(imageDataUrl ? { imageDataUrl } : {}),
+          ...(audioBase64 ? { audioBase64, audioFormat: audioClip?.format ?? "webm" } : {}),
         }),
       });
       const data = await response.json().catch(() => null);
@@ -260,10 +275,16 @@ export function AiCaseAnalyzer() {
                 onTranscript={(text) =>
                   setSituation((current) => (current.trim() ? `${current.trim()}\n${text}` : text))
                 }
+                onAudioChange={setAudioClip}
               />
             </div>
             <div className="rounded-xl border bg-secondary p-4 text-sm text-muted-foreground">
               Taxminiy soha: <span className="font-semibold text-foreground">{detectedArea}</span>
+              {audioClip && (
+                <span className="mt-2 block text-xs text-accent">
+                  Ovozli xabar tayyor — “Tahlil qilish” bosilganda AI ga yuboriladi.
+                </span>
+              )}
             </div>
             {error && (
               <p className="rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-sm text-foreground">

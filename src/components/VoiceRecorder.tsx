@@ -21,8 +21,10 @@ function pickMimeType(): { mimeType?: string; format: "webm" | "m4a" } {
 
 export function VoiceRecorder({
   onTranscript,
+  onAudioChange,
 }: {
   onTranscript: (text: string) => void;
+  onAudioChange?: (clip: { blob: Blob; format: "webm" | "m4a" } | null) => void;
 }) {
   const [state, setState] = useState<RecorderState>("idle");
   const [seconds, setSeconds] = useState(0);
@@ -84,6 +86,7 @@ export function VoiceRecorder({
         stream.getTracks().forEach((track) => track.stop());
         const blob = new Blob(chunksRef.current, { type: mimeType ?? "audio/webm" });
         blobRef.current = blob;
+        onAudioChange?.({ blob, format: formatRef.current });
         setAudioUrl((previous) => {
           if (previous) URL.revokeObjectURL(previous);
           return URL.createObjectURL(blob);
@@ -132,6 +135,7 @@ export function VoiceRecorder({
     setSeconds(0);
     setIsPlaying(false);
     blobRef.current = null;
+    onAudioChange?.(null);
     setAudioUrl((previous) => {
       if (previous) URL.revokeObjectURL(previous);
       return "";
@@ -243,7 +247,9 @@ export function VoiceRecorder({
 
       {error && <p className="mt-3 text-xs text-destructive">{error}</p>}
       {!error && state === "idle" && !audioUrl && (
-        <p className="mt-3 text-xs text-muted-foreground">Mikrofonda gapiring — AI matnga aylantiradi.</p>
+        <p className="mt-3 text-xs text-muted-foreground">
+          Mikrofonda gapiring — ovoz “Tahlil qilish” bosilganda AI ga yuboriladi.
+        </p>
       )}
     </div>
   );
