@@ -32,6 +32,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as MamlakatlarCountryIdRouteImport } from './routes/mamlakatlar.$countryId'
 import { Route as HuquqBolimlariSlugRouteImport } from './routes/huquq-bolimlari.$slug'
 import { Route as ApiAiChatRouteImport } from './routes/api/ai-chat'
+import { Route as ApiPublicTelegramWebhookRouteImport } from './routes/api/public/telegram/webhook'
 
 const YuristlarRoute = YuristlarRouteImport.update({
   id: '/yuristlar',
@@ -148,6 +149,12 @@ const ApiAiChatRoute = ApiAiChatRouteImport.update({
   path: '/api/ai-chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicTelegramWebhookRoute =
+  ApiPublicTelegramWebhookRouteImport.update({
+    id: '/api/public/telegram/webhook',
+    path: '/api/public/telegram/webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -173,6 +180,7 @@ export interface FileRoutesByFullPath {
   '/api/ai-chat': typeof ApiAiChatRoute
   '/huquq-bolimlari/$slug': typeof HuquqBolimlariSlugRoute
   '/mamlakatlar/$countryId': typeof MamlakatlarCountryIdRoute
+  '/api/public/telegram/webhook': typeof ApiPublicTelegramWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -198,6 +206,7 @@ export interface FileRoutesByTo {
   '/api/ai-chat': typeof ApiAiChatRoute
   '/huquq-bolimlari/$slug': typeof HuquqBolimlariSlugRoute
   '/mamlakatlar/$countryId': typeof MamlakatlarCountryIdRoute
+  '/api/public/telegram/webhook': typeof ApiPublicTelegramWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -224,6 +233,7 @@ export interface FileRoutesById {
   '/api/ai-chat': typeof ApiAiChatRoute
   '/huquq-bolimlari/$slug': typeof HuquqBolimlariSlugRoute
   '/mamlakatlar/$countryId': typeof MamlakatlarCountryIdRoute
+  '/api/public/telegram/webhook': typeof ApiPublicTelegramWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -251,6 +261,7 @@ export interface FileRouteTypes {
     | '/api/ai-chat'
     | '/huquq-bolimlari/$slug'
     | '/mamlakatlar/$countryId'
+    | '/api/public/telegram/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -276,6 +287,7 @@ export interface FileRouteTypes {
     | '/api/ai-chat'
     | '/huquq-bolimlari/$slug'
     | '/mamlakatlar/$countryId'
+    | '/api/public/telegram/webhook'
   id:
     | '__root__'
     | '/'
@@ -301,6 +313,7 @@ export interface FileRouteTypes {
     | '/api/ai-chat'
     | '/huquq-bolimlari/$slug'
     | '/mamlakatlar/$countryId'
+    | '/api/public/telegram/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -325,6 +338,7 @@ export interface RootRouteChildren {
   YuristBilanBoglanishRoute: typeof YuristBilanBoglanishRoute
   YuristlarRoute: typeof YuristlarRoute
   ApiAiChatRoute: typeof ApiAiChatRoute
+  ApiPublicTelegramWebhookRoute: typeof ApiPublicTelegramWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -490,6 +504,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/telegram/webhook': {
+      id: '/api/public/telegram/webhook'
+      path: '/api/public/telegram/webhook'
+      fullPath: '/api/public/telegram/webhook'
+      preLoaderRoute: typeof ApiPublicTelegramWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -539,6 +560,7 @@ const rootRouteChildren: RootRouteChildren = {
   YuristBilanBoglanishRoute: YuristBilanBoglanishRoute,
   YuristlarRoute: YuristlarRoute,
   ApiAiChatRoute: ApiAiChatRoute,
+  ApiPublicTelegramWebhookRoute: ApiPublicTelegramWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
