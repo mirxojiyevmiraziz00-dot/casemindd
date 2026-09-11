@@ -1,78 +1,57 @@
+# CaseMind Telegram bot — doim ishlovchi huquqiy AI yordamchi
+
 ## Maqsad
-Dark mode'dan tashqari barcha asosiy yaxshilanishlarni amalga oshirish — har bir tugma, har bir bo'lim ichkarigacha ishlaydigan, aniq, premium darajada.
 
-## Bajariladigan ishlar
+CaseMind saytidagi AI yordamchi kabi, Telegram bot ham huquqiy savollarga javob bersin va 24/7 doim ishlab tursin. Bot Telegramda alohida bot sifatida ko'rinadi — foydalanuvchi yozadi, bot huquqiy javob qaytaradi. Botning «miyasi» CaseMind sayti serverida (doim ishlab turuvchi) joylashadi.
 
-### 1. Auth + Foydalanuvchi tarixi
-- `/login` va `/register` to'liq ishlaydigan: email+parol va Google OAuth (Lovable Cloud orqali)
-- `case_history` jadvali (migration): user_id, title, area, input, ai_response, image_url, created_at + RLS
-- `/dashboard` — foydalanuvchi o'z AI tahlillari, statistika (jami case, soha bo'yicha taqsimot, oxirgi 5 ta)
-- Header'da AuthStatus: kirgan bo'lsa avatar+nom, chiqish; aks holda "Kirish"
+## Muhim eslatma (hosting)
 
-### 2. AI imkoniyatlari (to'liq ishlaydigan)
-- **Streaming javob** — `/api/ai-chat` SSE/stream qo'shish, AiLegalAssistant typing-effect bilan
-- **Ovozli kirish** — Web Speech API (uz, ru, en, de, ur va h.k. avtomatik aniqlash)
-- **Hujjat yuklash** — PDF/JPG/PNG → Gemini vision orqali tahlil (bor `legal-documents` bucket'ga yuklab, signed URL bilan AI'ga uzatish)
-- **Multi-turn chat** — har bir tahlil tarixi `case_history`'ga saqlanadi, davom ettirish mumkin
-- **Visual rasm** — har bir AI javobiga avtomatik 1 ta sahna rasmi (Gemini image)
-- **Ko'p tilda** — system prompt allaqachon mos, lekin UI tugmalari ham auto-translate (i18n keys)
+Lovable ichida alohida bot jarayonini (alohida serverda doim ishlab turadigan Python/Node skript) ishlata olmayman. Lovable faqat CaseMind saytini joylashtiradi. Shuning uchun botni **CaseMind sayti serveriga webhook orqali ulaymiz** — bu botni 24/7 ishlatishning yagona amaliy yo'li. Foydalanuvchilar uchun farq yo'q: ular Telegramda botga yozadi, bot javob beradi. Bot doim ishlaydi, chunki CaseMind sayti serveri doim yoqilgan.
 
-### 3. Yurist marketplace + admin
-- `lawyers` jadvali: name, photo, areas[], bio, languages[], rating, contact
-- `/yuristlar` — kartochkalar, soha bo'yicha filter, har biriga "Bog'lanish" tugmasi → consultation form
-- `/admin` (faqat admin role) — kelgan `consultation_requests`, status o'zgartirish, eksport
+Agar sizda allaqachon ishlaydigan bot kodi bo'lsa, uni alohida serverda (Render, Railway, VPS) o'zingiz joylashtirishingiz mumkin — lekin bu Lovable tashqarisida. Men bu reja bilan botni CaseMind orqali ishlatishni taklif qilaman.
 
-### 4. Email orqali xabar (yurist forma)
-- Email infrastructure setup + transactional email scaffold
-- Forma yuborilganda: ham `consultation_requests`'ga yoziladi, ham foydalanuvchi emailiga tasdiq, ham admin emailiga ogohlantirish keladi
-- Foydalanuvchidan admin email so'raymiz (yoki default `mirxojiyev@…`)
+## Sizdan kerak bo'ladigan narsa
 
-### 5. Mamlakatlar / Bo'limlar / Case database — hammasi ishlaydigan
-- Har bir mamlakat, har bir huquq bo'limi, har bir case kartasidagi tugmalar real ishlaydi:
-  - "AI tahlil" → `/ai-tahlil`'ga prompt bilan o'tadi va avtomatik tahlil boshlanadi
-  - "Manba" → ishonchli tashqi havola (Lex.uz, EUR-Lex, BAILII, Google Scholar)
-  - "PDF yuklab olish" → jspdf bilan to'liq report
-- "Manba yo'q" muammosi yo'qoladi — har bir item'da `sourceUrl` maydoni bo'ladi
+1. **Telegram bot tokeni** — @BotFather orqali yaratilgan bot. Sizda allaqachon bor (bot ishlagan). Bot tokenni maxfiy forma orqali kiritasiz (hech kimga ko'rsatmaymiz).
 
-### 6. Global search + UX polish
-- ⌘K global search (cmdk) — case, mamlakat, bo'lim, AI prompt orqali topish
-- Mobile menu (sheet)
-- Framer Motion: sahifa tranzitsiyalari, hover, scroll-reveal
-- Loading skeletonlar har joyda
+## Men nima qilaman
 
-### 7. SEO
-- Har bir route'da unique `head()` (title/description/og)
-- `/sitemap.xml` va `/robots.txt` server route
+### 1. Telegram connector ulash
+- `standard_connectors--connect` orqali Telegram connectorini loyihaga ulaymiz.
+- Siz bot tokenni maxfiy formada kiritasiz. Token `TELEGRAM_API_KEY` sifatida saqlanadi va server kodida ishlatiladi.
 
-### 8. Ijtimoiy tarmoqlar
-- Footer'da Telegram (@mirxojiyev), Instagram (@_miraziz.1), Facebook (@Ado.Vis) ishlaydigan linklar
-- Telegram orqali video yuborish bo'limi: `/media` sahifasida embed Telegram channel widget va Instagram feed (oddiy iframe/embed)
+### 2. Webhook endpoint yaratish
+- `src/routes/api/public/telegram/webhook.ts` — Telegram xabarlari shu yerga keladi.
+- Xavfsizlik: `X-Telegram-Bot-Api-Secret-Token` tekshiriladi (tokendan olingan).
+- Xabar matni olinadi.
+- AI Gateway ga yuboriladi (CaseMind saytidagi legal system prompt bilan — ko'p tilli, aniq, qisqa javob).
+- AI javobi Telegram gateway orqali `sendMessage` bilan foydalanuvchiga qaytariladi.
+- Xatolik bo'lsa, foydalanuvchiga aniq xabar beriladi.
 
-### 9. Xavfsizlik
-- Barcha jadvallarda RLS tekshiruv
-- Rate limit `/api/ai-chat` (IP+user bo'yicha, oddiy in-memory yoki Cloud KV)
+### 3. Suhbat tarixini saqlash (ixtiyoriy, tavsiya etiladi)
+- `telegram_messages` jadvali: `update_id`, `chat_id`, `user_id`, `text`, `ai_reply`, `raw_update`, `created_at`.
+- Bu AI ga oldingi suhbatni eslab turish imkonini beradi (kontekst).
+- RLS: faqat server (service_role) yozadi; foydalanuvchilar o'qiy olmaydi.
 
-## Texnik detallar
+### 4. Webhookni Telegramga ro'yxatdan o'tkazish
+- Stable project URL (`https://casemindd.lovable.app/api/public/telegram/webhook`) Telegramga `setWebhook` bilan ro'yxatdan o'tkaziladi.
+- `getWebhookInfo` bilan tekshiriladi.
 
-**Yangi fayllar:**
-- `supabase/migrations/...` — `case_history`, `lawyers` jadvallari
-- `src/routes/register.tsx`, `src/routes/yuristlar.tsx`, `src/routes/yuristlar.$id.tsx`, `src/routes/admin.tsx`, `src/routes/media.tsx`
-- `src/routes/api/sitemap.xml.ts`, `src/routes/api/robots.txt.ts`
-- `src/components/GlobalSearch.tsx`, `src/components/MobileMenu.tsx`, `src/components/PageTransition.tsx`
-- `src/server/case-history.functions.ts`, `src/server/lawyers.functions.ts`
-- `supabase/functions/auth-email-hook/...` va transactional email funksiyalari
+### 5. Bot komandalari (ixtiyoriy)
+- `/start` — salom va ko'rsatma.
+- Oddiy matn — huquqiy savol, AI javob beradi.
 
-**Yangilanadigan:**
-- `src/routes/api/ai-chat.ts` — streaming + image+text birga + rate limit
-- `src/components/AiLegalAssistant.tsx`, `AiCaseAnalyzer.tsx` — voice, file upload, history save
-- `src/lib/casemind-data.ts` — har bir item'ga `sourceUrl`
-- `src/components/CaseMindHeader.tsx` — auth status, ⌘K, mobile menu
-- `src/components/CaseMindFooter.tsx` — to'g'ri social linklar
+## Texnik tafsilotlar
 
-**Paketlar:** `cmdk`, `framer-motion` (yo'q bo'lsa), `react-dropzone`
+- **AI model:** `google/gemini-3-flash-preview` (saytdagi bilan bir xil).
+- **Gateway:** `https://connector-gateway.lovable.dev/telegram/sendMessage` — javob yuborish uchun.
+- **AI:** `https://ai.gateway.lovable.dev/v1/chat/completions` — savolni tahlil qilish uchun.
+- **System prompt:** saytdagi CaseMind legal promptining Telegram uchun moslashtirilgan varianti — qisqa, aniq, ko'p tilli javob, oxirida yuridik maslahat emas deb eslatma.
+- **Tillar:** foydalanuvchi qaysi tilda yozsa, shu tilda javob (o'zbek, rus, ingliz, nemis, turk, urdu, arab va h.k.).
 
-## Sizdan kerak (1 ta savol)
+## Natija
 
-**Admin email** — yurist formalari va consultation xabarlari qaysi emailga kelishi kerak? (masalan, `mirxojiyev@gmail.com`). Bitta email yozib bering, qolgani avtomatik bo'ladi.
-
-Tasdiqlasangiz, ketma-ket: **migration → auth → AI streaming/voice/file → mamlakatlar/bo'limlar tugmalari → marketplace+admin → email → search/SEO/UX → social** tartibida qilaman.
+- Bot Telegramda doim ishlaydi.
+- Foydalanuvchi huquqiy savol beradi → AI aniq, qisqa javob qaytaradi.
+- Suhbat tarixi saqlanadi (kontekst uchun).
+- Sayt dizayni va funksiyalari o'zgarishsiz qoladi.
